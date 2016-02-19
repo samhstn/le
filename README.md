@@ -30,7 +30,7 @@ Slider increments, buttons shown on le page, font size?, number of divs shown on
 
 There should be an option to reset your marked words and to look at your marked words for review
 
-![[homepage](assets/homepage.jpg)]
+[![homepage](assets/homepage.jpg)]
 
 ### Learning environment page
 
