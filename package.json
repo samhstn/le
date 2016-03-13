@@ -1,0 +1,18 @@
+{
+  "name": "le",
+  "version": "1.0.0",
+  "description": "A language learning environment",
+  "main": "server.js",
+  "scripts": {
+    "test": "tape ./backTest/*",
+    "coverage": "istanbul cover tape ./test/*",
+    "start": "node src/server.js"
+  },
+  "author": "shouston3",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul": "^0.4.2",
+    "shot": "^3.0.1",
+    "tape": "^4.4.0"
+  }
+}
