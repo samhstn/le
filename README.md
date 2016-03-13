@@ -86,13 +86,9 @@ Abandon learnenv on github and only use that for de learning and for reference w
 Order of progress steps:
 * Write out comment for what the function should do
 * Write test for that function
-* Fail the test
-* Write a working function using as basic code as possible
+* Make the test fail
+* Write a function which passes the test
 * Refactor the function
-
-Do not exceed 100 lines of javascript on each file
-
-Only use classes
 
 Each front-end structure will be written out in a structures folder before moved into a separate folder and then into the code.
 
