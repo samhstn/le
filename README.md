@@ -12,6 +12,8 @@ I will be using this to learn from until this version is made
 
 ### Homepage
 
+All of these will be made separately in React
+
 The homepage will have help button, faded into a top corner which will explain each of the app buttons
 
 There will be a randomize button to randomize the words for a selected array start point and length, this will be a toggle option.
@@ -51,6 +53,8 @@ There will be an option to star a word for review, and will be logged for review
 ## How
 
 All of the words will be stored in a database which will be retrieved by redis, the 'review' words will be stored in a redis database, these can be reviewed and edited in the homepage.
+
+I will make each component individually using React
 
 ## File structure
 
