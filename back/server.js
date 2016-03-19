@@ -1,33 +1,36 @@
-var Hapi = require('hapi')
-var Inert = require('inert')
-var server = new Hapi.Server()
-var port = process.env.PORT || 8080
+'use strict'
 
-server.connect(port)
+// node modules
+const Hapi = require('hapi')
+const Inert = require('inert')
 
-server.register(Inert, (err) => {
+// server config
+const server = new Hapi.Server()
+const port = 8080
+
+server.connection({
+  port: port
+})
+
+// Hapi plugins
+const plugins = [
+  Inert
+]
+
+server.register(plugins, (err) => {
   if (err) {
-    console.log('Error: ', err)
+    console.log(err)
     throw err
   }
-  server.route([
-    {
-      path: '/',
-      method: 'GET',
-      handler: function (request, reply) {
-        reply.file(__dirname + '../front/index.html')
-      }
-    },
-    {
-      path: '/{param*}',
-      mathod: 'GET',
-      handler: {
-        directory: {
-          path: '../front'
-        }
+  server.route([{
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {
+        path: 'front/production'
       }
     }
-  ])
+  }])
 })
 
 module.exports = server
