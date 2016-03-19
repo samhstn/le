@@ -6,7 +6,7 @@
   "scripts": {
     "test": "tape ./backTest/*",
     "coverage": "istanbul cover tape ./test/*",
-    "start": "node src/server.js"
+    "start": "nodemon back/index.js"
   },
   "author": "shouston3",
   "license": "ISC",
