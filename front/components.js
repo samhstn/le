@@ -1,6 +1,7 @@
 import React from 'react'
 import NavButton from './navbutton.js'
 import LangButton from './langbutton.js'
+import LangDir from './langdir.js'
 
 class Components extends React.Component {
   render () {
@@ -8,6 +9,7 @@ class Components extends React.Component {
       <div>
         <LangButton />
         <NavButton />
+        <LangDir />
       </div>
     )
   }
