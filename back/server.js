@@ -1,23 +1,33 @@
-var http = require('http');
+var Hapi = require('hapi')
+var Inert = require('inert')
+var server = new Hapi.Server()
+var port = process.env.PORT || 8080
 
-var port = process.env.PORT || 8080;
+server.connect(port)
 
-function x(k){
-    return 5;
-}
+server.register(Inert, (err) => {
+  if (err) {
+    console.log('Error: ', err)
+    throw err
+  }
+  server.route([
+    {
+      path: '/',
+      method: 'GET',
+      handler: function (request, reply) {
+        reply.file(__dirname + '../front/index.html')
+      }
+    },
+    {
+      path: '/{param*}',
+      mathod: 'GET',
+      handler: {
+        directory: {
+          path: '../front'
+        }
+      }
+    }
+  ])
+})
 
-function handler(req, res){
-    var url = req.url;
-    res.writeHead(200, {'Content-type': 'text/html'});
-    res.end();
-}
-
-var server = http.createServer(handler);
-
-module.exports = {
-    x: x,
-    handler: handler,
-    server: server
-};
-
-server.listen(port);
+module.exports = server
