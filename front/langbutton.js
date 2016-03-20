@@ -17,7 +17,7 @@ LangButton.defaultProps = {
   text: 'hello'
 }
 
-var styles = {
+const styles = {
   fontSize: '5vmin',
   border: '1px solid black',
   textAlign: 'center',

@@ -1,9 +1,18 @@
 import React from 'react'
+import NavButton from './navbutton.js'
+import LangButton from './langbutton.js'
+import LangDir from './langdir.js'
 
-class Hello extends React.Component {
+class Components extends React.Component {
   render () {
-    return <h1>Hello World</h1>
+    return (
+      <div>
+        <LangButton />
+        <NavButton />
+        <LangDir />
+      </div>
+    )
   }
 }
 
-export default Hello
+export default Components
