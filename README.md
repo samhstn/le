@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/shouston3/le.svg?branch=master)](https://travis-ci.org/shouston3/le)
+
 # Learning environment
 
 ## Why
