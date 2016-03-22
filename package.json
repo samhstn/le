@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "description": "A language learning environment",
   "main": "index.js",
+  "author": "shouston3",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
+  },
   "scripts": {
     "test": "tape ./backTest/test.js",
-    "coverage": "istanbul cover tape ./test/*",
-    "report-coverage": "cat .coverage/lcov.info | codecov",
+    "coverage": "node ./node_modules/.bin/istanbul cover backTest/test.js",
+    "report": "cat ./coverage/lcov.info | codecov",
     "start": "nodemon back/index.js",
     "build": "webpack --progress",
     "dev": "webpack-dev-server --hot --inline"
   },
-  "author": "shouston3",
-  "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
