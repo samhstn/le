@@ -4,8 +4,7 @@
   "description": "A language learning environment",
   "main": "index.js",
   "scripts": {
-    "t": "tape ./backTest/test.js",
-    "test": "npm run build && tape ./backTest/test.js",
+    "test": "tape ./backTest/test.js",
     "coverage": "istanbul cover tape ./test/*",
     "start": "nodemon back/index.js",
     "build": "webpack --progress",

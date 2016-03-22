@@ -2,6 +2,7 @@
 // node modules
 const Hapi = require('hapi')
 const Inert = require('inert')
+const Path = require('path')
 // server config
 const server = new Hapi.Server()
 const port = 4000
@@ -23,8 +24,8 @@ server.register(plugins, (err) => {
     {
       method: 'GET',
       path: '/',
-      handler: function (request, reply) {
-        reply.file('../front/production/index.html')
+      handler: (request, reply) => {
+        reply.file(Path.join(__dirname, '../front/production/index.html'))
       }
     },
     {
