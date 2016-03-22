@@ -1,12 +1,10 @@
 'use strict'
-
 // node modules
 const Hapi = require('hapi')
 const Inert = require('inert')
-
 // server config
 const server = new Hapi.Server()
-const port = 8080
+const port = 4000
 
 server.connection({
   port: port
@@ -19,7 +17,6 @@ const plugins = [
 
 server.register(plugins, (err) => {
   if (err) {
-    console.log(err)
     throw err
   }
   server.route([
@@ -37,6 +34,7 @@ server.register(plugins, (err) => {
         directory: {
           path: 'front/production'
         }
+
       }
     }
   ])
