@@ -23,25 +23,18 @@ server.register(plugins, (err) => {
     {
       method: 'GET',
       path: '/',
-      handler: (request, reply) => {
-        const path = __dirname.join('../../frontend/production/index.html')
-        console.log(path)
-        reply.file(path)
+      handler: function (request, reply) {
+        reply.file('../front/production/index.html')
       }
-    }, {
+    },
+    {
       method: 'GET',
-      path: '/',
-      handler: (request, reply) => {
-        const client = require('./redis.js')
-        require('./populateDB/populateDB.js')(client) // link these up to the correct urls, plan, then make work!
-        reply.redirect('/')
-      }
-    }, {
-      method: 'GET',
-      path: '/',
-      handler: (request, reply) => {
-        const path = __dirname.join('./../../frontend/production/amazon.js')
-        reply.file(path)
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'front/production'
+        }
+
       }
     }
   ])
