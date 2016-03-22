@@ -22,15 +22,24 @@ server.register(plugins, (err) => {
     console.log(err)
     throw err
   }
-  server.route([{
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: 'front/production'
+  server.route([
+    {
+      method: 'GET',
+      path: '/',
+      handler: function (request, reply) {
+        reply.file('../front/production/index.html')
+      }
+    },
+    {
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'front/production'
+        }
       }
     }
-  }])
+  ])
 })
 
 module.exports = server
