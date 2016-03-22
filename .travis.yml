@@ -7,3 +7,4 @@ addons:
       - ubuntu-toolchain-r-test
 
 script: npm install && npm run build && npm run test
+after_success: npm run report-coverage
