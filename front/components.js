@@ -10,7 +10,6 @@ class Components extends React.Component {
         <LangButton />
         <NavButton />
         <LangDir />
-        <LangDir />
       </div>
     )
   }
