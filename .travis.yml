@@ -6,5 +6,9 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
 
-script: npm install && npm run build && npm run test
-after_success: npm run report-coverage
+before_install:
+  - npm install codecov
+before_script:
+  - npm run build
+after_success:
+  - npm run report-coverage
