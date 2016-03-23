@@ -1,5 +1,3 @@
-const Path = require('path')
-
 module.exports = {
   entry: {
     javascript: './front/app.js',
@@ -7,7 +5,7 @@ module.exports = {
   },
   output: {
     filename: 'app.js',
-    path: Path.join(__dirname, '/front/production')
+    path: __dirname.join('/front/production')
   },
   module: {
     loaders: [
