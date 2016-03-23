@@ -21,9 +21,23 @@ tape('wrong endpoint is error handled correctly', (t) => {
 })
 
 tape('wrong method is error handled correctly', (t) => {
-  server.inject({method: 'MET', url: '/'}, (res) => {
+  server.inject({method: 'NOTMETHOD', url: '/'}, (res) => {
     t.equal(res.statusCode, 404, 'Server endpoint is not found')
     t.equal(res.result.error, 'Not Found', 'Server endpoint is not found')
+    t.end()
+  })
+})
+
+tape('wrong method is error handled correctly', (t) => {
+  server.inject({method: 'GET', url: '/', simulate: {error: true}}, (res) => {
+    t.equal(res.result.error, undefined, 'Server endpoint is not found')
+    t.end()
+  })
+})
+
+tape('wrong method is error handled correctly', (t) => {
+  server.inject({method: 'GET', url: '/', simulate: {error: true}}, (res) => {
+    t.equal(res.result.error, undefined, 'Server endpoint is not found')
     t.end()
   })
 })
