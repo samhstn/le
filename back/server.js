@@ -16,10 +16,7 @@ const plugins = [
   Inert
 ]
 
-server.register(plugins, (err) => {
-  if (err) {
-    throw err
-  }
+server.register(plugins, () => {
   server.route([
     {
       method: 'GET',
