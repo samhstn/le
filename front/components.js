@@ -1,15 +1,12 @@
 import React from 'react'
-import NavButton from './navbutton.js'
-import LangButton from './langbutton.js'
-import LangDir from './langdir.js'
+import { Link } from 'react-router'
 
 class Components extends React.Component {
   render () {
     return (
       <div>
-        <LangButton />
-        <NavButton />
-        <LangDir />
+        <Link to={this.props.children} />
+        {this.props.children}
       </div>
     )
   }
