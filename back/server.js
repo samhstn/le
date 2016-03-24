@@ -23,11 +23,19 @@ server.register(plugins, (err) => {
   server.route([
     {
       method: 'GET',
-      path: '/{params*}',
+      path: '/',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../front/production/index.html')
-        console.log(path)
-        reply.file(path)
+        reply.file(Path.join(__dirname, '../front/production/index.html'))
+      }
+    },
+    {
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'front/production'
+        }
+
       }
     }
   ])
