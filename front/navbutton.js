@@ -2,7 +2,11 @@ import React from 'react'
 
 class NavButton extends React.Component {
   render () {
-    return <div style={styles}>{this.props.text}</div>
+    return (
+      <div style={styles}>
+        {this.props.text}
+      </div>
+    )
   }
 }
 

@@ -3,7 +3,12 @@ import React from 'react'
 class LangButton extends React.Component {
   render () {
     styles.backgroundColor = this.props.backgroundColor
-    return <div style={styles}>{this.props.text}</div>
+    console.log(this.props)
+    return (
+      <div style={styles}>
+        {this.props.text}
+      </div>
+    )
   }
 }
 
