@@ -16,9 +16,25 @@ I will be using this to learn from until this version is made
 
 ## What
 
-### Homepage
+The app will consist of different pages which revolve around the main learning environment page, pages are as follows:
+* Homepage - Choose: langdir, category, order, wordListLength, wordStartPoint, reset saved (all cookies), play learnenv
+* Admin page (only accessible to me), populate db, add word, add category (all saved to redis)
+* learnenv page
 
-All of these will be made separately in React
+What data I will be using:
+
+    {
+      langdir: [deen, ende, rand],
+      category: [all, nouns, verbs, adberbs, adjectives, conj, custom, ...],
+      order: [deAlphabetical, enAlphabetical, rand],
+      wordListLength: [number (x5)],
+      wordStartPoint: [number (x5)],
+      count: [number (x5)]
+    }
+
+## Pages:
+
+### Homepage
 
 The homepage will have help button, faded into a top corner which will explain each of the app buttons
 
@@ -56,6 +72,8 @@ There will be (a default) 5 divs on the left in the correct chosen language dire
 
 There will be an option to star a word for review, and will be logged for review in the homepage
 
+### Admin page
+
 ## How
 
 All of the words will be stored in a database which will be retrieved by redis, the 'review' words will be stored in a redis database, these can be reviewed and edited in the homepage.
@@ -71,55 +89,16 @@ README.md
 assets
 coverage
 back
-    redis.js
-    server.js
-    javascript
-        {
-            all other .js files
-        }
-    backTest
-        test.js
+  redis.js
+  server.js
+  js
+    all other .js files
+  backTest
+    test.js
 front
-    index.html
-    style.css
-    javascript
-        {
-            all other .js files
-        }
-    frontTest/
-        test.js
-
-## Rules
-
-Abandon learnenv on github and only use that for de learning and for reference when stuck on solving functions
-
-Order of progress steps:
-* Write out comment for what the function should do
-* Write test for that function
-* Make the test fail
-* Write a function which passes the test
-* Refactor the function
-
-Each front-end structure will be written out in a structures folder before moved into a separate folder and then into the code.
-
-Set up istanbul as soon as possible
-
-Learning options:
-whole, en to de, ordered
-whole, de to en, ordered
-whole, en to de, random
-whole, de to en, random
-start point and length, en to de, ordered
-start point and length, de to en, ordered
-start point and length, en to de, random
-start point and length, de to en, random
-whole, random lang direction, ordered
-whole, random lang direction, random
-start point and length, random lang direction, ordered
-start point and length, random lang direction, random
-
-Pages to wireframe in Balsamic:
-
-Homepage
-App summary in help page
-Each Help Page
+  index.html
+  style.css
+  js
+    all other .js files
+  frontTest/
+    test.js
