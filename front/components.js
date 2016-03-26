@@ -1,12 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router'
+import Nav from './components/navbutton.js'
 
 class Components extends React.Component {
   render () {
     return (
       <div>
-        <Link to={this.props.children} />
-        {this.props.children}
+        <Nav />
       </div>
     )
   }
