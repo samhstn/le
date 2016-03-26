@@ -1,11 +1,17 @@
 import React from 'react'
-import Nav from './components/navbutton.js'
+import Home from './components/home/index.js'
+import Admin from './components/admin/index.js'
+import Le from './components/le/index.js'
+import Settings from './components/settings/index.js'
 
 class Components extends React.Component {
   render () {
     return (
       <div>
-        <Nav />
+        <Home />
+        <Admin />
+        <Le />
+        <Settings />
       </div>
     )
   }
