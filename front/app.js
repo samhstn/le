@@ -1,10 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Components from './components.js'
+import React from 'react';
 
-const rootElement = document.getElementById('container')
+class App extends React.Component {
+  render() {
+    return(
+      <div>
+        <h1>App page</h1>
+      </div>
+    )
+  }
+}
 
-ReactDOM.render(
-  <Components />,
-  rootElement
-)
+export default App;

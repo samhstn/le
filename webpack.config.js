@@ -2,12 +2,13 @@ const Path = require('path')
 
 module.exports = {
   entry: {
-    javascript: './front/app.js',
+    javascript: './front/index.js',
     html: './front/index.html'
   },
   output: {
-    filename: 'app.js',
-    path: Path.join(__dirname, '/front/production')
+    path: __dirname,
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
