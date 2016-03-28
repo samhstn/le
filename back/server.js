@@ -8,6 +8,7 @@ const server = new Hapi.Server()
 const port = 4000
 
 server.connection({
+  routes: {cors: true},
   port: port
 })
 
@@ -23,22 +24,22 @@ server.register(plugins, (err) => {
   server.route([
     {
       method: 'GET',
-      path: '/',
+      path: '/{params*}',
       handler: (request, reply) => {
-        reply.file(Path.join(__dirname, '../front/production/index.html'))
+        const path = Path.join(__dirname, '../front/production/index.html');
+        console.log(path, 'HTML');
+        reply.file(path);
       }
     },
     {
       method: 'GET',
-      path: '/{param*}',
-      handler: {
-        directory: {
-          path: 'front/production'
-        }
-
+      path: '/index.js',
+      handler: (request, reply) => {
+        const path = Path.join(__dirname, '../front/production/index.js')
+        console.log(path, 'JS');
       }
     }
   ])
-})
+});
 
 module.exports = server
