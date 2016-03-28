@@ -1,11 +1,14 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import App from './app';
+import Home from './components/home/index';
+import Admin from './components/admin/index';
 
 export default (
-  <App />
+  <Route path="/" component={App}>
+    <IndexRoute component={Home} />
+    <Route path="admin" component={Admin} />
+  </Route>
 );
 
-
-
-// <Route path="/" component={App} />
+// this.props.params.id
