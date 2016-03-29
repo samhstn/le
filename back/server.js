@@ -30,7 +30,15 @@ server.register(plugins, (err) => {
     },
     {
       method: 'GET',
-      path: '/{param*}',
+      path: '/',
+      handler: (request, reply) => {
+        const path = Path.join(__dirname, '../index.html');
+        reply.file(path);
+      }
+    },
+    {
+      method: 'GET',
+      path: '/admin',
       handler: (request, reply) => {
         const path = Path.join(__dirname, '../index.html');
         reply.file(path);
