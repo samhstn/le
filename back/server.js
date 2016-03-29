@@ -1,8 +1,8 @@
 'use strict'
 // node modules
-const Hapi = require('hapi')
-const Inert = require('inert')
-const Path = require('path')
+const Hapi = require('hapi');
+const Inert = require('inert');
+const Path = require('path');
 // server config
 const server = new Hapi.Server()
 const port = 4000
@@ -13,9 +13,7 @@ server.connection({
 })
 
 // Hapi plugins
-const plugins = [
-  Inert
-]
+const plugins = Inert;
 
 server.register(plugins, (err) => {
   if (err) {
@@ -24,19 +22,18 @@ server.register(plugins, (err) => {
   server.route([
     {
       method: 'GET',
-      path: '/{params*}',
+      path: '/bundle.js',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../front/production/index.html');
-        console.log(path, 'HTML');
+        const path = Path.join(__dirname, '../bundle.js')
         reply.file(path);
       }
     },
     {
       method: 'GET',
-      path: '/index.js',
+      path: '/{param*}',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../front/production/index.js')
-        console.log(path, 'JS');
+        const path = Path.join(__dirname, '../index.html');
+        reply.file(path);
       }
     }
   ])
