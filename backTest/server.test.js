@@ -7,7 +7,7 @@ tape('Does server respond successfully with the index?', (t) => {
     t.equal(res.result.error, undefined, 'Server has no errors')
     t.ok(res.payload.match('<!DOCTYPE html>'), 'file starts with <!DOCTYPE html>')
     t.ok(res.payload.match('id="container"'), 'index contains the container id')
-    console.log(res.payload, 'PAYLOAD');
+    console.log(res, 'RES');
     t.ok(res.payload.match('<script src="./bundle.js">'), 'index is linking to bundle.js')
     t.end()
   })
