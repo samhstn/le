@@ -7,21 +7,36 @@ tape('Does server respond successfully with the index?', (t) => {
     t.equal(res.result.error, undefined, 'Server has no errors')
     t.ok(res.payload.match('<!DOCTYPE html>'), 'file starts with <!DOCTYPE html>')
     t.ok(res.payload.match('id="container"'), 'index contains the container id')
-    console.log(res, 'RES');
     t.ok(res.payload.match('<script src="./bundle.js">'), 'index is linking to bundle.js')
     t.end()
   })
 })
 
-tape('wrong endpoint is error handled correctly', (t) => {
-  server.inject({method: 'GET', url: '/notanendpoint'}, (res) => {
-    t.equal(res.statusCode, 404, 'Server endpoint is not found')
-    t.equal(res.result.error, 'Not Found', 'Server has no errors')
+tape('Admin endpoint replys correctly', (t) => {
+  server.inject({method: 'GET', url: '/admin'}, (res) => {
+    t.equal(res.statusCode, 200, 'Server endpoint is not found')
+    t.equal(res.result.error, undefined, 'Server has no errors')
     t.end()
   })
 })
 
-tape('wrong method is error handled correctly', (t) => {
+tape('Admin endpoint replys correctly', (t) => {
+  server.inject({method: 'GET', url: '/bundle.js'}, (res) => {
+    t.equal(res.statusCode, 200, 'Server endpoint is not found')
+    t.equal(res.result.error, undefined, 'Server has no errors')
+    t.end()
+  })
+})
+
+tape('Wrong endpoint is error handled correctly', (t) => {
+  server.inject({method: 'GET', url: '/notanendpoint'}, (res) => {
+    t.equal(res.statusCode, 404, 'Server endpoint is not found')
+    t.equal(res.result.error, 'Not Found', 'Server endpoint is not found')
+    t.end()
+  })
+})
+
+tape('Wrong method is error handled correctly', (t) => {
   server.inject({method: 'MET', url: '/'}, (res) => {
     t.equal(res.statusCode, 404, 'Server endpoint is not found')
     t.equal(res.result.error, 'Not Found', 'Server endpoint is not found')
