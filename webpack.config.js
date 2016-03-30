@@ -3,7 +3,7 @@ const Path = require('path');
 module.exports = {
   entry: {
     javascript: './front/index.js',
-    html: './front/index.html'
+    html: './front/public/index.html'
   },
   output: {
     path: Path.join(__dirname, 'production'),
