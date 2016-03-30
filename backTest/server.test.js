@@ -21,6 +21,14 @@ tape('Admin endpoint replys correctly', (t) => {
 })
 
 tape('Admin endpoint replys correctly', (t) => {
+  server.inject({method: 'GET', url: '/le'}, (res) => {
+    t.equal(res.statusCode, 200, 'Server endpoint is not found')
+    t.equal(res.result.error, undefined, 'Server has no errors')
+    t.end()
+  })
+})
+
+tape('Admin endpoint replys correctly', (t) => {
   server.inject({method: 'GET', url: '/bundle.js'}, (res) => {
     t.equal(res.statusCode, 200, 'Server endpoint is not found')
     t.equal(res.result.error, undefined, 'Server has no errors')

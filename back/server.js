@@ -40,6 +40,14 @@ server.register(plugins, () => {
         const path = Path.join(__dirname, '../index.html');
         reply.file(path);
       }
+    },
+    {
+      method: 'GET',
+      path: '/le',
+      handler: (request, reply) => {
+        const path = Path.join(__dirname, '../index.html');
+        reply.file(path);
+      }
     }
   ])
 });
