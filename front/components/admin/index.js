@@ -6,6 +6,7 @@ class Admin extends React.Component {
   render() {
     return(
       <div>
+        <h1>Hello Admin</h1>
         <Link to="/" style={styles}><NavButton /></Link>
       </div>
     );

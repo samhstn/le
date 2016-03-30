@@ -6,6 +6,7 @@ class LearnEnv extends React.Component {
   render() {
     return (
       <div>
+        <h1>Hello LearnEnv</h1>
         <Link to="/" style={styles}><LangButton text="hello" backgroundColor="red" /></Link>
       </div>
     );
