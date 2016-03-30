@@ -8,9 +8,9 @@ class Home extends React.Component {
   render() {
     return(
       <div>
-        <h1>Home Page</h1>
-        <h1>Select a language direction</h1>
-        <Link to="/le" style={styles} className="grid.css"><LangDirButton text="DE -> EN" /></Link>
+        <h1 style={{textAlign: 'center'}}>Home Page</h1>
+        <h2 style={{textAlign: 'center'}}>Select a language direction</h2>
+        <Link to="/le" style={styles}><LangDirButton text="DE -> EN" /></Link>
         <Link to="/le" style={styles}><LangDirButton text="EN -> DE" /></Link>
         <Link to="/admin" style={styles}><Navbutton text="Admin" /></Link>
       </div>
@@ -19,8 +19,9 @@ class Home extends React.Component {
 }
 
 const styles = {
-  textDecoration: "none",
-  color: "black"
+  textDecoration: 'none',
+  color: 'black',
+  display: 'inlineBlock',
 };
 
 export default Home;
