@@ -1,0 +1,24 @@
+* {
+  font-family: sans-serif;
+}
+
+.langdir {
+  font-family: monospace;
+  font-size: 24px;
+  background-color: green;
+  width: 30%;
+  height: 100%;
+  padding: 3%;
+  margin-right: 5%;
+  float: left;
+  border-radius: 20%;
+}
+
+.langdirbuts {
+    text-align: center;
+    height: 6vh;
+    width: 100%;
+    margin-top: 6%;
+    position: relative;
+    margin-left: 10%;
+}

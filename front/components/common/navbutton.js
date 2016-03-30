@@ -2,6 +2,8 @@ import React from 'react';
 
 class NavButton extends React.Component {
   render () {
+    styles.top = this.props.top;
+    styles.left = this.props.left;
     return (
       <div style={styles}>
         {this.props.text}
@@ -11,11 +13,14 @@ class NavButton extends React.Component {
 }
 
 NavButton.propTypes = {
-  text: React.PropTypes.string
+  text: React.PropTypes.string,
+  top: React.PropTypes.string
 };
 
 NavButton.defaultProps = {
-  text: 'Home'
+  text: 'Home',
+  top: 'inherit',
+  left: 'inherit'
 };
 
 const styles = {

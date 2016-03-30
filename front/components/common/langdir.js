@@ -21,7 +21,7 @@ const styles = {
   fontFamily: 'monospace',
   fontSize: '24px',
   backgroundColor: 'green',
-  width: '30%',
+  width: '90%',
   height: '6vh',
   padding: '3%',
   borderRadius: '20%',
