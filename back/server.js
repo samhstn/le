@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 // node modules
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Path = require('path');
 // server config
-const server = new Hapi.Server()
-const port = 4000
+const server = new Hapi.Server();
+const port = 4000;
 
 server.connection({
   routes: {cors: true},
   port: port
-})
+});
 
 // Hapi plugins
 const plugins = Inert;
@@ -21,7 +21,7 @@ server.register(plugins, () => {
       method: 'GET',
       path: '/bundle.js',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/bundle.js')
+        const path = Path.join(__dirname, '../production/bundle.js');
         reply.file(path);
       }
     },
@@ -49,7 +49,7 @@ server.register(plugins, () => {
         reply.file(path);
       }
     }
-  ])
+  ]);
 });
 
-module.exports = server
+module.exports = server;

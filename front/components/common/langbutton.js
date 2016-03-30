@@ -20,7 +20,7 @@ LangButton.propTypes = {
 LangButton.defaultProps = {
   backgroundColor: 'red',
   text: 'hello'
-};
+}
 
 const styles = {
   fontSize: '5vmin',
