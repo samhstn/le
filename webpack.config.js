@@ -6,7 +6,7 @@ module.exports = {
     html: './front/index.html'
   },
   output: {
-    path: __dirname,
+    path: Path.join(__dirname, 'production'),
     publicPath: '/',
     filename: 'bundle.js'
   },
