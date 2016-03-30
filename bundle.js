@@ -25123,7 +25123,7 @@
 	};
 
 	LangDirButton.defaultProps = {
-	  text: 'DE -> EN'
+	  text: 'RANDOM'
 	};
 
 	var styles = {

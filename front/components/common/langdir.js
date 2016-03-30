@@ -11,7 +11,7 @@ LangDirButton.propTypes = {
 }
 
 LangDirButton.defaultProps = {
-  text: 'DE -> EN'
+  text: 'RANDOM'
 }
 
 const styles = {
