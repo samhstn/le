@@ -22,7 +22,9 @@ const styles = {
   width: '30%',
   height: '6vh',
   padding: '3%',
-  borderRadius: '20%'
+  borderRadius: '20%',
+  float: 'left',
+  display: 'inline'
 }
 
 export default LangDirButton
