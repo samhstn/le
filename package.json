@@ -16,16 +16,21 @@
     "start": "nodemon back/index.js",
     "build": "webpack --progress",
     "watch": "webpack --progress --watch",
-    "dev": "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --hot --inline",
+    "back-lint": "eslint back/*.js && eslint back/*.js",
+    "back-quality-test": "npm run test && npm run back-lint"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
+    "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.3",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "codecov.io": "^0.1.6",
     "css-loader": "^0.23.1",
+    "eslint": "^2.5.3",
+    "eslint-plugin-react": "^4.2.3",
     "file-loader": "^0.8.5",
     "fs-extra": "^0.26.5",
     "hapi": "^13.2.1",
