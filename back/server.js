@@ -48,6 +48,14 @@ server.register(plugins, () => {
         const path = Path.join(__dirname, '../production/index.html');
         reply.file(path);
       }
+    },
+    {
+      method: 'GET',
+      path: '/settings',
+      handler: (request, reply) => {
+        const path = Path.join(__dirname, '../production/index.html');
+        reply.file(path);
+      }
     }
   ]);
 });
