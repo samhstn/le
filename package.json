@@ -17,8 +17,8 @@
     "build": "webpack --progress",
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
-    "back-lint": "eslint back/*.js && eslint back/*.js",
-    "back-quality-test": "npm run test && npm run back-lint"
+    "lint": "eslint back*/*.js && eslint front/*.js && eslint front/**/*.js",
+    "quality-test": "npm run test && npm run lint"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

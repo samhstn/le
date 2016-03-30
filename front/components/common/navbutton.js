@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 class NavButton extends React.Component {
   render () {
@@ -6,17 +6,17 @@ class NavButton extends React.Component {
       <div style={styles}>
         {this.props.text}
       </div>
-    )
+    );
   }
 }
 
 NavButton.propTypes = {
   text: React.PropTypes.string
-}
+};
 
 NavButton.defaultProps = {
   text: 'Home'
-}
+};
 
 const styles = {
   fontSize: '36px',
@@ -28,6 +28,6 @@ const styles = {
   textAlign: 'center',
   position: 'absolute',
   borderRadius: '50%'
-}
+};
 
-export default NavButton
+export default NavButton;

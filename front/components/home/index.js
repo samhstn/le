@@ -14,14 +14,14 @@ class Home extends React.Component {
         <Link to="/le" style={styles}><LangDirButton text="EN -> DE" /></Link>
         <Link to="/admin" style={styles}><Navbutton text="Admin" /></Link>
       </div>
-    )
+    );
   }
 }
 
 const styles = {
   textDecoration: 'none',
   color: 'black',
-  display: 'inlineBlock',
+  display: 'inlineBlock'
 };
 
 export default Home;
