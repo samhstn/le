@@ -8,19 +8,19 @@ class LangButton extends React.Component {
       <div style={styles}>
         {this.props.text}
       </div>
-    )
+    );
   }
 }
 
 LangButton.propTypes = {
   backgroundColor: React.PropTypes.string,
   text: React.PropTypes.string
-}
+};
 
 LangButton.defaultProps = {
   backgroundColor: 'red',
   text: 'hello'
-}
+};
 
 const styles = {
   fontSize: '5vmin',
@@ -29,7 +29,8 @@ const styles = {
   width: '48%',
   height: '12%',
   borderRadius: '5%',
-  paddingTop: '2%'
+  paddingTop: '2%',
+  textDecoration: 'none'
 }
 
 export default LangButton
