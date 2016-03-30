@@ -21,7 +21,7 @@ server.register(plugins, () => {
       method: 'GET',
       path: '/bundle.js',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../bundle.js')
+        const path = Path.join(__dirname, '../production/bundle.js')
         reply.file(path);
       }
     },
@@ -29,7 +29,7 @@ server.register(plugins, () => {
       method: 'GET',
       path: '/',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../index.html');
+        const path = Path.join(__dirname, '../production/index.html');
         reply.file(path);
       }
     },
@@ -37,7 +37,7 @@ server.register(plugins, () => {
       method: 'GET',
       path: '/admin',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../index.html');
+        const path = Path.join(__dirname, '../production/index.html');
         reply.file(path);
       }
     },
@@ -45,7 +45,7 @@ server.register(plugins, () => {
       method: 'GET',
       path: '/le',
       handler: (request, reply) => {
-        const path = Path.join(__dirname, '../index.html');
+        const path = Path.join(__dirname, '../production/index.html');
         reply.file(path);
       }
     }
