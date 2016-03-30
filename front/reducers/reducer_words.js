@@ -5,5 +5,5 @@ export default function() {
     {word: 'three'},
     {word: 'four'},
     {word: 'five'}
-  ]
+  ];
 }
