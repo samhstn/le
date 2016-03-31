@@ -14,7 +14,8 @@ class NavButton extends React.Component {
 
 NavButton.propTypes = {
   text: React.PropTypes.string,
-  top: React.PropTypes.string
+  top: React.PropTypes.string,
+  left: React.PropTypes.string
 };
 
 NavButton.defaultProps = {

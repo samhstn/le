@@ -19,7 +19,7 @@ class LearnEnv extends React.Component {
                 onClick={() => this.props.selectWord(word)}>{word.left}
               </li>
             );
-          })};
+          })}
         </ul>
         <ul className="rightInput">
           {this.props.words.slice(0,5).map((word) => {
@@ -45,6 +45,16 @@ class LearnEnv extends React.Component {
     );
   }
 }
+
+LearnEnv.propTypes = {
+  words: React.PropTypes.array,
+  selectWord: React.PropTypes.func
+};
+
+LearnEnv.defaultProps = {
+  words: [],
+  selectWord: () => {}
+};
 
 const styles = {
   textDecoration: "none",
