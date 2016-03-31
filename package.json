@@ -17,7 +17,7 @@
     "build": "webpack --progress",
     "watch": "webpack --progress --watch",
     "dev": "webpack-dev-server --hot --inline",
-    "lint": "eslint back*/*.js && eslint front/*.js && eslint front/**/*.js",
+    "lint": "eslint back*/*.js && eslint front/*.js && eslint front/**/*.js && eslint front/**/**/*.js",
     "quality-test": "npm run test && npm run lint"
   },
   "devDependencies": {
