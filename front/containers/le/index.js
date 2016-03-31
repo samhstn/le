@@ -4,16 +4,35 @@ import LangButton from '../../components/common/langbutton';
 import { connect } from 'react-redux';
 import { selectWord } from '../../actions/index';
 import { bindActionCreators } from 'redux';
+require('../../public/style.css');
 
 class LearnEnv extends React.Component {
   renderList(){
-    return this.props.words.slice(0,5).map((word) => {
-      return (
-        <li
-        key={word.word}
-        onClick={() => this.props.selectWord(word)}>{word.word}
-        </li>)
-    });
+    return (
+      <div>
+        <ul className="leftInput">
+          {this.props.words.slice(0,5).map((word) => {
+            return (
+              <li
+                key={word.left}
+                className="left"
+                onClick={() => this.props.selectWord(word)}>{word.left}
+              </li>
+            );
+          })};
+        </ul>
+        <ul className="rightInput">
+          {this.props.words.slice(0,5).map((word) => {
+            return (
+              <li
+                key={word.left}
+                className="right">{word.right}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
   }
 
   render() {
@@ -21,9 +40,7 @@ class LearnEnv extends React.Component {
       <div>
         <h1>Hello LearnEnv</h1>
         <Link to="/" style={styles}><LangButton text="hello" backgroundColor="red" /></Link>
-        <ul>
-          {this.renderList()}
-        </ul>
+        {this.renderList()}
       </div>
     );
   }
