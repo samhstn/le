@@ -7,7 +7,7 @@ arr.slice(0,5).map((word) => {
   document.getElementsByClassName('leftInput')[0].appendChild(leftNode);
   var rightNode = document.createElement('li');
   rightNode.classList.add('right');
-  rightNode.classList.add(''+word.index);
+  rightNode.classList.add('' + word.index);
   rightNode.innerHTML = word.right;
   rightNode.style.visibility = 'hidden';
   document.getElementsByClassName('rightInput')[0].appendChild(rightNode);
