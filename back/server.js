@@ -10,50 +10,24 @@ server.connection({
   port: port
 })
 
-const plugins = Inert
-
-server.register(plugins, () => {
-  server.route([
-    {
-      method: 'GET',
-      path: '/bundle.js',
-      handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/bundle.js')
-        reply.file(path)
-      }
-    },
-    {
-      method: 'GET',
-      path: '/',
-      handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/index.html')
-        reply.file(path)
-      }
-    },
-    {
-      method: 'GET',
-      path: '/admin',
-      handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/index.html')
-        reply.file(path)
-      }
-    },
-    {
-      method: 'GET',
-      path: '/le',
-      handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/index.html')
-        reply.file(path)
-      }
-    },
-    {
-      method: 'GET',
-      path: '/settings',
-      handler: (request, reply) => {
-        const path = Path.join(__dirname, '../production/index.html')
-        reply.file(path)
-      }
+const returnRoots = (method, urlpath, replyPath) => {
+  return {
+    method: method,
+    path: urlpath,
+    handler: (request, reply) => {
+      const path = Path.join(__dirname, replyPath)
+      reply.file(path)
     }
+  }
+}
+
+server.register(Inert, () => {
+  server.route([
+    returnRoots('GET', '/bundle.js', '../production/bundle.js'),
+    returnRoots('GET', '/', '../production/index.html'),
+    returnRoots('GET', '/admin', '../production/index.html'),
+    returnRoots('GET', '/le', '../production/index.html'),
+    returnRoots('GET', '/settings', '../production/index.html')
   ])
 })
 
