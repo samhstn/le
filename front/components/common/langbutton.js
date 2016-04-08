@@ -1,25 +1,25 @@
-import React from 'react';
+import React from 'react'
 
 class LangButton extends React.Component {
   render () {
-    styles.backgroundColor = this.props.backgroundColor;
+    styles.backgroundColor = this.props.backgroundColor
     return (
       <div style={styles}>
         {this.props.text}
       </div>
-    );
+    )
   }
 }
 
 LangButton.propTypes = {
   backgroundColor: React.PropTypes.string,
   text: React.PropTypes.string
-};
+}
 
 LangButton.defaultProps = {
   backgroundColor: 'red',
   text: 'hello'
-};
+}
 
 const styles = {
   fontSize: '5vmin',
@@ -30,6 +30,6 @@ const styles = {
   borderRadius: '5%',
   paddingTop: '2%',
   textDecoration: 'none'
-};
+}
 
-export default LangButton;
+export default LangButton

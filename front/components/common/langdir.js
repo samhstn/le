@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
 class LangDirButton extends React.Component {
   render () {
     return (
       <div style={styles}>{this.props.text}</div>
-    );
+    )
   }
 }
 
 LangDirButton.propTypes = {
   text: React.PropTypes.string
-};
+}
 
 LangDirButton.defaultProps = {
   text: 'RANDOM'
-};
+}
 
 const styles = {
   textAlign: 'center',
@@ -27,6 +27,6 @@ const styles = {
   borderRadius: '20%',
   float: 'left',
   display: 'inline'
-};
+}
 
-export default LangDirButton;
+export default LangDirButton
