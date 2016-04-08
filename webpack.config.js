@@ -1,4 +1,4 @@
-const Path = require('path');
+const Path = require('path')
 
 module.exports = {
   entry: {
@@ -27,4 +27,4 @@ module.exports = {
       }
     ]
   }
-};
+}

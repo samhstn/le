@@ -1,3 +1,3 @@
-export function selectWord(word){
-  console.log('A word has been selected: ' + word.left);
+export function selectWord (word) {
+  console.log('A word has been selected: ' + word.left)
 }

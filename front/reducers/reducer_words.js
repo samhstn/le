@@ -1,4 +1,4 @@
-export default function() {
+export default function () {
   return [
     {left: 'oneLeft', right: 'oneRight'},
     {left: 'twoLeft', right: 'twoRight'},
@@ -10,5 +10,5 @@ export default function() {
     {left: 'eightLeft', right: 'eightRight'},
     {left: 'nineLeft', right: 'nineRight'},
     {left: 'tenLeft', right: 'tenRight'}
-  ];
+  ]
 }

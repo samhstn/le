@@ -1,8 +1,8 @@
-const server = require('./server.js');
+const server = require('./server.js')
 
 server.start((err) => {
   if (err) {
-    throw err;
+    throw err
   }
-  console.log('Server running at:', server.info.uri);
-});
+  console.log('Server running at:', server.info.uri)
+})

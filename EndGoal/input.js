@@ -9,4 +9,4 @@ var arr = [
   {left: 'eightLeft', right: 'eightRight'},
   {left: 'nineLeft', right: 'nineRight'},
   {left: 'tenLeft', right: 'tenRight'}
-];
+]
