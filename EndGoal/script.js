@@ -1,3 +1,11 @@
+var numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+var arr = numbers.map((n) => {
+  var obj = {}
+  obj.left = n + 'Left'
+  obj.right = n + 'Right'
+  return obj
+})
+
 arr.slice(0, 5).map((word) => {
   word.index = arr.indexOf(word)
   var leftNode = document.createElement('li')
