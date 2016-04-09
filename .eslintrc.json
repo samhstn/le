@@ -43,7 +43,6 @@
     "use-isnan": "error",
     "valid-typeof": "error",
 
-    "array-callback-return": "error",
     "complexity": ["error", { "maximum": 5 }],
     "curly": ["error", "multi-line", "consistent"],
     "dot-location": ["error", "property"],
