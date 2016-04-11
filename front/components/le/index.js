@@ -1,16 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router'
-import LangButton from '../../components/common/langbutton'
 import {connect} from 'react-redux'
 import {selectWord} from '../../actions/index'
 import {bindActionCreators} from 'redux'
 require('../../public/style.css')
 
-class LearnEnv extends React.Component {
-  handleClick (word) {
-    this.props.selectWord(word)
-  }
+import LangButton from '../common/langbutton'
 
+class LearnEnv extends React.Component {
   renderList () {
     return (
       <div>
@@ -20,7 +17,7 @@ class LearnEnv extends React.Component {
               <li
                 key={word.left}
                 className='left'
-                onClick={this.handleClick(word)}
+                onClick={() => {this.props.selectWord(word)}}
               >{word.left}</li>
             )
           })}

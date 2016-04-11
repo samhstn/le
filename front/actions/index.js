@@ -1,3 +1,6 @@
 export function selectWord (word) {
-  console.log('A word has been selected: ' + word.left)
+  return {
+    type: 'WORD_SELECTED',
+    payload: word
+  }
 }
