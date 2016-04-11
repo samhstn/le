@@ -6,32 +6,15 @@ import {bindActionCreators} from 'redux'
 require('../../public/style.css')
 
 import LangButton from '../common/langbutton'
+import LeftList from '../../containers/leftList'
+import RightList from '../../containers/rightList'
 
 class LearnEnv extends React.Component {
   renderList () {
     return (
       <div>
-        <ul className='leftInput'>
-          {this.props.words.slice(0, 5).map((word) => {
-            return (
-              <li
-                key={word.left}
-                className='left'
-                onClick={() => {this.props.selectWord(word)}}
-              >{word.left}</li>
-            )
-          })}
-        </ul>
-        <ul className='rightInput'>
-          {this.props.words.slice(0, 5).map((word) => {
-            return (
-              <li
-                key={word.left}
-                className='right'
-              >{word.right}</li>
-            )
-          })}
-        </ul>
+        <LeftList />
+        <RightList />
       </div>
     )
   }
