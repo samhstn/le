@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
-export default class LeftList extends Component {
+export default class RightList extends Component {
   render () {
     return (
       <ul className='rightInput'>
@@ -15,5 +16,12 @@ export default class LeftList extends Component {
       </ul>
     )
   }
-
 }
+
+function mapStateToProps (state) {
+  return {
+    words: state.words
+  }
+}
+
+export default connect(mapStateToProps)(RightList)
