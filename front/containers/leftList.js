@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import selectWord from '../actions/index'
 
 export default class LeftList extends Component {
   render () {
@@ -16,5 +19,16 @@ export default class LeftList extends Component {
       </ul>
     )
   }
-
 }
+
+function mapStateToProps (state) {
+  return {
+    words: state.words
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({selectWord: selectWord}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftList)
