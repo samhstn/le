@@ -1,5 +1,5 @@
 const tape = require('tape')
-const server = require('../back/server.js')
+const server = require('../transpiledForTesting/server.js')
 
 const endpointHelper = (message, method, url, statusCode) => {
   return (
