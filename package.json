@@ -10,7 +10,7 @@
     "url": "git://github.com/username/repository.git"
   },
   "scripts": {
-    "test": "tape ./backTest/test.js",
+    "test": "babel back -d transpiledForTesting --presets es2015,stage-1 && tape ./backTest/test.js",
     "coverage": "node ./node_modules/.bin/istanbul cover backTest/test.js",
     "report": "cat ./coverage/lcov.info | codecov",
     "start": "nodemon back/index.js --exec babel-node --presets es2015,stage-1",
