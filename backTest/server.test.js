@@ -1,7 +1,7 @@
 const tape = require('tape')
 const server = require('../back/server.js')
 
-const helperFunction = (message, method, url, statusCode) => {
+const endpointHelper = (message, method, url, statusCode) => {
   return (
     tape(message, (t) => {
       server.inject({method: method, url: url}, (res) => {
@@ -29,9 +29,9 @@ tape('Does server respond successfully with the index?', (t) => {
   })
 })
 
-helperFunction('Admin endpoint replys correctly', 'GET', '/admin', 200)
-helperFunction('Le endpoint replys correctly', 'GET', '/le', 200)
-helperFunction('Settings endpoint replys correctly', 'GET', '/settings', 200)
-helperFunction('bundle.js endpoint replys the javascript file correctly', 'GET', '/settings', 200)
-helperFunction('Wrong endpoint is error handled correctly', 'GET', '/notanendpoint', 404)
-helperFunction('Wrong method is error handled correctly', 'MET', '/', 404)
+endpointHelper('Admin endpoint replys correctly', 'GET', '/admin', 200)
+endpointHelper('Le endpoint replys correctly', 'GET', '/le', 200)
+endpointHelper('Settings endpoint replys correctly', 'GET', '/settings', 200)
+endpointHelper('bundle.js endpoint replys the javascript file correctly', 'GET', '/settings', 200)
+endpointHelper('Wrong endpoint is error handled correctly', 'GET', '/notanendpoint', 404)
+endpointHelper('Wrong method is error handled correctly', 'MET', '/', 404)

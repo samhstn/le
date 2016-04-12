@@ -1,6 +1,6 @@
-const Hapi = require('hapi')
-const Inert = require('inert')
-const Path = require('path')
+import Hapi from 'hapi'
+import Inert from 'inert'
+import routeHandler from './routeHandler'
 
 const server = new Hapi.Server()
 const port = 4000
@@ -10,24 +10,13 @@ server.connection({
   port: port
 })
 
-const returnRoots = (method, urlpath, replyPath) => {
-  return {
-    method: method,
-    path: urlpath,
-    handler: (request, reply) => {
-      const path = Path.join(__dirname, replyPath)
-      reply.file(path)
-    }
-  }
-}
-
 server.register(Inert, () => {
   server.route([
-    returnRoots('GET', '/bundle.js', '../production/bundle.js'),
-    returnRoots('GET', '/', '../production/index.html'),
-    returnRoots('GET', '/admin', '../production/index.html'),
-    returnRoots('GET', '/le', '../production/index.html'),
-    returnRoots('GET', '/settings', '../production/index.html')
+    routeHandler('GET', '/bundle.js', '../production/bundle.js'),
+    routeHandler('GET', '/', '../production/index.html'),
+    routeHandler('GET', '/admin', '../production/index.html'),
+    routeHandler('GET', '/le', '../production/index.html'),
+    routeHandler('GET', '/settings', '../production/index.html')
   ])
 })
 
