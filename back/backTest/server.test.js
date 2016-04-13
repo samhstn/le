@@ -3,8 +3,6 @@ import server from '../server.js'
 
 import endpointHelper from './endpointHelper.js'
 
-console.log(endpointHelper[Function], '<---')
-
 tape('Does server respond successfully with the index?', (t) => {
   server.inject({method: 'GET', url: '/'}, (res) => {
     t.equal(res.statusCode, 200, 'Server responds with statusCode: 200')
