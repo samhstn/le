@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
-class LangButton extends React.Component {
+export default class LangButton extends Component {
   render () {
     styles.backgroundColor = this.props.backgroundColor
     return (
@@ -12,8 +12,8 @@ class LangButton extends React.Component {
 }
 
 LangButton.propTypes = {
-  backgroundColor: React.PropTypes.string,
-  text: React.PropTypes.string
+  backgroundColor: PropTypes.string,
+  text: PropTypes.string
 }
 
 LangButton.defaultProps = {
@@ -31,5 +31,3 @@ const styles = {
   paddingTop: '2%',
   textDecoration: 'none'
 }
-
-export default LangButton

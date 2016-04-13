@@ -1,8 +1,8 @@
-import React from 'react'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import LangButton from '../common/langbutton'
 
-class Settings extends React.Component {
+export default class Settings extends Component {
   render () {
     return (
       <div>
@@ -17,5 +17,3 @@ const styles = {
   textDecoration: 'none',
   color: 'black'
 }
-
-export default Settings

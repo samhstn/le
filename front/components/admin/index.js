@@ -1,8 +1,8 @@
-import React from 'react'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import NavButton from '../common/navbutton'
 
-class Admin extends React.Component {
+export default class Admin extends Component {
   render () {
     return (
       <div>
@@ -17,5 +17,3 @@ const styles = {
   color: 'black',
   textDecoration: 'none'
 }
-
-export default Admin

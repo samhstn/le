@@ -1,16 +1,16 @@
-import React from 'react'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 require('../../public/style.css')
 
-import LangButton from '../common/langbutton'
+import NavButton from '../common/navbutton'
 import List from '../../containers/List'
 
-export default class LearnEnv extends React.Component {
+export default class LearnEnv extends Component {
   render () {
     return (
       <div>
         <h1>Hello LearnEnv</h1>
-        <Link to='/' style={styles}><LangButton text='hello' backgroundColor='red' /></Link>
+        <Link to='/' style={styles}><NavButton text='Home' top='50%' left='10%' /></Link>
         <List />
       </div>
     )

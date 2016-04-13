@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {selectWord} from '../actions/index'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { selectWord } from '../actions/index'
 
-export default class LeftList extends Component {
+class List extends Component {
   render () {
     return (
       <div>
@@ -46,4 +46,4 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({selectWord}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftList)
+export default connect(mapStateToProps, mapDispatchToProps)(List)
