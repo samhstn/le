@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class App extends React.Component {
+export default class App extends Component {
   render () {
     return (
       <div>
@@ -13,5 +13,3 @@ class App extends React.Component {
 App.propTypes = {
   children: React.PropTypes.node
 }
-
-export default App

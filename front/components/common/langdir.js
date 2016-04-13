@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class LangDirButton extends React.Component {
+export default class LangDirButton extends Component {
   render () {
     return (
       <div style={styles}>{this.props.text}</div>
@@ -9,11 +9,7 @@ class LangDirButton extends React.Component {
 }
 
 LangDirButton.propTypes = {
-  text: React.PropTypes.string
-}
-
-LangDirButton.defaultProps = {
-  text: 'RANDOM'
+  text: React.PropTypes.string.isRequired
 }
 
 const styles = {
@@ -28,5 +24,3 @@ const styles = {
   float: 'left',
   display: 'inline'
 }
-
-export default LangDirButton

@@ -1,10 +1,11 @@
-import React from 'react'
-import LangDirButton from '../common/langdir'
-import Navbutton from '../common/navbutton'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 require('../../public/style.css')
 
-class Home extends React.Component {
+import LangDirButton from '../common/langdir'
+import NavButton from '../common/navbutton'
+
+export default class Home extends Component {
   render () {
     return (
       <div>
@@ -14,8 +15,8 @@ class Home extends React.Component {
           <Link to='/le' style={styles} className='langdir'><LangDirButton text='DE -> EN' /></Link>
           <Link to='/le' style={styles} className='langdir'><LangDirButton text='EN -> DE' /></Link>
         </div>
-        <Link to='/admin' style={styles}><Navbutton text='Admin' top='50%' left='10%' /></Link>
-        <Link to='/settings' style={styles}><Navbutton text='Settings' top='50%' left='40%' /></Link>
+        <Link to='/admin' style={styles}><NavButton text='Admin' top='50%' left='10%' /></Link>
+        <Link to='/settings' style={styles}><NavButton text='Settings' top='50%' left='40%' /></Link>
       </div>
     )
   }
@@ -26,5 +27,3 @@ const styles = {
   color: 'black',
   display: 'inlineBlock'
 }
-
-export default Home

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
-class NavButton extends React.Component {
+export default class NavButton extends Component {
   render () {
     styles.top = this.props.top
     styles.left = this.props.left
@@ -13,9 +13,9 @@ class NavButton extends React.Component {
 }
 
 NavButton.propTypes = {
-  text: React.PropTypes.string,
-  top: React.PropTypes.string,
-  left: React.PropTypes.string
+  text: PropTypes.string,
+  top: PropTypes.string,
+  left: PropTypes.string
 }
 
 NavButton.defaultProps = {
@@ -35,5 +35,3 @@ const styles = {
   position: 'absolute',
   borderRadius: '50%'
 }
-
-export default NavButton
