@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import selectWord from '../actions/index'
+import {selectWord} from '../actions/index'
 
 export default class LeftList extends Component {
   render () {
@@ -13,17 +13,19 @@ export default class LeftList extends Component {
             <li
               key={i}
               className='left'
-              onClick={() => {this.props.selectWord(word)}}
+              onClick={() => {this.props.selectWord(i)}}
             >{word.left}</li>
           )
         })}
         </ul>
         <ul className='rightInput'>
           {this.props.words.slice(0, 5).map((word, i) => {
+            const visibility = !this.props.showing[i] ? 'hidden' : 'visible'
             return (
               <li
                 key={i}
                 className='right'
+                style={{visibility: visibility}}
               >{word.left}</li>
             )
           })}
@@ -35,12 +37,13 @@ export default class LeftList extends Component {
 
 function mapStateToProps (state) {
   return {
-    words: state.words
+    words: state.words,
+    showing: state.showing
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({selectWord: selectWord}, dispatch)
+  return bindActionCreators({selectWord}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftList)

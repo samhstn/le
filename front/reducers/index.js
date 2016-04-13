@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
-import WordsReducer from './reducer_words'
-import WordsHide from './reducer_hide'
+import WordsReducer from './wordsReducer.js'
+import ShowingReducer from './showingReducer.js'
 
 const rootReducer = combineReducers({
   words: WordsReducer,
-  wordsHide: WordsHide
+  showing: ShowingReducer
 })
 
 export default rootReducer
