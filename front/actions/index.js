@@ -1,6 +1,6 @@
-export function selectWord (word) {
+export function selectWord (i) {
   return {
     type: 'WORD_SELECTED',
-    payload: word
+    payload: i
   }
 }

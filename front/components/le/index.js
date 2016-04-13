@@ -3,8 +3,7 @@ import {Link} from 'react-router'
 require('../../public/style.css')
 
 import LangButton from '../common/langbutton'
-import LeftList from '../../containers/leftList'
-import RightList from '../../containers/rightList'
+import List from '../../containers/List'
 
 export default class LearnEnv extends React.Component {
   render () {
@@ -12,8 +11,7 @@ export default class LearnEnv extends React.Component {
       <div>
         <h1>Hello LearnEnv</h1>
         <Link to='/' style={styles}><LangButton text='hello' backgroundColor='red' /></Link>
-        <LeftList />
-        <RightList />
+        <List />
       </div>
     )
   }
