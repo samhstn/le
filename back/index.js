@@ -1,4 +1,4 @@
-const server = require('./server.js')
+import server from './server.js'
 
 server.start(err => {
   if (err) {

@@ -10,8 +10,8 @@
     "url": "git://github.com/username/repository.git"
   },
   "scripts": {
-    "test": "babel back -d transpiledForTesting --presets es2015,stage-1 && tape ./backTest/test.js",
-    "coverage": "node ./node_modules/.bin/istanbul cover backTest/test.js",
+    "test": "babel back -d backTranspiled --presets es2015,stage-1 && tape ./backTranspiled/backTest/index.js",
+    "coverage": "node ./node_modules/.bin/istanbul cover ./backTranspiled/backTest/index.js",
     "report": "cat ./coverage/lcov.info | codecov",
     "start": "nodemon back/index.js --exec babel-node --presets es2015,stage-1",
     "build": "webpack --progress",
