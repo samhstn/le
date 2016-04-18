@@ -5,6 +5,10 @@
 
 # Learning environment
 
+To start the app run:
+
+`git clone https://github.com/shouston3/le.git && cd le && npm start`
+
 ## Why
 
 I would like to create a language learning environment as I would like to learn German.
