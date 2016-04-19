@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 require('../../public/style.css')
 
 import NavButton from '../common/navbutton'
-import List from '../../containers/List'
+import List from './List.js'
 
 export default class LearnEnv extends Component {
   render () {
