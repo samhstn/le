@@ -1,10 +1,7 @@
-export default function (state = [0, 0, 0, 0, 0], action) {
+export default function (state = [false, false, false, false, false], action) {
   switch (action.type) {
   case 'WORD_SELECTED':
-    return (state.slice(0, action.payload)
-                 .concat((state[action.payload] + 1) % 2)
-                 .concat(state.slice(action.payload + 1, state.length))
-    )
+    return state.map((n, i) => i === action.payload ? !n : n)
   default:
     return state
   }
