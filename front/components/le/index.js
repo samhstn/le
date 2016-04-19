@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+
 require('../../public/style.css')
 
-import NavButton from '../common/navbutton'
+import NavButtons from '../../containers/navbuttons.js'
 import List from './List.js'
 
 export default class LearnEnv extends Component {
@@ -10,14 +10,9 @@ export default class LearnEnv extends Component {
     return (
       <div>
         <h1>Hello LearnEnv</h1>
-        <Link to='/' style={styles}><NavButton text='Home' top='50%' left='10%' /></Link>
+        <NavButtons />
         <List />
       </div>
     )
   }
-}
-
-const styles = {
-  textDecoration: 'none',
-  color: 'black'
 }

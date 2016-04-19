@@ -5,7 +5,7 @@ export default class NavButton extends Component {
     styles.top = this.props.top
     styles.left = this.props.left
     return (
-      <div style={styles}>
+      <div style={styles} onClick={this.props.click}>
         {this.props.text}
       </div>
     )
