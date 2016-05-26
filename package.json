@@ -10,7 +10,8 @@
     "url": "git://github.com/username/repository.git"
   },
   "scripts": {
-    "test": "tape ./back/backTest/start.js",
+    "test": "tape ./back/backTest/runner.js",
+    "testmon": "nodemon ./back/backTest/runner.js",
     "coverage": "node ./node_modules/.bin/istanbul cover ./back/backTest/start.js",
     "report": "cat ./coverage/lcov.info | codecov",
     "start": "nodemon back/start.js",
