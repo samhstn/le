@@ -13,7 +13,7 @@ server.register([Inert], err => {
   if (err) throw err
   server.route([
     require('./routes/index.js'),
-    require('./routes/filename.js'),
+    require('./routes/bundle.js'),
     require('./routes/params.js')
   ])
 })
