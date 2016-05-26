@@ -1,22 +1,20 @@
-import Hapi from 'hapi'
-import Inert from 'inert'
-import routeHandler from './routeHandler'
+const Hapi = require('hapi')
+const Inert = require('inert')
 
 const server = new Hapi.Server()
 const port = 4000
 
 server.connection({
   routes: {cors: true},
-  port: port
+  port
 })
 
-server.register(Inert, () => {
+server.register([Inert], err => {
+  if (err) throw err
   server.route([
-    routeHandler('GET', '/bundle.js', '../production/bundle.js'),
-    routeHandler('GET', '/', '../production/index.html'),
-    routeHandler('GET', '/admin', '../production/index.html'),
-    routeHandler('GET', '/le', '../production/index.html'),
-    routeHandler('GET', '/settings', '../production/index.html')
+    require('./routes/index.js'),
+    require('./routes/filename.js'),
+    require('./routes/params.js')
   ])
 })
 
