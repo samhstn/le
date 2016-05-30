@@ -7,14 +7,14 @@
 
 To start the app run:
 
-`git clone https://github.com/shouston3/le.git && cd le && npm start`
+`git clone https://github.com/shouston3/le.git && cd le && npm i && npm start`
 
 ## Why
 
 I would like to create a language learning environment as I would like to learn German.
 Its quite nice to go through some words if I have some spare minutes
 
-I have a previous working version set up in a repo called learnenv, [this](http://shouston3.github.io/learnenv) is a working version only using the front-end - It was made without TDD, it has sloppy code and filestructure, but works ok.
+I have a previous working version set up in a repo called learnenv, [this](http://shouston3.github.io/learnenv) is a working version only using the front-end - It was made without TDD, it has sloppy code and file-structure, but works ok.
 I will be using this to learn from until this version is made
 
 ## What
@@ -32,7 +32,9 @@ What data I will be using:
       order: [deAlphabetical, enAlphabetical, rand],
       wordListLength: [number (x5)],
       wordStartPoint: [number (x5)],
-      count: [number (x5)]
+      count: [number (x5)],
+      loggedIn: [bool],
+      timer: [20, 10, 0]
     }
 
 ## Pages:

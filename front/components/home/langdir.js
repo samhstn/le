@@ -16,7 +16,6 @@ const styles = {
   textAlign: 'center',
   fontFamily: 'monospace',
   fontSize: '24px',
-  backgroundColor: 'green',
   width: '90%',
   height: '6vh',
   padding: '3%',
