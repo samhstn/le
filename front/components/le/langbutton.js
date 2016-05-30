@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 
 export default class LangButton extends Component {
   render () {
-    styles.backgroundColor = this.props.backgroundColor
     return (
       <div style={styles}>
         {this.props.text}
@@ -12,18 +11,16 @@ export default class LangButton extends Component {
 }
 
 LangButton.propTypes = {
-  backgroundColor: PropTypes.string,
   text: PropTypes.string
 }
 
 LangButton.defaultProps = {
-  backgroundColor: 'red',
   text: 'hello'
 }
 
 const styles = {
   fontSize: '5vmin',
-  border: '1px solid black',
+  border: '3px solid red',
   textAlign: 'center',
   width: '48%',
   height: '12%',
