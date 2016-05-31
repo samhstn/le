@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 require('../../public/style.css')
 
-import LangDirButton from '../common/langdir'
-import NavButton from '../common/navbutton'
+import LangDirButton from './langdir.js'
 
 export default class Home extends Component {
   render () {
@@ -15,8 +14,6 @@ export default class Home extends Component {
           <Link to='/le' style={styles} className='langdir'><LangDirButton text='DE -> EN' /></Link>
           <Link to='/le' style={styles} className='langdir'><LangDirButton text='EN -> DE' /></Link>
         </div>
-        <Link to='/admin' style={styles}><NavButton text='Admin' top='50%' left='10%' /></Link>
-        <Link to='/settings' style={styles}><NavButton text='Settings' top='50%' left='40%' /></Link>
       </div>
     )
   }

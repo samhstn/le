@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-import NavButton from '../components/common/navbutton.js'
+import NavButton from '../components/le/navbutton.js'
 
 export default class NavButtons extends Component {
   render () {
