@@ -51,7 +51,6 @@
     "wrapping-tape": "0.0.3"
   },
   "dependencies": {
-    "bcrypt": "^0.8.6",
     "boom": "^3.2.1",
     "env2": "^2.1.0",
     "hapi-auth-jwt2": "^7.0.0",
