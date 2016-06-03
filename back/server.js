@@ -9,8 +9,7 @@ server.connection({
   port
 })
 
-server.register([Inert], err => {
-  if (err) throw err
+server.register([Inert], () => {
   server.route([
     require('./routes/index.js'),
     require('./routes/bundle.js'),
