@@ -11,8 +11,8 @@
   },
   "scripts": {
     "test": "tape ./back/backTest/runner.js",
-    "testmon": "nodemon ./back/backTest/runner.js",
-    "coverage": "node ./node_modules/.bin/istanbul cover ./back/backTest/runner.js",
+    "testmon": "npm run build && nodemon ./back/backTest/runner.js",
+    "coverage": "npm run build && node ./node_modules/.bin/istanbul cover ./back/backTest/runner.js",
     "report": "cat ./coverage/lcov.info | codecov",
     "start": "nodemon back/start.js",
     "build": "webpack --progress",

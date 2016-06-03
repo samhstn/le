@@ -32,3 +32,14 @@ const testingStatusCode = endpoint => {
 
 endpoints.forEach(endpoint => testingStatusCode(endpoint))
 
+tape('does the server correctly respond with the bundle.js file', t => {
+  const options = {
+    method: 'get',
+    url: '/bundle.js'
+  }
+  server.inject(options, res => {
+    t.equal(res.statusCode, 200, 'replies with the bundle.js file')
+    t.ok(res.payload.indexOf('function') > -1)
+    t.end()
+  })
+})
