@@ -15,7 +15,8 @@ export default class NavButton extends Component {
 NavButton.propTypes = {
   text: PropTypes.string,
   top: PropTypes.string,
-  left: PropTypes.string
+  left: PropTypes.string,
+  onClick: PropTypes.func.isRequired
 }
 
 NavButton.defaultProps = {
@@ -26,8 +27,7 @@ NavButton.defaultProps = {
 
 const styles = {
   fontSize: '36px',
-  border: '1px solid black',
-  backgroundColor: 'brown',
+  border: '5px solid brown',
   width: '12%',
   height: '5%',
   padding: '4%',
