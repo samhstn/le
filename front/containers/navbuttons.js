@@ -8,8 +8,8 @@ export default class NavButtons extends Component {
     return (
       <div>
         <Link to='/' style={styles}><NavButton text='Home' top='50%' left='40%' /></Link>
-        <NavButton text='Next' top='50%' left='70%' />
-        <NavButton text='Prev' top='50%' left='10%' />
+        <NavButton text='Next' top='50%' left='70%' onClick={this.props.nextWords} />
+        <NavButton text='Prev' top='50%' left='10%' onClick={this.props.prevWords} />
       </div>
     )
   }
