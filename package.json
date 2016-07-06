@@ -7,7 +7,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git://github.com/username/repository.git"
+    "url": "git://github.com/shouston3/le.git"
   },
   "scripts": {
     "test": "tape ./back/backTest/runner.js",
