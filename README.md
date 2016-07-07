@@ -1,8 +1,3 @@
-[![Build Status](https://travis-ci.org/shouston3/le.svg?branch=master)](https://travis-ci.org/shouston3/le)
-[![codecov.io](https://codecov.io/github/shouston3/le/coverage.svg?branch=master)](https://codecov.io/github/shouston3/le?branch=master)
-[![Code Climate](https://codeclimate.com/github/shouston3/le/badges/gpa.svg)](https://codeclimate.com/github/shouston3/le)
-[![Issue Count](https://codeclimate.com/github/shouston3/le/badges/issue_count.svg)](https://codeclimate.com/github/shouston3/le)
-
 # Learning environment
 
 To start the app run:
