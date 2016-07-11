@@ -10,9 +10,9 @@
     "url": "git://github.com/shouston3/le.git"
   },
   "scripts": {
-    "test": "tape ./back/backTest/runner.js",
-    "testmon": "npm run build && nodemon ./back/backTest/runner.js",
-    "coverage": "npm run build && node ./node_modules/.bin/istanbul cover ./back/backTest/runner.js",
+    "test": "tape ./back/test/runner.js",
+    "testmon": "npm run build && nodemon ./back/test/runner.js",
+    "coverage": "npm run build && node ./node_modules/.bin/istanbul cover ./back/test/runner.js",
     "start": "node back/start.js",
     "startmon": "nodemon back/start.js",
     "build": "webpack --progress",
