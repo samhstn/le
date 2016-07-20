@@ -10,10 +10,9 @@
     "url": "git://github.com/shouston3/le.git"
   },
   "scripts": {
-    "test": "tape ./back/backTest/runner.js",
-    "testmon": "npm run build && nodemon ./back/backTest/runner.js",
-    "coverage": "npm run build && node ./node_modules/.bin/istanbul cover ./back/backTest/runner.js",
-    "report": "cat ./coverage/lcov.info | codecov",
+    "test": "tape ./back/test/runner.js",
+    "testmon": "npm run build && nodemon ./back/test/runner.js",
+    "coverage": "npm run build && node ./node_modules/.bin/istanbul cover ./back/test/runner.js",
     "start": "node back/start.js",
     "startmon": "nodemon back/start.js",
     "build": "webpack --progress",
@@ -30,7 +29,6 @@
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
-    "codecov.io": "^0.1.6",
     "css-loader": "^0.23.1",
     "eslint": "^2.5.3",
     "eslint-plugin-react": "^4.2.3",
