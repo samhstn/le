@@ -1,0 +1,51 @@
+{
+  "name": "le",
+  "version": "1.0.0",
+  "description": "A language learning app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shouston3/le.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shouston3/le/issues"
+  },
+  "homepage": "https://github.com/shouston3/le#readme",
+  "dependencies": {
+    "env2": "^2.1.1",
+    "hapi": "^14.2.0",
+    "inert": "^4.0.1",
+    "ramda": "^0.22.1",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.13.0",
+    "eslint": "^3.3.1",
+    "eslint-plugin-react": "^6.1.2",
+    "node-sass": "^3.8.0",
+    "nodemon": "^1.10.2",
+    "react-hot-loader": "^1.3.0",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1",
+    "tap-diff": "^0.1.1",
+    "tap-notify": "^1.0.0",
+    "tape": "^4.6.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
