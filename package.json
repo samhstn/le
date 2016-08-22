@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node api/index.js",
     "startmon": "nodemon api/index.js",
-    "test": "node test/runner.js",
-    "testmon": "nodemon -e js -i app/ -q -x 'tape test/runner.js | tap-notify | tap-spec'"
+    "test": "NODE_ENV=test node test/runner.js",
+    "testmon": "NODE_ENV=test nodemon -e js -i app/ -q -x 'tape test/runner.js | tap-notify | tap-spec'"
   },
   "repository": {
     "type": "git",
