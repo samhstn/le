@@ -1,7 +1,9 @@
 const Hapi = require('hapi');
-const Inert = require('inert');
 const port = process.env.PORT || 3333;
 const host = process.env.HOST || 'localhost';
+
+const plugins = require('./plugins/index.js');
+const routes = require('./routes/index.js');
 
 const server = new Hapi.Server();
 
@@ -10,14 +12,11 @@ server.connection({
   port
 });
 
-server.register([Inert], (err) => {
+server.register(plugins, (err) => {
   if (err)
     throw err;
 
-  server.route([
-    require('./routes/react-urls.js'),
-    require('./routes/bundle.js')
-  ]);
+  server.route(routes);
 });
 
 

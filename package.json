@@ -4,7 +4,10 @@
   "description": "A language learning app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node api/index.js",
+    "startmon": "nodemon api/index.js",
+    "test": "node test/runner.js",
+    "testmon": "nodemon -e js -i app/ -q -x 'tape test/runner.js | tap-notify | tap-spec'"
   },
   "repository": {
     "type": "git",
@@ -18,13 +21,16 @@
   },
   "homepage": "https://github.com/shouston3/le#readme",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "env2": "^2.1.1",
+    "file-loader": "^0.9.0",
     "hapi": "^14.2.0",
     "inert": "^4.0.1",
     "ramda": "^0.22.1",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
+    "redis": "^2.6.2",
     "redux": "^3.5.2"
   },
   "devDependencies": {
@@ -43,6 +49,7 @@
     "style-loader": "^0.13.1",
     "tap-diff": "^0.1.1",
     "tap-notify": "^1.0.0",
+    "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
