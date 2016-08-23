@@ -19,4 +19,4 @@ server.register(plugins, (err) => {
   server.route(routes);
 });
 
-
+module.exports = server;
