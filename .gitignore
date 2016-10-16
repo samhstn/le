@@ -1,4 +1,3 @@
 node_modules
-app/production/*
 config.env
 **/npm-debug.log

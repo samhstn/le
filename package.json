@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js",
-    "lint": "eslint .",
     "test": "node_modules/.bin/tape test/runner.js"
   },
   "repository": {
