@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/shouston3/le#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "bluebird": "^3.4.6",
+    "env2": "^2.1.1",
+    "handlebars": "^4.0.5",
     "hapi": "^15.1.1",
     "inert": "^4.0.2",
     "pg": "^6.1.0",
