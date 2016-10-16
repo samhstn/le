@@ -2,7 +2,7 @@
   "name": "le",
   "version": "1.0.0",
   "description": "A language learning app",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node api/index.js",
     "build": "for dir in tags/*;do; node_modules/.bin/riot $dir public/$dir.js; done;",
