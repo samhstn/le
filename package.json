@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js",
+    "build": "for dir in tags/*;do; node_modules/.bin/riot $dir public/$dir.js; done;",
     "test": "node_modules/.bin/tape test/runner.js"
   },
   "repository": {
