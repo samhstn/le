@@ -4,8 +4,8 @@
   "description": "A language learning app",
   "main": "server/index.js",
   "scripts": {
-    "start": "node api/index.js",
-    "build": "for dir in tags/*;do; node_modules/.bin/riot $dir public/$dir.js; done;",
+    "start": "node server/index.js",
+    "build": "for dir in tags/*;do\nnode_modules/.bin/riot $dir public/$dir.js\ndone",
     "test": "node_modules/.bin/tape test/runner.js"
   },
   "repository": {
