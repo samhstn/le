@@ -19,7 +19,24 @@
   },
   "homepage": "https://github.com/shouston3/le#readme",
   "dependencies": {
+    "hapi": "^15.1.1",
+    "inert": "^4.0.2",
+    "pg": "^6.1.0",
+    "redis": "^2.6.2",
+    "riot": "^2.6.4",
+    "vision": "^4.1.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-fixture": "^0.2.6",
+    "karma-html2js-preprocessor": "^1.1.0",
+    "karma-jasmine": "^1.0.2",
+    "shot": "^3.3.2",
+    "tape": "^4.6.2"
   }
 }
