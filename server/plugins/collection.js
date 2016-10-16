@@ -4,7 +4,6 @@ const usernameFromCookie = require('../helpers/usernameFromCookie.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;
-  const redisCli = server.app.redisCli;
 
   server.route([
     {
