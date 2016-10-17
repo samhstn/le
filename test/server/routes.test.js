@@ -2,6 +2,34 @@ const tape = require('tape');
 
 const server = require('../../server/server.js');
 
+tape('GET :: /', (t) => {
+  const options = {
+    method: 'get',
+    url: '/'
+  };
+
+  server.inject(options)
+    .then((res) => {
+      t.equal(res.statusCode, 302);
+      t.equal(res.headers.location, '/login/timeout=true');
+      t.end();
+    });
+});
+
+tape('GET :: /practice', (t) => {
+  const options = {
+    method: 'get',
+    url: '/practice'
+  };
+
+  server.inject(options)
+    .then((res) => {
+      t.equal(res.statusCode, 302);
+      t.equal(res.headers.location, '/login/timeout=true');
+      t.end();
+    });
+});
+
 tape('GET :: /login', (t) => {
   const options = {
     method: 'get',
