@@ -1,6 +1,9 @@
 const views = ['register', 'login', 'dashboard', 'practice'].map((route) => {
   return {
     method: 'get',
+    config: ['dashboard', 'practice'].indexOf(route) > -1 ? {
+      auth: 'le-strategy'
+    } : {},
     path: route === 'dashboard' ? '/' : '/' + route,
     handler: (request, reply) => {
       reply.view('layout', { component: route });
