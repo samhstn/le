@@ -48,7 +48,40 @@ exports.register = (server, options, next) => {
       method: 'post',
       path: '/api/collection',
       handler: (request, reply) => {
-        reply('WIP');
+        const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+        const username = usernameFromCookie(cookie);
+
+        const collection_name = request.payload.collection_name;
+        const collection_description = request.payload.collection_description;
+
+        pool.connect((connectErr, client, done) => {
+          assert(!connectErr, connectErr);
+
+          client.query(
+            'select * from user_table where username = $1',
+            [ username ],
+            (selectAllErr, data) => {
+              done();
+              assert(!selectAllErr, selectAllErr);
+              
+              const user_id = data.rows[0].user_id;
+              client.query(
+                'insert into collection_table '
+                + '(user_id, collection_name, collection_description) '
+                + 'values ($1, $2, $3)',
+                [ user_id, collection_name, collection_description ],
+                (collInsertErr) => {
+                  assert(!collInsertErr, collInsertErr);
+
+                  reply({
+                    message: 'New collection created',
+                    info: { created: true }
+                  });
+                }
+              );
+            }
+          );
+        });
       }
     },
     {
