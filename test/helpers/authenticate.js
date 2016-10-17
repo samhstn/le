@@ -1,5 +1,6 @@
 module.exports = (pool, redisCli) => {
   const loginUserWRedis = require('./loginUserWRedis.js')(redisCli);
+  const registerUser = require('./registerUser.js')(pool);
 
   return function (userObj) {
     const redisObj = {
@@ -10,7 +11,8 @@ module.exports = (pool, redisCli) => {
     const cookie = Buffer.from(JSON.stringify(redisObj)).toString('base64');
 
     return new Promise((resolve, reject) => {
-      loginUserWRedis(redisObj)
+      registerUser(userObj)
+        .then(() => loginUserWRedis(redisObj))
         .then(() => resolve({ 'set-cookie': [ 'cookie=' + cookie ] }))
     });
   }
