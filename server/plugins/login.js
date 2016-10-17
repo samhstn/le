@@ -29,7 +29,7 @@ exports.register = (server, options, next) => {
           (selectUserErr, usernames) => {
             assert(!selectUserErr, selectUserErr);
 
-            if (!(usernames.rows.filter((u) => u === username).length)) {
+            if (!(usernames.rows.filter((u) => u.username === username).length)) {
               done();
 
               return reply.redirect('/login/user_not_registered=true&user=' + username);
@@ -39,9 +39,10 @@ exports.register = (server, options, next) => {
               'select password from user_table where username = $1',
               [username],
               (selectPassErr, dbPass) => {
+                done();
                 assert(!selectPassErr, selectPassErr);
 
-                if (dbPass !== password) {
+                if (dbPass.rows[0].password !== password) {
                   return reply.redirect('/login/incorrect_pass=true&user=' + username);
                 }
 
