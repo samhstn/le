@@ -19,6 +19,8 @@ exports.register = (server, options, next) => {
 
   server.auth.strategy('le-strategy', 'le-scheme', { validateFunc: validate });
 
+  server.auth.default('le-strategy');
+
   server.state('cookie', {
     // 4 hours for the session cookie to expire
     ttl: 4 * 60 * 60 * 1000,

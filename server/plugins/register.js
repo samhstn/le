@@ -11,7 +11,8 @@ exports.register = (server, options, next) => {
           username: Joi.string().required(),
           password: Joi.string().required()
         }
-      }
+      },
+      auth: false
     },
     handler: (request, reply) => {
       const username = request.payload.username;
