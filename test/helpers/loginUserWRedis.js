@@ -8,9 +8,9 @@ module.exports = (redisCli) => (userObj) => {
     return Promise.reject('no username in loginUserWRedis payload');
   }
 
-  if (userObjKeys.indexOf('password') === -1) {
-    return Promise.reject('no password in loginUserWRedis payload');
+  if (userObjKeys.indexOf('key') === -1) {
+    return Promise.reject('no key in loginUserWRedis payload');
   }
 
-  return redisCli.set(userObj.username, userObj.password);
+  return redisCli.set(userObj.username, userObj.key);
 }

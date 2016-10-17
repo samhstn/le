@@ -21,7 +21,7 @@ tape('loginUserWRedis', (t) => {
     .then(() => redisCli.keysAsync('*'))
     .then((data) => {
       t.equal(data.length, 0);
-      return loginUserWRedis({ username: 'sam', password: 'pass' });
+      return loginUserWRedis({ username: 'sam', key: 'key' });
     })
     .then(() => redisCli.keysAsync('*'))
     .then((data) => {
@@ -34,9 +34,9 @@ tape('loginUserWRedis', (t) => {
 
 tape('loginUserWRedis with bad payload', (t) => {
   flushDb()
-    .then(() => loginUserWRedis({ username: 'sam', key: 'key' }))
+    .then(() => loginUserWRedis({ username: 'sam', password: 'password' }))
     .catch((err) => {
-      t.equal(err, 'no password in loginUserWRedis payload');
+      t.equal(err, 'no key in loginUserWRedis payload');
       t.end();
     });
 });
