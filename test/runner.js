@@ -9,3 +9,4 @@ require('./test_helpers/flushDb.test.js');
 require('./server/routes.test.js');
 require('./server/login.test.js');
 require('./server/register.test.js');
+require('./server/authflow.test.js');
