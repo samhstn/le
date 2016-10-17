@@ -8,6 +8,8 @@ const logout = require('./logout.js');
 const scheme = require('./scheme.js');
 const strategy = require('./strategy.js');
 const collection = require('./collection.js');
+const result = require('./result.js');
+const settings = require('./settings.js');
 
 const plugins = [
   Inert,
@@ -19,7 +21,9 @@ const plugins = [
   logout,
   scheme,
   strategy,
-  collection
+  collection,
+  result,
+  settings
 ];
 
 module.exports = plugins;
