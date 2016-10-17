@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "build": "for dir in tags/*;do\nnode_modules/.bin/riot $dir public/$dir.js\ndone",
-    "test": "node_modules/.bin/tape test/runner.js"
+    "test": "NODE_ENV=test node_modules/.bin/tape test/runner.js"
   },
   "repository": {
     "type": "git",
