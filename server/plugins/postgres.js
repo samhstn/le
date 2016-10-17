@@ -2,7 +2,7 @@ const pg = require('pg');
 const config = require('../../config.js').pg;
 
 exports.register = (server, options, next) => {
-  const pool = new pg.Pool(config);
+  server.app.pool = new pg.Pool(config);
 
   next();
 }
