@@ -47,7 +47,8 @@ tape('POST :: /register', (t) => {
     .then((res) => {
       t.ok(res);
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

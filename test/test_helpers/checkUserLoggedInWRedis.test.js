@@ -23,9 +23,7 @@ tape('checkUserLoggedInWRedis with no user logged in', (t) => {
       t.equal(res, false);
       t.end();
     })
-    .catch((err) => {
-      assert(!err, err);
-    });
+    .catch((err) => assert(!err, err));
 });
 
 tape('checkUserLoggedInWRedis with user logged in', (t) => {
@@ -38,9 +36,7 @@ tape('checkUserLoggedInWRedis with user logged in', (t) => {
       t.equal(res, true);
       t.end();
     })
-    .catch((err) => {
-      assert(!err, err);
-    });
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

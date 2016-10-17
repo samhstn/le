@@ -69,7 +69,8 @@ tape('POST :: /login', (t) => {
     .then((res) => {
       t.notOk(res);
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

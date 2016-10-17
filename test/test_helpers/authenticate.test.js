@@ -19,7 +19,8 @@ tape('authenticate', (t) => {
     .then((res) => {
       t.equal(res.statusCode, 200);
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

@@ -84,9 +84,7 @@ tape('flush db clears pg database', (t) => {
         );
       });
     })
-    .catch((err) => {
-      assert(!err, err);
-    });
+    .catch((err) => assert(!err, err));
 });
 
 tape('flushDb clears the redis database', (t) => {
@@ -106,9 +104,7 @@ tape('flushDb clears the redis database', (t) => {
       t.equal(keys.length, 0, 'redis db is cleared by flushDb');
       t.end();
     })
-    .catch((err) => {
-      assert(!err, err);
-    });
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {
