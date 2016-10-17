@@ -3,3 +3,4 @@ config.env
 **/npm-debug.log
 public/tags/*
 dump.rdb
+coverage
