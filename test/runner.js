@@ -1,6 +1,11 @@
-const tape = require('tape');
+// helpers tests
+require('./test_helpers/checkUserRegistered.test.js');
+require('./test_helpers/checkUserLoggedInWRedis.test.js');
+require('./test_helpers/loginUserWRedis.test.js');
+require('./test_helpers/registerUser.test.js');
+require('./test_helpers/flushDb.test.js');
 
-tape('First test', (t) => {
-  t.equal(true, true);
-  t.end();
-});
+// server tests
+require('./server/routes.test.js');
+require('./server/login.test.js');
+require('./server/register.test.js');
