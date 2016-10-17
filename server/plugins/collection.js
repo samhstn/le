@@ -17,33 +17,29 @@ exports.register = (server, options, next) => {
           assert(!connectErr, connectErr);
 
           client.query(
-            'select user_id from user_table where username = $1',
-            [ username ],
-            (selectUsernameErr, idData) => {
-              assert(!selectUsernameErr, selectUsernameErr)
+            'select '
+            + 'user_table.user_id, '
+            + 'collection_table.collection_id, '
+            + 'collection_table.collection_name, '
+            + 'collection_table.collection_description '
+            + 'from user_table inner join collection_table '
+            + 'on user_table.user_id = collection_table.user_id',
+            (selectErr, data) => {
+              done();
+              assert(!selectErr, selectErr); 
 
-              const user_id = idData.rows[0].user_id;
+              function format (rows) {
+                const obj = {};
+                rows.forEach((row) => {
+                  obj[row.collection_id] = {
+                    collection_name: row.collection_name,
+                    collection_description: row.collection_description
+                  };
+                });
+                return obj;
+              }
 
-              client.query(
-                'select * from collection_table where user_id = $1',
-                [ user_id ],
-                (selectAllErr, data) => {
-                  done();
-                  assert(!selectAllErr, selectAllErr)
-                  function format (rows) {
-                    const obj = {};
-                    rows.forEach((row) => {
-                      obj[row.collection_id] = {
-                        collection_name: row.collection_name,
-                        collection_description: row.collection_description
-                      };
-                    });
-                    return obj;
-                  }
-
-                  reply({ collections: format(data.rows) });
-                }
-              );
+              reply({ collections: format(data.rows) });
             }
           );
         });
