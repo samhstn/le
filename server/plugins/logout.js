@@ -10,7 +10,8 @@ exports.register = (server, options, next) => {
         headers: Joi.object({
           cookie: Joi.string().required()
         }).options({ allowUnknown: true })
-      }
+      },
+      auth: false
     },
     handler: (request, reply) => {
       const username = usernameFromCookie(request.headers.cookie);

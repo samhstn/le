@@ -1,8 +1,8 @@
 const views = ['register', 'login', 'dashboard', 'practice'].map((route) => {
   return {
     method: 'get',
-    config: ['dashboard', 'practice'].indexOf(route) > -1 ? {
-      auth: 'le-strategy'
+    config: ['register', 'login'].indexOf(route) > -1 ? {
+      auth: false
     } : {},
     path: route === 'dashboard' ? '/' : '/' + route,
     handler: (request, reply) => {
@@ -14,6 +14,7 @@ const views = ['register', 'login', 'dashboard', 'practice'].map((route) => {
 const riot = {
   method: 'get',
   path: '/riot+compiler.min.js',
+  config: { auth: false },
   handler: (request, reply) => {
     reply.file('node_modules/riot/riot+compiler.min.js');
   }
@@ -22,6 +23,7 @@ const riot = {
 const resources = {
   method: 'get',
   path: '/resource/{param*}',
+  config: { auth: false },
   handler: { directory: { path: 'public' } }
 };
 
