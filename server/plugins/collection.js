@@ -13,28 +13,40 @@ exports.register = (server, options, next) => {
         const cookie = request.headers.cookie || request.headers['set-cookie'][0];
         const username = usernameFromCookie(cookie);
 
-        reply('WIP');
+        pool.connect((connectErr, client, done) => {
+          assert(!connectErr, connectErr);
 
-        // pool.connect((connectErr, client, done) => {
-        //   assert(connectErr, connectErr);
+          client.query(
+            'select user_id from user_table where username = $1',
+            [ username ],
+            (selectUsernameErr, idData) => {
+              assert(!selectUsernameErr, selectUsernameErr)
 
-        //   client.query(
-        //     'select user_id from user_table where username = $1',
-        //     [username],
-        //     (selectUsernameErr, user_id) => {
-        //       assert(!selectUsernameErr, selectUsernameErr)
+              const user_id = idData.rows[0].user_id;
 
-        //       client.query(
-        //         'select * from collection_table where user_id = $1',
-        //         [user_id],
-        //         (selectAllErr, data) => {
-        //           done();
-        //           console.log('>>>>>>', typeof data, data);
-        //         }
-        //       );
-        //     }
-        //   );
-        // });
+              client.query(
+                'select * from collection_table where user_id = $1',
+                [ user_id ],
+                (selectAllErr, data) => {
+                  done();
+                  assert(!selectAllErr, selectAllErr)
+                  function format (rows) {
+                    const obj = {};
+                    rows.forEach((row) => {
+                      obj[row.collection_id] = {
+                        collection_name: row.collection_name,
+                        collection_description: row.collection_description
+                      };
+                    });
+                    return obj;
+                  }
+
+                  reply({ collections: format(data.rows) });
+                }
+              );
+            }
+          );
+        });
       }
     },
     {

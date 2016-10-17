@@ -46,20 +46,43 @@ tape('GET :: /api/collection', (t) => {
     url: '/api/collection'
   };
 
+  const userObj = { username: 'sam', password: 'pass' };
+
+  const collectionObj = {
+    username: 'sam',
+    collection_name: 'another name',
+    collection_description: 'another description'
+  };
+
+  let headers;
+
   flushDb()
     .then(() => server.inject(options))
     .then((res) => {
       t.equal(res.statusCode, 302);
       t.equal(res.headers.location, '/login/timeout=true');
-      return authenticate({ username: 'sam', password: 'pass' });
+      return authenticate(userObj);
     })
-    .then((headers) => {
-      return server.inject(Object.assign(options, { headers }));
+    .then((_headers) => {
+      headers = _headers;
+      return server.inject(Object.assign(options, { headers }))
     })
     .then((res) => {
       t.equal(res.statusCode, 200);
+      t.deepEqual(JSON.parse(res.payload).collections, {});
+      return storeCollection(collectionObj);
+    })
+    .then(() => server.inject(Object.assign(options, { headers })))
+    .then((res) => {
+      t.equal(res.statusCode, 200);
+      t.equal(Object.keys(JSON.parse(res.payload).collections).length, 1);
+      const collectionId = Object.keys(JSON.parse(res.payload).collections)[0];
+      const collection = JSON.parse(res.payload).collections[collectionId];
+      t.equal(collection.collection_name, 'another name');
+      t.equal(collection.collection_description, 'another description');
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {
