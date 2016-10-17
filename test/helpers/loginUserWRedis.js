@@ -12,5 +12,5 @@ module.exports = (redisCli) => (userObj) => {
     return Promise.reject('no key in loginUserWRedis payload');
   }
 
-  return redisCli.set(userObj.username, userObj.key);
+  return redisCli.setAsync(userObj.username, userObj.key);
 }
