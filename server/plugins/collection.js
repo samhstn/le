@@ -9,36 +9,32 @@ exports.register = (server, options, next) => {
     {
       method: 'get',
       path: '/api/collection',
-      config: {
-        validate: {
-          headers: Joi.object({
-            cookie: Joi.string().required()
-          })
-        }
-      },
       handler: (request, reply) => {
-        const username = usernameFromCookie(request.headers.cookie);
+        const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+        const username = usernameFromCookie(cookie);
 
-        pool.connect((connectErr, client, done) => {
-          assert(connectErr, connectErr);
+        reply('WIP');
 
-          client.query(
-            'select user_id from user_table where username = $1',
-            [username],
-            (selectUsernameErr, user_id) => {
-              assert(!selectUsernameErr, selectUsernameErr)
+        // pool.connect((connectErr, client, done) => {
+        //   assert(connectErr, connectErr);
 
-              client.query(
-                'select * from collection_table where user_id = $1',
-                [user_id],
-                (selectAllErr, data) => {
-                  done();
-                  console.log('>>>>>>', typeof data, data);
-                }
-              );
-            }
-          );
-        });
+        //   client.query(
+        //     'select user_id from user_table where username = $1',
+        //     [username],
+        //     (selectUsernameErr, user_id) => {
+        //       assert(!selectUsernameErr, selectUsernameErr)
+
+        //       client.query(
+        //         'select * from collection_table where user_id = $1',
+        //         [user_id],
+        //         (selectAllErr, data) => {
+        //           done();
+        //           console.log('>>>>>>', typeof data, data);
+        //         }
+        //       );
+        //     }
+        //   );
+        // });
       }
     },
     {
