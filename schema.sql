@@ -2,13 +2,11 @@ BEGIN;
 
 DROP TABLE IF EXISTS user_table CASCADE;
 DROP TABLE IF EXISTS collection_table CASCADE;
-DROP TABLE IF EXISTS settings_table CASCADE;
-DROP TABLE IF EXISTS words_table CASCADE;
+DROP TABLE IF EXISTS word_table CASCADE;
 
 DROP SEQUENCE IF EXISTS user_seq CASCADE;
 DROP SEQUENCE IF EXISTS collection_seq CASCADE;
-DROP SEQUENCE IF EXISTS settings_seq CASCADE;
-DROP SEQUENCE IF EXISTS words_seq CASCADE;
+DROP SEQUENCE IF EXISTS word_seq CASCADE;
 
 /****** 1. USER TABLE ******/
 CREATE SEQUENCE user_seq start 100 increment 1 cache 1;
@@ -46,7 +44,7 @@ CREATE TABLE word_table (
   hint VARCHAR,
   attempts VARCHAR,
   correct_attempts VARCHAR,
-  CONSTRAINT collection_pk PRIMARY KEY(word_id)
+  CONSTRAINT word_pk PRIMARY KEY(word_id)
 )
 WITHOUT OIDS;
 
