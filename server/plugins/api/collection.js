@@ -23,7 +23,9 @@ exports.register = (server, options, next) => {
             + 'collection_table.collection_name, '
             + 'collection_table.collection_description '
             + 'from user_table inner join collection_table '
-            + 'on user_table.user_id = collection_table.user_id',
+            + 'on user_table.user_id = collection_table.user_id '
+            + 'where user_table.username = $1',
+            [ username ],
             (selectErr, data) => {
               done();
               assert(!selectErr, selectErr); 
