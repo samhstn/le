@@ -96,7 +96,29 @@ exports.register = (server, options, next) => {
       method: 'put',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
-        reply('WIP');
+        const collection_id = request.params.collection_id;
+
+        pool.connect((connectErr, client, done) => {
+          assert(!connectErr, connectErr);
+
+          client.query(
+            'select * from collection_table where collection_id = $1',
+            [ collection_id ],
+            (selectAllErr, selectAllData) => {
+              done();
+              assert(!selectAllErr, selectAllErr);
+
+              if (!selectAllData.rows.length) {
+                return reply({ message: 'Collection does not exist' }).code(400);
+              }
+
+              reply({
+                message: 'Collection has been updated',
+                info: { updated: true }
+              });
+            }
+          );
+        });
       }
     },
     {

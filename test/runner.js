@@ -18,4 +18,4 @@ require('./server/logout.test.js');
 require('./server/authflow.test.js');
 
 // api
-require('./server/collection.test.js');
+require('./server/collection.test.js'); // wip
