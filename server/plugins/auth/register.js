@@ -1,5 +1,6 @@
-const assert = require('assert');
 const Joi = require('joi');
+
+const registerUser = require('../../../db/pg/registerUser.js');
 
 exports.register = (server, options, next) => {
   server.route({
@@ -15,36 +16,17 @@ exports.register = (server, options, next) => {
       auth: false
     },
     handler: (request, reply) => {
-      const username = request.payload.username;
-      const password = request.payload.password;
+      const payload = request.payload;
+      registerUser(server.app.pool, payload.username, payload.password, (err, res) => {
+        if (err) {
+          return reply(err).code(500);
+        }
 
-      const pool = server.app.pool;
+        if (res === 'username not available') {
+          return reply.redirect('/register/unavailable_username=true&user=' + username);
+        }
 
-      pool.connect((connectErr, client, done) => {
-        assert(!connectErr, connectErr);
-
-        client.query(
-          'select username from user_table',
-          (selectErr, data) => {
-            assert(!selectErr, selectErr);
-
-            if (data.rows.map((u) => u.username).indexOf(username) > -1) {
-              done();
-              return reply.redirect('/register/unavailable_username=true&user=' + username);
-            }
-
-            client.query(
-              'insert into user_table (username, password) values ($1, $2)',
-              [username, password],
-              (insertErr) => {
-                done();
-                assert(!insertErr, insertErr);
-
-                reply.redirect('/register/registered=true');
-              }
-            );
-          }
-        );
+        reply.redirect('/register/registered=true');
       });
     }
   });
@@ -52,8 +34,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'register'
-  }
-}
+exports.register.attributes = { pkg: { name: 'register' } }
