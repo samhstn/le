@@ -37,6 +37,7 @@ tape('POST :: /logout', (t) => {
       );
       t.end();
     })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

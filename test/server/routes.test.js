@@ -27,7 +27,8 @@ tape('GET :: /practice', (t) => {
       t.equal(res.statusCode, 302);
       t.equal(res.headers.location, '/login/timeout=true');
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape('GET :: /login', (t) => {
@@ -42,7 +43,8 @@ tape('GET :: /login', (t) => {
       t.equal(res.headers['content-type'], 'text/html; charset=utf-8');
       t.ok(res.payload.includes('/resource/tags/login.js'));
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape('GET :: /register', (t) => {
@@ -57,7 +59,8 @@ tape('GET :: /register', (t) => {
       t.equal(res.headers['content-type'], 'text/html; charset=utf-8');
       t.ok(res.payload.includes('/resource/tags/register.js'));
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape('GET :: /riot+compiler.min.js', (t) => {
@@ -71,7 +74,8 @@ tape('GET :: /riot+compiler.min.js', (t) => {
       t.equal(res.statusCode, 200);
       t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape('GET :: /resource/tags/login.js', (t) => {
@@ -85,7 +89,8 @@ tape('GET :: /resource/tags/login.js', (t) => {
       t.equal(res.statusCode, 200, 'You will have to run the build to find this file');
       t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape('GET :: /resource/helpers/request.js', (t) => {
@@ -99,7 +104,8 @@ tape('GET :: /resource/helpers/request.js', (t) => {
       t.equal(res.statusCode, 200);
       t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
       t.end();
-    });
+    })
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

@@ -53,9 +53,7 @@ tape('registerUser', (t) => {
       t.equal(data.rows.map((u) => u.username)[0], 'sam');
       t.end();
     })
-    .catch((err) => {
-      assert(!err, err);
-    });
+    .catch((err) => assert(!err, err));
 });
 
 tape.onFinish(() => {

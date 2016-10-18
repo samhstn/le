@@ -44,6 +44,7 @@ CREATE TABLE word_table (
   hint VARCHAR,
   attempts VARCHAR,
   correct_attempts VARCHAR,
+  score REAL,
   CONSTRAINT word_pk PRIMARY KEY(word_id)
 )
 WITHOUT OIDS;

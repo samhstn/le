@@ -9,33 +9,37 @@ exports.register = (server, options, next) => {
     {
       method: 'get',
       path: '/api/collection',
-      config: {
-        validate: {
-          headers: Joi.object({
-            cookie: Joi.string().required()
-          })
-        }
-      },
       handler: (request, reply) => {
-        const username = usernameFromCookie(request.headers.cookie);
+        const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+        const username = usernameFromCookie(cookie);
 
         pool.connect((connectErr, client, done) => {
-          assert(connectErr, connectErr);
+          assert(!connectErr, connectErr);
 
           client.query(
-            'select user_id from user_table where username = $1',
-            [username],
-            (selectUsernameErr, user_id) => {
-              assert(!selectUsernameErr, selectUsernameErr)
+            'select '
+            + 'user_table.user_id, '
+            + 'collection_table.collection_id, '
+            + 'collection_table.collection_name, '
+            + 'collection_table.collection_description '
+            + 'from user_table inner join collection_table '
+            + 'on user_table.user_id = collection_table.user_id',
+            (selectErr, data) => {
+              done();
+              assert(!selectErr, selectErr); 
 
-              client.query(
-                'select * from collection_table where user_id = $1',
-                [user_id],
-                (selectAllErr, data) => {
-                  done();
-                  console.log('>>>>>>', typeof data, data);
-                }
-              );
+              function format (rows) {
+                const obj = {};
+                rows.forEach((row) => {
+                  obj[row.collection_id] = {
+                    collection_name: row.collection_name,
+                    collection_description: row.collection_description
+                  };
+                });
+                return obj;
+              }
+
+              reply({ collections: format(data.rows) });
             }
           );
         });
@@ -52,14 +56,69 @@ exports.register = (server, options, next) => {
       method: 'post',
       path: '/api/collection',
       handler: (request, reply) => {
-        reply('WIP');
+        const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+        const username = usernameFromCookie(cookie);
+
+        const collection_name = request.payload.collection_name;
+        const collection_description = request.payload.collection_description;
+
+        pool.connect((connectErr, client, done) => {
+          assert(!connectErr, connectErr);
+
+          client.query(
+            'select * from user_table where username = $1',
+            [ username ],
+            (selectAllErr, data) => {
+              done();
+              assert(!selectAllErr, selectAllErr);
+              
+              const user_id = data.rows[0].user_id;
+              client.query(
+                'insert into collection_table '
+                + '(user_id, collection_name, collection_description) '
+                + 'values ($1, $2, $3)',
+                [ user_id, collection_name, collection_description ],
+                (collInsertErr) => {
+                  assert(!collInsertErr, collInsertErr);
+
+                  reply({
+                    message: 'New collection created',
+                    info: { created: true }
+                  });
+                }
+              );
+            }
+          );
+        });
       }
     },
     {
       method: 'put',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
-        reply('WIP');
+        const collection_id = request.params.collection_id;
+
+        pool.connect((connectErr, client, done) => {
+          assert(!connectErr, connectErr);
+
+          client.query(
+            'select * from collection_table where collection_id = $1',
+            [ collection_id ],
+            (selectAllErr, selectAllData) => {
+              done();
+              assert(!selectAllErr, selectAllErr);
+
+              if (!selectAllData.rows.length) {
+                return reply({ message: 'Collection does not exist' }).code(400);
+              }
+
+              reply({
+                message: 'Collection has been updated',
+                info: { updated: true }
+              });
+            }
+          );
+        });
       }
     },
     {

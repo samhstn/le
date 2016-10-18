@@ -22,8 +22,8 @@ const plugins = [
   scheme,
   strategy,
   collection,
-  result,
-  settings
+  // result,
+  // settings
 ];
 
 module.exports = plugins;

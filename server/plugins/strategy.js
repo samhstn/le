@@ -3,7 +3,7 @@ exports.register = (server, options, next) => {
     const redisCli = server.app.redisCli;
 
     redisCli.keys('*', (_, keys) => {
-      if (keys.indexOf(username === -1)) {
+      if (keys.indexOf(username) === -1) {
         return cb('timeout=true');
       }
 
