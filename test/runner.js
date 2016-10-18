@@ -5,7 +5,7 @@ require('./test_helpers/loginUserWRedis.test.js');
 require('./test_helpers/registerUser.test.js');
 require('./test_helpers/flushDb.test.js');
 require('./test_helpers/authenticate.test.js');
-require('./test_helpers/storeCollection.test.js');
+require('./test_helpers/createCollection.test.js');
 require('./test_helpers/getCollections.test.js');
 
 // auth tests
