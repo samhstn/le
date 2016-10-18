@@ -12,7 +12,7 @@ const redisCli = server.app.redisCli;
 const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../helpers/registerUser.js')(pool, redisCli);
 const getCollections = require('../helpers/getCollections.js')(pool);
-const storeCollection = require('../helpers/storeCollection.js')(pool);
+const createCollection = require('../helpers/createCollection.js')(pool);
 
 tape('getCollections', (t) => {
   const collectionObj = {
@@ -26,7 +26,7 @@ tape('getCollections', (t) => {
     .then(() => getCollections('sam'))
     .then((res) => {
       t.equal(res.length, 0);
-      return storeCollection(collectionObj);
+      return createCollection(collectionObj);
     })
     .then(() => getCollections('sam'))
     .then((res) => {
