@@ -1,15 +1,18 @@
 const Inert = require('inert');
 const Vision = require('vision');
-const redis = require('./redis.js');
-const postgres = require('./postgres.js');
-const register = require('./register.js');
-const login = require('./login.js');
-const logout = require('./logout.js');
-const scheme = require('./scheme.js');
-const strategy = require('./strategy.js');
-const collection = require('./collection.js');
-const result = require('./result.js');
-const settings = require('./settings.js');
+
+const redis = require('./db/redis.js');
+const postgres = require('./db/postgres.js');
+
+const register = require('./auth/register.js');
+const login = require('./auth/login.js');
+const logout = require('./auth/logout.js');
+const scheme = require('./auth/scheme.js');
+const strategy = require('./auth/strategy.js');
+
+const collection = require('./api/collection.js');
+// const result = require('./api/result.js');
+// const settings = require('./api/settings.js');
 
 const plugins = [
   Inert,

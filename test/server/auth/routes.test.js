@@ -1,6 +1,6 @@
 const tape = require('tape');
 
-const server = require('../../server/server.js');
+const server = require('../../../server/server.js');
 
 tape('GET :: /', (t) => {
   const options = {

@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const usernameFromCookie = require('../helpers/usernameFromCookie.js');
+const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 
 exports.register = (server, options, next) => {
   server.route({
