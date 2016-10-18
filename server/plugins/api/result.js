@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Joi = require('joi');
-const usernameFromCookie = require('../helpers/usernameFromCookie.js');
+const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;

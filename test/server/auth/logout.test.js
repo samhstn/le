@@ -1,13 +1,13 @@
 const tape = require('tape');
 const assert = require('assert');
 
-const server = require('../../server/server.js');
+const server = require('../../../server/server.js');
 const redisCli = server.app.redisCli;
 const pool = server.app.pool;
 
-const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
-const checkUserLoggedInWRedis = require('../helpers/checkUserLoggedInWRedis.js')(redisCli);
-const loginUserWRedis = require('../helpers/loginUserWRedis.js')(redisCli);
+const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
+const checkUserLoggedInWRedis = require('../../helpers/checkUserLoggedInWRedis.js')(redisCli);
+const loginUserWRedis = require('../../helpers/loginUserWRedis.js')(redisCli);
 
 tape('POST :: /logout', (t) => {
   const key = '267f666bf2496696fa299e20e6c3e6d84c4ac0fafdc1d389d585fc65c2606a7e';

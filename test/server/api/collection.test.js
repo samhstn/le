@@ -1,14 +1,14 @@
 const tape = require('tape');
 const assert = require('assert');
 
-const server = require('../../server/server.js');
+const server = require('../../../server/server.js');
 const redisCli = server.app.redisCli;
 const pool = server.app.pool;
 
-const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
-const authenticate = require('../helpers/authenticate.js')(pool, redisCli);
-const getCollections = require('../helpers/getCollections.js')(pool);
-const createCollection = require('../helpers/createCollection.js')(pool);
+const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
+const authenticate = require('../../helpers/authenticate.js')(pool, redisCli);
+const getCollections = require('../../helpers/getCollections.js')(pool);
+const createCollection = require('../../helpers/createCollection.js')(pool);
 
 tape('GET :: /api/collection', (t) => {
   const options = {
