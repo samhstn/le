@@ -25,12 +25,12 @@ tape('updateCollection', (t) => {
     }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_name, 'hi');
-      t.equal(res[0].collection_description, 'desc');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'hi');
+      t.equal(res['100'].collection_description, 'desc');
 
-      id = res[0].collection_id;
+      id = Object.keys(res)[0];
 
       const collectionObj = {
         collection_id: id,
@@ -53,9 +53,10 @@ tape('updateCollection', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'hi');
-      t.equal(res[0].collection_description, 'new description');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'hi');
+      t.equal(res['100'].collection_description, 'new description');
       return getWords(id);
     })
     .then((res) => {

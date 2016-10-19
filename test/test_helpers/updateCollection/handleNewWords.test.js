@@ -37,10 +37,10 @@ tape('handleNewWords', (t) => {
     .then(() => handleNewWords(pool, newWordsObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'name');
-      t.equal(res[0].collection_description, 'desc');
-      t.equal(res[0].collection_id, '100');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'name');
+      t.equal(res['100'].collection_description, 'desc');
     })
     .then(() => getWords('100'))
     .then((res) => {

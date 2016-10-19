@@ -39,19 +39,19 @@ tape('getWords', (t) => {
     .then(() => createCollection(createCollectionObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      collection_id = res[0].collection_id;
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_name, 'coll');
-      t.equal(res[0].collection_description, 'desc');
+      collection_id = Object.keys(res)[0];
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'coll');
+      t.equal(res['100'].collection_description, 'desc');
       return updateCollection(Object.assign(updateCollectionObj, { collection_id }));
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_description, 'desc');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_name, 'sams collection');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'sams collection');
+      t.equal(res['100'].collection_description, 'desc');
       return getWords(collection_id);
     })
     .then((res) => {

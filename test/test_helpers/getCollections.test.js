@@ -21,14 +21,15 @@ tape('getCollections', (t) => {
     .then(() => registerUser({ username: 'sam', password: 'pass' }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 0);
+      t.deepEqual(res, {});
       return createCollection(collectionObj);
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1)
-      t.equal(res[0].collection_name, 'coll1');
-      t.equal(res[0].collection_description, 'my collection');
+      t.equal(Object.keys(res).length, 1)
+      t.equal(Object.keys(res)[0], '100')
+      t.equal(res['100'].collection_name, 'coll1');
+      t.equal(res['100'].collection_description, 'my collection');
       t.end();
     })
     .catch((err) => assert(!err, err));

@@ -77,9 +77,10 @@ tape('POST :: /api/collection', (t) => {
       return getCollections(userObj.username);
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'collection1');
-      t.equal(res[0].collection_description, 'my first collection');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'collection1');
+      t.equal(res['100'].collection_description, 'my first collection');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -132,12 +133,12 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_name, 'another name');
-      t.equal(res[0].collection_description, 'another description');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'another name');
+      t.equal(res['100'].collection_description, 'another description');
 
-      collection_id = res[0].collection_id;
+      collection_id = Object.keys(res)[0];
 
       const options = {
         method: 'put',
@@ -157,10 +158,10 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_description, 'another description');
-      t.equal(res[0].collection_name, 'another name');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_description, 'another description');
+      t.equal(res['100'].collection_name, 'another name');
 
       const options = {
         method: 'put',
@@ -191,10 +192,10 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_description, 'another description');
-      t.equal(res[0].collection_name, 'another name');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_description, 'another description');
+      t.equal(res['100'].collection_name, 'another name');
       t.end();
     })
     .catch((err) => assert(!err, err));

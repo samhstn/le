@@ -4,6 +4,7 @@ require('./loginUserWRedis.test.js');
 require('./registerUser.test.js');
 require('./flushDb.test.js');
 require('./authenticate.test.js');
+
 require('./createCollection.test.js');
 require('./getCollections.test.js');
 require('./updateCollection.test.js');

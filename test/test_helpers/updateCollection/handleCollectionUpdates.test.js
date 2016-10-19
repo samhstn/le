@@ -30,18 +30,18 @@ tape('handleCollectionUpdates', (t) => {
     .then(() => createCollection(initialCollectionObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'a');
-      t.equal(res[0].collection_description, 'a');
-      t.equal(res[0].collection_id, '100');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'a');
+      t.equal(res['100'].collection_description, 'a');
       return handleCollectionUpdates(pool, updateCollectionObj);
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'hello name');
-      t.equal(res[0].collection_description, 'hello description');
-      t.equal(res[0].collection_id, '100');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'hello name');
+      t.equal(res['100'].collection_description, 'hello description');
       t.end();
     })
     .catch((err) => assert(!err, err));
