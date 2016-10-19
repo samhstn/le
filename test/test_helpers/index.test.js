@@ -6,9 +6,9 @@ require('./flushDb.test.js');
 require('./authenticate.test.js');
 require('./createCollection.test.js');
 require('./getCollections.test.js');
-require('./updateCollection.test.js'); // wip
+require('./updateCollection.test.js');
 require('./updateCollection/handleCollectionUpdates.test.js');
 require('./updateCollection/handleNewWords.test.js');
 require('./updateCollection/handleUpdateWords.test.js');
-require('./updateCollection/handleDeleteWords.test.js');
-require('./getWords.test.js'); // wip
+require('./updateCollection/handleDeleteWords.test.js'); // wip
+require('./getWords.test.js');
