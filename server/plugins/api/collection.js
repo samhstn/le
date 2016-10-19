@@ -1,53 +1,25 @@
 const assert = require('assert');
-const Joi = require('joi');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
+const getAllCollections = require('../../../db/pg/getAllCollections.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;
 
   server.route([
     {
+      // TODO: get average score and number of words
       method: 'get',
       path: '/api/collection',
       handler: (request, reply) => {
         const cookie = request.headers.cookie || request.headers['set-cookie'][0];
         const username = usernameFromCookie(cookie);
 
-        pool.connect((connectErr, client, done) => {
-          assert(!connectErr, connectErr);
-
-          client.query(
-            'select '
-            + 'user_table.user_id, '
-            + 'collection_table.collection_id, '
-            + 'collection_table.collection_name, '
-            + 'collection_table.collection_description '
-            + 'from user_table inner join collection_table '
-            + 'on user_table.user_id = collection_table.user_id '
-            + 'where user_table.username = $1',
-            [ username ],
-            (selectErr, data) => {
-              done();
-              assert(!selectErr, selectErr); 
-
-              function format (rows) {
-                const obj = {};
-                rows.forEach((row) => {
-                  obj[row.collection_id] = {
-                    collection_name: row.collection_name,
-                    collection_description: row.collection_description
-                  };
-                });
-                return obj;
-              }
-
-              reply({ collections: format(data.rows) });
-            }
-          );
-        });
+        getAllCollections(pool, username)
+          .then((collections) => reply({ collections }));
       }
     },
     {
+      // TODO: start
       method: 'get',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
@@ -55,6 +27,7 @@ exports.register = (server, options, next) => {
       }
     },
     {
+      // TODO: refactor
       method: 'post',
       path: '/api/collection',
       handler: (request, reply) => {
@@ -95,6 +68,7 @@ exports.register = (server, options, next) => {
       }
     },
     {
+      // TODO: refactor
       method: 'put',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
@@ -124,6 +98,7 @@ exports.register = (server, options, next) => {
       }
     },
     {
+      // TODO: start
       method: 'delete',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
