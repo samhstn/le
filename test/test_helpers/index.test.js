@@ -10,5 +10,5 @@ require('./updateCollection.test.js');
 require('./updateCollection/handleCollectionUpdates.test.js');
 require('./updateCollection/handleNewWords.test.js');
 require('./updateCollection/handleUpdateWords.test.js');
-require('./updateCollection/handleDeleteWords.test.js'); // wip
+require('./updateCollection/handleDeleteWords.test.js');
 require('./getWords.test.js');
