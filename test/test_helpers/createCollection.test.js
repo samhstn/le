@@ -9,6 +9,20 @@ const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../helpers/registerUser.js')(pool, redisCli);
 const createCollection = require('../helpers/createCollection.js')(pool);
 
+function getAllCollections() {
+ return new Promise((resolve) => {
+   pool.connect((_, client, done) => {
+     client.query(
+       'select * from collection_table',
+       (_, data) => {
+         done();
+         resolve(data);
+       }
+     );
+   });
+ });
+}
+
 tape('createCollection', (t) => {
   const collectionObj = {
     username: 'sam',
@@ -19,19 +33,7 @@ tape('createCollection', (t) => {
   flushDb()
     .then(() => registerUser({ username: 'sam', password: 'pass' }))
     .then(() => createCollection(collectionObj))
-    .then((res) => {
-      return new Promise((resolve) => {
-        pool.connect((_, client, done) => {
-          client.query(
-            'select * from collection_table',
-            (_, data) => {
-              done();
-              resolve(data);
-            }
-          );
-        });
-      });
-    })
+    .then((res) => getAllCollections())
     .then((res) => {
       t.equal(res.rows[0].collection_name, 'colllll');
       t.equal(res.rows[0].collection_description, 'another coll')
