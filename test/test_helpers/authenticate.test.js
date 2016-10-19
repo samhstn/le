@@ -1,8 +1,5 @@
 const tape = require('tape');
-const pg = require('pg')
 const assert = require('assert');
-const bluebird = require('bluebird');
-const redis = require('redis');
 
 const server = require('../../server/server.js');
 
