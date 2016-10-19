@@ -1,59 +1,27 @@
-const assert = require('assert');
-const Joi = require('joi');
+const registerUser = require('../../../db/pg/registerUser.js');
+const validate = require('../../validation/register.js');
 
 exports.register = (server, options, next) => {
   server.route({
     method: 'post',
     path: '/api/register',
-    config: {
-      validate: {
-        payload: {
-          username: Joi.string().required(),
-          password: Joi.string().required()
-        }
-      },
-      auth: false
-    },
+    config: { validate, auth: false },
     handler: (request, reply) => {
-      const username = request.payload.username;
-      const password = request.payload.password;
-
-      const pool = server.app.pool;
-
-      pool.connect((connectErr, client, done) => {
-        assert(!connectErr, connectErr);
-
-        client.query(
-          'select username from user_table',
-          (selectErr, data) => {
-            assert(!selectErr, selectErr);
-
-            if (data.rows.map((u) => u.username).indexOf(username) > -1) {
-              done();
-              return reply.redirect('/register/unavailable_username=true&user=' + username);
-            }
-
-            client.query(
-              'insert into user_table (username, password) values ($1, $2)',
-              [username, password],
-              (insertErr) => {
-                done();
-                assert(!insertErr, insertErr);
-
-                reply.redirect('/register/registered=true');
-              }
+      registerUser(server.app.pool, request.payload)
+        .then(() => reply.redirect('/register/registered=true'))
+        .catch((err) => {
+          if (err === 'username not available') {
+            return reply.redirect(
+              '/register/unavailable_username=true&user=' + request.payload.username
             );
           }
-        );
-      });
+
+          return reply(err).code(500);
+        });
     }
   });
 
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'register'
-  }
-}
+exports.register.attributes = { pkg: { name: 'register' } }

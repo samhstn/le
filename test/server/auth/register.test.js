@@ -46,6 +46,13 @@ tape('POST :: /register', (t) => {
     })
     .then((res) => {
       t.ok(res);
+      const payload = { username: 'sam', password: 'pass' };
+
+      return server.inject(Object.assign(options, { payload }));
+    })
+    .then((res) => {
+      t.equal(res.statusCode, 302);
+      t.equal(res.headers.location, '/register/unavailable_username=true&user=sam');
       t.end();
     })
     .catch((err) => assert(!err, err));

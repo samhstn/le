@@ -1,8 +1,5 @@
 const tape = require('tape');
-const pg = require('pg')
 const assert = require('assert');
-const bluebird = require('bluebird');
-const redis = require('redis');
 
 const server = require('../../server/server.js');
 
@@ -59,6 +56,45 @@ tape('updateCollection', (t) => {
       t.equal(res.length, 1);
       t.equal(res[0].collection_name, 'hi');
       t.equal(res[0].collection_description, 'new description');
+      return getWords(id);
+    })
+    .then((res) => {
+      t.equal(res.length, 2);
+      t.equal(res[0].word_id, '100');
+      t.equal(res[0].collection_id, '100');
+      t.equal(res[0].direction, 'deToEn');
+      t.equal(res[0].source_word, 'Wiedersehen');
+      t.deepEqual(res[0].target_words, [ 'Bye' ]);
+      t.equal(res[1].word_id, '101');
+      t.equal(res[1].collection_id, '100');
+      t.equal(res[1].direction, 'enToDe');
+      t.equal(res[1].source_word, 'hello');
+      t.deepEqual(res[1].target_words, [ 'hallo', 'Guten Tag']);
+
+      const collectionObj = {
+        collection_id: id,
+        update_words: {
+          '101': {
+            target_words: [ 'hallo' ],
+            hint: 'my first hint',
+            score: 5.6
+          }
+        },
+        delete_words: ['100']
+      };
+
+      return updateCollection(collectionObj);
+    })
+    .then(() => getWords('100'))
+    .then((res) => {
+      t.equal(res.length, 1);
+      t.equal(res[0].word_id, '101');
+      t.equal(res[0].collection_id, '100');
+      t.equal(res[0].direction, 'enToDe');
+      t.equal(res[0].source_word, 'hello');
+      t.deepEqual(res[0].target_words, [ 'hallo' ]);
+      t.equal(res[0].hint, 'my first hint');
+      t.equal(res[0].score, 5.6);
       t.end();
     })
     .catch((err) => assert(!err, err));

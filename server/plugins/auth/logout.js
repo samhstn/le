@@ -1,18 +1,11 @@
-const Joi = require('joi');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
+const validate = require('../../validation/logout.js');
 
 exports.register = (server, options, next) => {
   server.route({
     method: 'post',
     path: '/api/logout',
-    config: {
-      validate: {
-        headers: Joi.object({
-          cookie: Joi.string().required()
-        }).options({ allowUnknown: true })
-      },
-      auth: false
-    },
+    config: { validate, auth: false },
     handler: (request, reply) => {
       const username = usernameFromCookie(request.headers.cookie);
       const redisCli = server.app.redisCli;
@@ -29,8 +22,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'logout'
-  }
-}
+exports.register.attributes = { pkg: { name: 'logout' } }
