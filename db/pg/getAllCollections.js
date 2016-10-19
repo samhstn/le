@@ -18,7 +18,6 @@ module.exports = (pool, username) => {
 
       client.query(
         'select '
-        + 'user_table.user_id, '
         + 'collection_table.collection_id, '
         + 'collection_table.collection_name, '
         + 'collection_table.collection_description '

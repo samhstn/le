@@ -1,9 +1,18 @@
-const assert = require('assert');
-
 function rejectErr(err, reject) {
   if (err) {
     reject(err);
   }
+}
+
+function format (rows) {
+  const obj = {};
+  rows.forEach((row) => {
+    obj[row.collection_id] = {
+      collection_name: row.collection_name,
+      collection_description: row.collection_description
+    };
+  });
+  return obj;
 }
 
 module.exports = (pool) => {
@@ -18,31 +27,18 @@ module.exports = (pool) => {
 
         client.query(
           'select '
-          + 'user_id, '
-          + 'username '
-          + 'from user_table '
-          + 'where username = $1',
+          + 'collection_table.collection_id, '
+          + 'collection_table.collection_name, '
+          + 'collection_table.collection_description '
+          + 'from user_table inner join collection_table '
+          + 'on user_table.user_id = collection_table.user_id '
+          + 'where user_table.username = $1',
           [ username ],
-          (selectIdErr, idData) => {
-            rejectErr(selectIdErr, reject);
+          (selectErr, data) => {
+            done();
+            rejectErr(selectErr, reject);
 
-            const user_id = idData.rows[0].user_id;
-            
-            client.query(
-              'select '
-              + 'collection_name, '
-              + 'collection_description, '
-              + 'collection_id '
-              + 'from collection_table '
-              + 'where user_id = $1',
-              [ user_id ],
-              (selectCollErr, collData) => {
-                done();
-                rejectErr(selectCollErr, reject);
-
-                resolve(collData.rows);
-              }
-            );
+            resolve(format(data.rows));
           }
         );
       });
