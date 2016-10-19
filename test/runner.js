@@ -9,3 +9,6 @@ require('./server/auth/index.test.js');
 
 // api
 require('./server/api/index.test.js');
+
+// db
+require('./db/index.test.js');
