@@ -1,6 +1,6 @@
 const assert = require('assert');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
-const getAllCollections = require('../../../db/pg/getAllCollections.js');
+const getCollections = require('../../../db/pg/getCollections.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;
@@ -14,7 +14,7 @@ exports.register = (server, options, next) => {
         const cookie = request.headers.cookie || request.headers['set-cookie'][0];
         const username = usernameFromCookie(cookie);
 
-        getAllCollections(pool, username)
+        getCollections(pool)(username)
           .then((collections) => reply({ collections }));
       }
     },

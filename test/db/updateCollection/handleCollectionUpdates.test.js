@@ -7,10 +7,10 @@ const pool = new pg.pool(pg.config);
 
 const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../../helpers/registerUser.js')(pool)
-const createCollection = require('../../helpers/createCollection.js')(pool);
-const getCollections = require('../../helpers/getCollections.js')(pool);
+const createCollection = require('../../../db/pg/createCollection.js')(pool);
+const getCollections = require('../../../db/pg/getCollections.js')(pool);
 const handleCollectionUpdates =
-  require('../../helpers/updateCollection/handleCollectionUpdates.js');
+  require('../../../db/pg/updateCollection/handleCollectionUpdates.js');
 
 tape('handleCollectionUpdates', (t) => {
   const initialCollectionObj = {

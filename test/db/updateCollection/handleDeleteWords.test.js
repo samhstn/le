@@ -7,11 +7,11 @@ const pool = new pg.pool(pg.config);
 
 const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../../helpers/registerUser.js')(pool)
-const createCollection = require('../../helpers/createCollection.js')(pool);
-const getCollections = require('../../helpers/getCollections.js')(pool);
-const getWords = require('../../helpers/getWords.js')(pool);
-const handleNewWords = require('../../helpers/updateCollection/handleNewWords.js');
-const handleDeleteWords = require('../../helpers/updateCollection/handleDeleteWords.js');
+const createCollection = require('../../../db/pg/createCollection.js')(pool);
+const getCollections = require('../../../db/pg/getCollections.js')(pool);
+const getWords = require('../../../db/pg/getWords.js')(pool);
+const handleNewWords = require('../../../db/pg/updateCollection/handleNewWords.js');
+const handleDeleteWords = require('../../../db/pg/updateCollection/handleDeleteWords.js');
 
 tape('handleUpdateWords', (t) => {
   const collectionObj = {

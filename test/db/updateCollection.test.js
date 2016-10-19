@@ -1,17 +1,16 @@
 const tape = require('tape');
 const assert = require('assert');
 
-const server = require('../../server/server.js');
-
-const pool = server.app.pool;
-const redisCli = server.app.redisCli;
+const redisCli = require('../test_helpers/configureRedis.js');
+const pg = require('../test_helpers/configurePool.js');
+const pool = new pg.pool(pg.config);
 
 const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../helpers/registerUser.js')(pool);
-const createCollection = require('../helpers/createCollection.js')(pool);
-const getCollections = require('../helpers/getCollections.js')(pool);
-const updateCollection = require('../helpers/updateCollection.js')(pool);
-const getWords = require('../helpers/getWords.js')(pool);
+const createCollection = require('../../db/pg/createCollection.js')(pool);
+const getCollections = require('../../db/pg/getCollections.js')(pool);
+const updateCollection = require('../../db/pg/updateCollection.js')(pool);
+const getWords = require('../../db/pg/getWords.js')(pool);
 
 let id;
 

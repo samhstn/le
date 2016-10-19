@@ -7,19 +7,19 @@ const pool = new pg.pool(pg.config);
 
 const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../../helpers/registerUser.js')(pool)
-const createCollection = require('../../helpers/createCollection.js')(pool);
-const getCollections = require('../../helpers/getCollections.js')(pool);
-const getWords = require('../../helpers/getWords.js')(pool);
-const handleNewWords =
-  require('../../helpers/updateCollection/handleNewWords.js');
+const createCollection = require('../../../db/pg/createCollection.js')(pool);
+const getCollections = require('../../../db/pg/getCollections.js')(pool);
+const getWords = require('../../../db/pg/getWords.js')(pool);
+const handleNewWords = require('../../../db/pg/updateCollection/handleNewWords.js');
+const handleUpdateWords = require('../../../db/pg/updateCollection/handleUpdateWords.js');
 
-tape('handleNewWords', (t) => {
+tape('handleUpdateWords', (t) => {
   const collectionObj = {
     username: 'sam',
     collection_name: 'name',
     collection_description: 'desc'
   };
-  const newWordsObj = {
+  const initialWordsObj = {
     collection_id: '100',
     new_words: [
       {
@@ -29,19 +29,23 @@ tape('handleNewWords', (t) => {
       }
     ]
   };
+  const newWordsObj = {
+    collection_id: '100',
+    update_words: {
+      '100': {
+        direction: 'deToEn',
+        source_word: 'hallo',
+        target_words: [ 'hello' ],
+        hint: 'my hint'
+      }  
+    }
+  };
   const userObj = { username: 'sam', password: 'pass' };
 
   flushDb()
     .then(() => registerUser(userObj))
     .then(() => createCollection(collectionObj))
-    .then(() => handleNewWords(pool, newWordsObj))
-    .then(() => getCollections('sam'))
-    .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'name');
-      t.equal(res['100'].collection_description, 'desc');
-    })
+    .then(() => handleNewWords(pool, initialWordsObj))
     .then(() => getWords('100'))
     .then((res) => {
       t.equal(res.length, 1);
@@ -50,6 +54,16 @@ tape('handleNewWords', (t) => {
       t.equal(res[0].direction, 'enToDe');
       t.equal(res[0].source_word, 'hello');
       t.deepEqual(res[0].target_words, [ 'hallo' ]);
+      return handleUpdateWords(pool, newWordsObj);
+    })
+    .then(() => getWords('100'))
+    .then((res) => {
+      t.equal(res.length, 1);
+      t.equal(res[0].word_id, '100');
+      t.equal(res[0].collection_id, '100');
+      t.equal(res[0].direction, 'deToEn');
+      t.equal(res[0].source_word, 'hallo');
+      t.deepEqual(res[0].target_words, [ 'hello' ]);
       t.end();
     })
     .catch((err) => assert(!err, err));
