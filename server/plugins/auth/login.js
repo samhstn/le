@@ -1,6 +1,8 @@
-const crypto = require('crypto');
-const assert = require('assert');
 const Joi = require('joi');
+const checkUserRegistered = require('../../../db/pg/checkUserRegistered.js');
+const verifyPassword = require('../../../db/pg/verifyPassword.js');
+const storeKeyInRedis = require('../../../db/redis/storeKeyInRedis.js');
+const validate = require('../../validation/login.js');
 
 exports.register = (server, options, next) => {
   server.route({
@@ -17,59 +19,31 @@ exports.register = (server, options, next) => {
     },
     handler: (request, reply) => {
       const username = request.payload.username;
-      const password = request.payload.password;
 
-      const pool = server.app.pool;
-      const redisCli = server.app.redisCli;
-
-      pool.connect((connectErr, client, done) => {
-        assert(!connectErr, connectErr);
-
-        client.query(
-          'select username from user_table',
-          (selectUserErr, usernames) => {
-            assert(!selectUserErr, selectUserErr);
-
-            if (!(usernames.rows.filter((u) => u.username === username).length)) {
-              done();
-
-              return reply.redirect('/login/user_not_registered=true&user=' + username);
-            }
-
-            client.query(
-              'select password from user_table where username = $1',
-              [username],
-              (selectPassErr, dbPass) => {
-                done();
-                assert(!selectPassErr, selectPassErr);
-
-                if (dbPass.rows[0].password !== password) {
-                  return reply.redirect('/login/incorrect_pass=true&user=' + username);
-                }
-
-                const key = crypto.randomBytes(256).toString('base64');
-
-                redisCli.set(username, key, () => {
-                  // expire after 10 mins
-                  redisCli.expire(username, 10 * 60)
-
-                  reply
-                    .redirect('/')
-                    .state('cookie', { username, key });;
-                })
-              }
-            );
+      checkUserRegistered(server.app.pool, request.payload)
+        .then(() => verifyPassword(server.app.pool, request.payload))
+        .then(() => storeKeyInRedis(server.app.redisCli, request.payload))
+        .then((key) => {
+          reply
+            .redirect('/')
+            .state('cookie', { username, key });
+        })
+        .catch((err) => {
+          switch (err) {
+          case 'db error':
+            return reply(err).code(500);
+          case 'user not registered':
+            return reply.redirect('/login/user_not_registered=true&user=' + username);
+          case 'incorrect password':
+            return reply.redirect('/login/incorrect_pass=true&user=' + username);
+          default:
+            return reply('Unknown error').code(500);
           }
-        );
-      });
+        });
     }
   });
 
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'login'
-  }
-}
+exports.register.attributes = { pkg: { name: 'login' } };
