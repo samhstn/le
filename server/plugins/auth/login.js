@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const checkUserRegistered = require('../../../db/pg/checkUserRegistered.js');
 const verifyPassword = require('../../../db/pg/verifyPassword.js');
 const storeKeyInRedis = require('../../../db/redis/storeKeyInRedis.js');
@@ -8,15 +7,7 @@ exports.register = (server, options, next) => {
   server.route({
     method: 'post',
     path: '/api/login',
-    config: {
-      validate: {
-        payload: {
-          username: Joi.string().required(),
-          password: Joi.string().required()
-        }
-      },
-      auth: false
-    },
+    config: { validate, auth: false },
     handler: (request, reply) => {
       const username = request.payload.username;
 
