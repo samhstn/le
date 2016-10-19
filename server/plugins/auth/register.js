@@ -7,18 +7,17 @@ exports.register = (server, options, next) => {
     path: '/api/register',
     config: { validate, auth: false },
     handler: (request, reply) => {
-      const payload = request.payload;
-      registerUser(server.app.pool, payload.username, payload.password, (err, res) => {
-        if (err) {
+      registerUser(server.app.pool, request.payload)
+        .then(() => reply.redirect('/register/registered=true'))
+        .catch((err) => {
+          if (err === 'username not available') {
+            return reply.redirect(
+              '/register/unavailable_username=true&user=' + request.payload.username
+            );
+          }
+
           return reply(err).code(500);
-        }
-
-        if (res === 'username not available') {
-          return reply.redirect('/register/unavailable_username=true&user=' + username);
-        }
-
-        reply.redirect('/register/registered=true');
-      });
+        });
     }
   });
 
