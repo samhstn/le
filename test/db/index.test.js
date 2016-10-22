@@ -9,4 +9,5 @@ require('./updateCollection/handleNewWords.test.js');
 require('./updateCollection/handleUpdateWords.test.js');
 require('./updateCollection/handleDeleteWords.test.js');
 require('./getWords.test.js');
+require('./getCollectionWithWords.test.js');
 require('./deleteCollection.js');

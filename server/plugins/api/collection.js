@@ -1,6 +1,7 @@
 const assert = require('assert');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 const getCollections = require('../../../db/pg/getCollections.js');
+const getCollectionsWithWordData = require('../../../db/pg/getCollectionsWithWordData.js');
 const deleteCollection = require('../../../db/pg/deleteCollection.js');
 
 exports.register = (server, options, next) => {
@@ -8,14 +9,13 @@ exports.register = (server, options, next) => {
 
   server.route([
     {
-      // TODO: get average score and number of words
       method: 'get',
       path: '/api/collection',
       handler: (request, reply) => {
         const cookie = request.headers.cookie || request.headers['set-cookie'][0];
         const username = usernameFromCookie(cookie);
 
-        getCollections(pool)(username)
+        getCollectionsWithWordData(pool)(username)
           .then((collections) => reply({ collections }));
       }
     },
