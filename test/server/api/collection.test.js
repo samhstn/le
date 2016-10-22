@@ -7,8 +7,9 @@ const pool = server.app.pool;
 
 const flushDb = require('../../helpers/flushDb.js')(pool, redisCli);
 const authenticate = require('../../helpers/authenticate.js')(pool, redisCli);
-const getCollections = require('../../helpers/getCollections.js')(pool);
-const createCollection = require('../../helpers/createCollection.js')(pool);
+const getCollections = require('../../../db/pg/getCollections.js')(pool);
+const createCollection = require('../../../db/pg/createCollection.js')(pool);
+const getWords = require('../../../db/pg/getWords.js')(pool);
 
 tape('GET :: /api/collection', (t) => {
   const options = {
@@ -31,25 +32,30 @@ tape('GET :: /api/collection', (t) => {
     .then((res) => {
       t.equal(res.statusCode, 302);
       t.equal(res.headers.location, '/login/timeout=true');
+
       return authenticate(userObj);
     })
     .then((_headers) => {
       headers = _headers;
+
       return server.inject(Object.assign(options, { headers }))
     })
     .then((res) => {
       t.equal(res.statusCode, 200);
       t.deepEqual(JSON.parse(res.payload).collections, {});
+
       return createCollection(collectionObj);
     })
     .then(() => server.inject(Object.assign(options, { headers })))
     .then((res) => {
+      const collections = JSON.parse(res.payload).collections;
+      const collectionId = Object.keys(collections)[0];
+
       t.equal(res.statusCode, 200);
-      t.equal(Object.keys(JSON.parse(res.payload).collections).length, 1);
-      const collectionId = Object.keys(JSON.parse(res.payload).collections)[0];
-      const collection = JSON.parse(res.payload).collections[collectionId];
-      t.equal(collection.collection_name, 'another name');
-      t.equal(collection.collection_description, 'another description');
+      t.equal(Object.keys(collections).length, 1);
+      t.equal(collections[collectionId].collection_name, 'another name');
+      t.equal(collections[collectionId].collection_description, 'another description');
+
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -77,24 +83,18 @@ tape('POST :: /api/collection', (t) => {
       return getCollections(userObj.username);
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_name, 'collection1');
-      t.equal(res[0].collection_description, 'my first collection');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'collection1');
+      t.equal(res['100'].collection_description, 'my first collection');
+
       t.end();
     })
     .catch((err) => assert(!err, err));
 });
 
 tape('PUT :: /api/collection/{collection_id}', (t) => {
-  const userObj = { username: 'sam', password: 'pass' };
-
-  const collectionObj = {
-    username: 'sam',
-    collection_name: 'another name',
-    collection_description: 'another description'
-  };
-
-  let headers, collection_id;
+  let headers;
 
   flushDb()
     .then(() => {
@@ -108,40 +108,33 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
     .then((res) => {
       t.equal(res.statusCode, 302);
       t.equal(res.headers.location, '/login/timeout=true');
-      return authenticate(userObj);
+
+      return authenticate({
+        username: 'sam',
+        password: 'pass'
+      });
     })
     .then((_headers) => {
       headers = _headers;
 
-      const options = {
-        method: 'put',
-        url: '/api/collection/100',
-        payload: {
-          collection_name: 'new name',
-          collection_description: 'description 2.0'
-        }
+      const collectionObj = {
+        username: 'sam',
+        collection_name: 'another name',
+        collection_description: 'another description'
       };
-
-      return server.inject(Object.assign(options, { headers }));
-    })
-    .then((res) => {
-      t.equal(res.statusCode, 400);
-      t.equal(JSON.parse(res.payload).message, 'Collection does not exist');
 
       return createCollection(collectionObj);
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_name, 'another name');
-      t.equal(res[0].collection_description, 'another description');
-
-      collection_id = res[0].collection_id;
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_name, 'another name');
+      t.equal(res['100'].collection_description, 'another description');
 
       const options = {
         method: 'put',
-        url: '/api/collection/' + collection_id,
+        url: '/api/collection/100',
         payload: {
           collection_name: 'new name',
           collection_description: 'description 2.0'
@@ -157,14 +150,14 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_description, 'another description');
-      t.equal(res[0].collection_name, 'another name');
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_description, 'description 2.0');
+      t.equal(res['100'].collection_name, 'new name');
 
       const options = {
         method: 'put',
-        url: '/api/collection/' + collection_id,
+        url: '/api/collection/100',
         payload: {
           collection_description: 'even newer description',
           new_words: [
@@ -191,10 +184,26 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(res.length, 1);
+      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res)[0], '100');
+      t.equal(res['100'].collection_description, 'even newer description');
+      t.equal(res['100'].collection_name, 'new name');
+      return getWords('100');
+    })
+    .then((res) => {
+      t.equal(res.length, 2);
+      t.equal(res[0].word_id, '100');
       t.equal(res[0].collection_id, '100');
-      t.equal(res[0].collection_description, 'another description');
-      t.equal(res[0].collection_name, 'another name');
+      t.equal(res[0].direction, 'enToDe');
+      t.equal(res[0].source_word, 'hello');
+      t.deepEqual(res[0].target_words, [ 'Hallo' ]);
+
+      t.equal(res[1].word_id, '101');
+      t.equal(res[1].collection_id, '100');
+      t.equal(res[1].direction, 'deToEn');
+      t.equal(res[1].source_word, 'Wiedersehen');
+      t.deepEqual(res[1].target_words, [ 'Bye' ]);
+
       t.end();
     })
     .catch((err) => assert(!err, err));

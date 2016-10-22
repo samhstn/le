@@ -16,29 +16,26 @@ function format (rows) {
 }
 
 module.exports = (pool) => {
-  return function (username) {
+  return function (collection_id) {
     return new Promise((resolve, reject) => {
-      if (!username) {
-        return reject('Username is not defined');
-      }
-
       pool.connect((connectErr, client, done) => {
         rejectErr(connectErr, reject, done);
 
         client.query(
           'select '
-          + 'collection_table.collection_id, '
-          + 'collection_table.collection_name, '
-          + 'collection_table.collection_description '
-          + 'from user_table inner join collection_table '
-          + 'on user_table.user_id = collection_table.user_id '
-          + 'where user_table.username = $1',
-          [ username ],
+          + 'c.collection_id, c.collection_name, c.collection_description, '
+          + 'w.word_id, w.direction, w.source_word, w.target_words, '
+          + 'w.hint, w.attempts, w.correct_attempts, w.score '
+          + 'from '
+          + 'collection_table as c inner join '
+          + 'word_table as w on c.collection_id = w.collection_id '
+          + ' where c.collection_id = $1',
+          [ collection_id ],
           (selectErr, data) => {
             done();
             rejectErr(selectErr, reject);
 
-            resolve(format(data.rows));
+            resolve(data.rows);
           }
         );
       });
