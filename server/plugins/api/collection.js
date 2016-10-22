@@ -2,6 +2,7 @@ const assert = require('assert');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 const getCollections = require('../../../db/pg/getCollections.js');
 const getCollectionsWithWordData = require('../../../db/pg/getCollectionsWithWordData.js');
+const getCollectionWithWords = require('../../../db/pg/getCollectionWithWords.js');
 const deleteCollection = require('../../../db/pg/deleteCollection.js');
 
 exports.register = (server, options, next) => {

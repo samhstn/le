@@ -10,4 +10,5 @@ require('./updateCollection/handleUpdateWords.test.js');
 require('./updateCollection/handleDeleteWords.test.js');
 require('./getWords.test.js');
 require('./getCollectionWithWords.test.js');
+require('./getCollectionsWithWordData.test.js');
 require('./deleteCollection.js');
