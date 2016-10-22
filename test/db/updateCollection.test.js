@@ -9,30 +9,36 @@ const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../helpers/registerUser.js')(pool);
 const createCollection = require('../../db/pg/createCollection.js')(pool);
 const getCollections = require('../../db/pg/getCollections.js')(pool);
-const updateCollection = require('../../db/pg/updateCollection.js')(pool);
 const getWords = require('../../db/pg/getWords.js')(pool);
-
-let id;
+const updateCollection = require('../../db/pg/updateCollection.js')(pool);
 
 tape('updateCollection', (t) => {
   flushDb()
     .then(() => registerUser({ username: 'sam', password: 'asdf' }))
     .then(() => createCollection({
       username: 'sam',
-      collection_name: 'hi',
-      collection_description: 'desc'
+      collection_name: 'hi1',
+      collection_description: 'desc1'
+    }))
+    .then(() => createCollection({
+      username: 'sam',
+      collection_name: 'hi2',
+      collection_description: 'desc2'
+    }))
+    .then(() => createCollection({
+      username: 'sam',
+      collection_name: 'hi3',
+      collection_description: 'desc3'
     }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res).length, 3);
       t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'hi');
-      t.equal(res['100'].collection_description, 'desc');
-
-      id = Object.keys(res)[0];
+      t.equal(res['100'].collection_name, 'hi1');
+      t.equal(res['100'].collection_description, 'desc1');
 
       const collectionObj = {
-        collection_id: id,
+        collection_id: '100',
         collection_description: 'new description',
         new_words: [
           {
@@ -50,13 +56,38 @@ tape('updateCollection', (t) => {
 
       return updateCollection(collectionObj);
     })
+    .then(() => {
+      const collectionObj = {
+        collection_id: '102',
+        collection_description: 'new description 2',
+        new_words: [
+          {
+            direction: 'deToEn',
+            source_word: 'Wiedersehen',
+            target_words: ['Bye']
+          },
+          {
+            direction: 'enToDe',
+            source_word: 'hello',
+            target_words: ['hallo', 'Guten Tag']
+          },
+          {
+            direction: 'deToEn',
+            source_word: 'die Bibliothek',
+            target_words: ['the library']
+          }
+        ]
+      };
+
+      return updateCollection(collectionObj);
+    })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res).length, 3);
       t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'hi');
+      t.equal(res['100'].collection_name, 'hi1');
       t.equal(res['100'].collection_description, 'new description');
-      return getWords(id);
+      return getWords('100');
     })
     .then((res) => {
       t.equal(res.length, 2);
@@ -72,12 +103,16 @@ tape('updateCollection', (t) => {
       t.deepEqual(res[1].target_words, [ 'hallo', 'Guten Tag']);
 
       const collectionObj = {
-        collection_id: id,
+        collection_id: '100',
         update_words: {
           '101': {
             target_words: [ 'hallo' ],
             hint: 'my first hint',
             score: 5.6
+          },
+          '102': {
+            hint: 'library hint',
+            score: 7
           }
         },
         delete_words: ['100']
