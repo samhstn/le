@@ -1,6 +1,7 @@
 const assert = require('assert');
 const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 const getCollections = require('../../../db/pg/getCollections.js');
+const deleteCollection = require('../../../db/pg/deleteCollection.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;
@@ -98,11 +99,21 @@ exports.register = (server, options, next) => {
       }
     },
     {
-      // TODO: start
       method: 'delete',
       path: '/api/collection/{collection_id}',
       handler: (request, reply) => {
-        reply('WIP');
+        const collection_id = request.params.collection_id;
+
+        deleteCollection(pool)(collection_id)
+          .then(() => {
+            reply({
+              message: 'Collection has been deleted',
+              info: { deleted: true }
+            });
+          })
+          .catch((err) => {
+            reply(err).code(400);
+          });
       }
     }
   ]);
