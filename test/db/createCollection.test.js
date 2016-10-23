@@ -32,7 +32,7 @@ tape('createCollection', (t) => {
   flushDb()
     .then(() => registerUser({ username: 'sam', password: 'pass' }))
     .then(() => createCollection(collectionObj))
-    .then((res) => getAllCollections())
+    .then(getAllCollections)
     .then((res) => {
       t.equal(res.rows[0].collection_name, 'colllll');
       t.equal(res.rows[0].collection_description, 'another coll')

@@ -9,12 +9,6 @@ const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const setupPool = require('../helpers/setupPool.js')(pool);
 const checkUserRegistered = require('../helpers/checkUserRegistered.js')(pool);
 
-function rejectErr (err, reject) {
-  if (err) {
-    reject(err);
-  }
-}
-
 tape('checkUserRegistered with no user registered', (t) => {
   flushDb()
     .then(() => checkUserRegistered('sam'))
@@ -37,7 +31,10 @@ tape('checkUserRegistered with user registered', (t) => {
           ['sam', 'pass'],
           (err) => {
             _.done();
-            rejectErr(err, reject);
+            if (err) {
+              return reject(err);
+            }
+
             resolve('sam');
           }
         );

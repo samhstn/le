@@ -15,3 +15,4 @@ require('./deleteCollection.js');
 
 require('./updateSettings.js');
 require('./getSettings.js');
+require('./updateScores.test.js');

@@ -11,6 +11,8 @@ const createCollection = require('../../db/pg/createCollection.js')(pool);
 const getCollections = require('../../db/pg/getCollections.js')(pool);
 const getWords = require('../../db/pg/getWords.js')(pool);
 const updateCollection = require('../../db/pg/updateCollection.js')(pool);
+const updateScores = require('../../db/pg/updateScores.js')(pool);
+const updateSettings = require('../../db/pg/updateSettings.js')(pool);
 
 tape('updateCollection', (t) => {
   flushDb()
@@ -125,7 +127,7 @@ tape('updateCollection', (t) => {
           '102': {
             target_words: [ 'GoodBye' ],
             hint: 'my first hint',
-            score: 8.8
+            score: 9.2
           },
           '103': {
             score: 4
@@ -140,11 +142,11 @@ tape('updateCollection', (t) => {
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.deepEqual(res[0].target_words, [ 'GoodBye' ]);
-      t.equal(res[0].hint, 'my first hint');
-      t.equal(res[0].score, 6.9);
-      t.equal(res[1].hint, 'Hello hint');
-      t.equal(res[1].score, 7.1);
+      t.deepEqual(res.filter((o) => o.word_id === '100')[0].target_words, [ 'GoodBye' ]);
+      t.equal(res.filter((o) => o.word_id === '100')[0].hint, 'my first hint');
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 6.9);
+      t.equal(res.filter((o) => o.word_id === '101')[0].hint, 'Hello hint');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 7.1);
 
       return getWords('101');
     })
@@ -155,11 +157,51 @@ tape('updateCollection', (t) => {
     })
     .then((res) => {
       t.equal(res.length, 3);
-      t.deepEqual(res[0].target_words, [ 'GoodBye' ]);
-      t.equal(res[0].hint, 'my first hint');
-      t.equal(res[0].score, 8.8);
-      t.equal(res[1].score, 4);
-      t.equal(res[2].score, 9.9);
+      t.deepEqual(res.filter((o) => o.word_id === '102')[0].target_words, [ 'GoodBye' ]);
+      t.equal(res.filter((o) => o.word_id === '102')[0].hint, 'my first hint');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 9.2);
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 9.9);
+
+      const settingsObj = {
+        'sam': {
+          decrease_per_hour: 1,
+          decrease_per_day: 3,
+          correct_answer_increase: 1,
+          incorrect_answer_decrease: 1
+        }
+      };
+
+      return updateSettings(settingsObj);
+    })
+    .then(() => updateScores('hour'))
+    .then(() => getWords('100'))
+    .then((res) => {
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5.9);
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 6.1);
+
+      return getWords('102');
+    })
+    .then((res) => {
+      t.equal(res.length, 3);
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 8.2);
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 8.9);
+
+      return updateScores('day');
+    })
+    .then(() => getWords('100'))
+    .then((res) => {
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5);
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 5);
+
+      return getWords('102');
+    })
+    .then((res) => {
+      t.equal(res.length, 3);
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 5.2);
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 5.9);
 
       t.end();
     })
