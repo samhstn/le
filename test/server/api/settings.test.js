@@ -41,7 +41,7 @@ tape('GET :: /api/collection', (t) => {
       ];
       t.deepEqual(Object.keys(JSON.parse(res.payload).settings), settingsKeys);
       settingsKeys.forEach((key) => {
-        t.notOk(JSON.parse(res.payload).settings[key]);
+        t.equal(JSON.parse(res.payload).settings[key], '1');
       });
 
       const settingsObj = {
@@ -112,7 +112,7 @@ tape('PUT :: /api/settings', (t) => {
     })
     .then((res) => {
       t.equal(res[0].decrease_per_hour, '1');
-      t.notOk(res[0].decrease_per_day);
+      t.equal(res[0].decrease_per_day, '1');
       t.equal(res[0].correct_answer_increase, '5');
       t.equal(res[0].incorrect_answer_decrease, '6');
       t.end();

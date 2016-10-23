@@ -32,10 +32,11 @@ tape('updateCollection', (t) => {
     }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 3);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'hi1');
-      t.equal(res['100'].collection_description, 'desc1');
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+      Object.keys(res).forEach((key, i) => {
+        t.equal(res[key].collection_name, 'hi' + (i + 1));
+        t.equal(res[key].collection_description, 'desc' + (i + 1));
+      });
 
       const collectionObj = {
         collection_id: '100',
@@ -44,12 +45,12 @@ tape('updateCollection', (t) => {
           {
             direction: 'deToEn',
             source_word: 'Wiedersehen',
-            target_words: ['Bye']
+            target_words: [ 'Bye' ]
           },
           {
             direction: 'enToDe',
             source_word: 'hello',
-            target_words: ['hallo', 'Guten Tag']
+            target_words: [ 'hallo', 'Guten Tag' ]
           }
         ]
       };
@@ -64,17 +65,17 @@ tape('updateCollection', (t) => {
           {
             direction: 'deToEn',
             source_word: 'Wiedersehen',
-            target_words: ['Bye']
+            target_words: [ 'Bye' ]
           },
           {
             direction: 'enToDe',
             source_word: 'hello',
-            target_words: ['hallo', 'Guten Tag']
+            target_words: [ 'hallo', 'Guten Tag' ]
           },
           {
             direction: 'deToEn',
             source_word: 'die Bibliothek',
-            target_words: ['the library']
+            target_words: [ 'the library' ]
           }
         ]
       };
@@ -83,10 +84,8 @@ tape('updateCollection', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 3);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'hi1');
-      t.equal(res['100'].collection_description, 'new description');
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+
       return getWords('100');
     })
     .then((res) => {
@@ -100,36 +99,68 @@ tape('updateCollection', (t) => {
       t.equal(res[1].collection_id, '100');
       t.equal(res[1].direction, 'enToDe');
       t.equal(res[1].source_word, 'hello');
-      t.deepEqual(res[1].target_words, [ 'hallo', 'Guten Tag']);
+      t.deepEqual(res[1].target_words, [ 'hallo', 'Guten Tag' ]);
 
       const collectionObj = {
         collection_id: '100',
         update_words: {
-          '101': {
-            target_words: [ 'hallo' ],
+          '100': {
+            target_words: [ 'GoodBye' ],
             hint: 'my first hint',
-            score: 5.6
+            score: 6.9
           },
-          '102': {
-            hint: 'library hint',
-            score: 7
+          '101': {
+            hint: 'Hello hint',
+            score: 7.1
           }
-        },
-        delete_words: ['100']
+        }
+      };
+
+      return updateCollection(collectionObj);
+    })
+    .then((res) => {
+      const collectionObj = {
+        collection_id: '102',
+        update_words: {
+          '102': {
+            target_words: [ 'GoodBye' ],
+            hint: 'my first hint',
+            score: 8.8
+          },
+          '103': {
+            score: 4
+          },
+          '104': {
+            score: 9.9
+          }
+        }
       };
 
       return updateCollection(collectionObj);
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].word_id, '101');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'enToDe');
-      t.equal(res[0].source_word, 'hello');
-      t.deepEqual(res[0].target_words, [ 'hallo' ]);
+      t.deepEqual(res[0].target_words, [ 'GoodBye' ]);
       t.equal(res[0].hint, 'my first hint');
-      t.equal(res[0].score, 5.6);
+      t.equal(res[0].score, 6.9);
+      t.equal(res[1].hint, 'Hello hint');
+      t.equal(res[1].score, 7.1);
+
+      return getWords('101');
+    })
+    .then((res) => {
+      t.deepEqual(res, []);
+
+      return getWords('102');
+    })
+    .then((res) => {
+      t.equal(res.length, 3);
+      t.deepEqual(res[0].target_words, [ 'GoodBye' ]);
+      t.equal(res[0].hint, 'my first hint');
+      t.equal(res[0].score, 8.8);
+      t.equal(res[1].score, 4);
+      t.equal(res[2].score, 9.9);
+
       t.end();
     })
     .catch((err) => assert(!err, err));

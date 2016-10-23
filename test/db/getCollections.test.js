@@ -22,6 +22,7 @@ tape('getCollections', (t) => {
     .then(() => getCollections('sam'))
     .then((res) => {
       t.deepEqual(res, {});
+
       return createCollection(collectionObj);
     })
     .then(() => getCollections('sam'))
