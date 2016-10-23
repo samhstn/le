@@ -67,9 +67,37 @@ tape('getCollectionWithWords', (t) => {
     })
     .then(() => getCollectionWithWords('100'))
     .then((res) => {
-      // TODO: write more tests for this
-      t.equal(res.length, 3);
-      t.equal(res[0].collection_id, '100');
+      t.equal(res.collection_id, '100');
+      t.equal(res.collection_name, 'col1');
+      t.equal(res.collection_description, 'col desc1');
+      t.equal(res.words.length, 3);
+      t.equal(res.words[0].word_id, '100');
+      t.equal(res.words[0].direction, 'deToEn');
+      t.equal(res.words[0].source_word, 'Wiedersehen');
+      t.deepEqual(res.words[0].target_words, [ 'Bye' ]);
+      t.equal(res.words[0].hint, null);
+      t.equal(res.words[0].attempts, '0');
+      t.equal(res.words[0].correct_attempts, '0');
+      t.equal(res.words[0].score, 5);
+
+      t.equal(res.words[1].word_id, '101');
+      t.equal(res.words[1].direction, 'enToDe');
+      t.equal(res.words[1].source_word, 'hello');
+      t.deepEqual(res.words[1].target_words, [ 'hallo', 'Guten Tag' ]);
+      t.equal(res.words[1].hint, null);
+      t.equal(res.words[1].attempts, '0');
+      t.equal(res.words[1].correct_attempts, '0');
+      t.equal(res.words[1].score, 5);
+
+      t.equal(res.words[2].word_id, '102');
+      t.equal(res.words[2].direction, 'deToEn');
+      t.equal(res.words[2].source_word, 'das Auto');
+      t.deepEqual(res.words[2].target_words, [ 'the car' ]);
+      t.equal(res.words[2].hint, null);
+      t.equal(res.words[2].attempts, '0');
+      t.equal(res.words[2].correct_attempts, '0');
+      t.equal(res.words[2].score, 5);
+
       t.end();
     })
     .catch((err) => assert(!err, err));
