@@ -33,6 +33,7 @@ module.exports = (pool, collectionObj) => {
   return new Promise((resolve, reject) => {
     pool.connect((connectErr, client, done) => {
       if (connectErr) {
+        done();
         return reject(connectErr);
       }
 
@@ -40,7 +41,8 @@ module.exports = (pool, collectionObj) => {
         .then(() => {
           done();
           resolve();
-        });
+        })
+        .catch((err) => reject(err));
     });
   });
 

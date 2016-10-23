@@ -1,50 +1,47 @@
 const assert = require('assert');
 
-function rejectErr(err, reject) {
-  if (err) {
-    reject(err);
-  }
-}
+module.exports = (pool) => (collectionObj) => {
+  const { username, collection_name, collection_description } = collectionObj;
 
-module.exports = (pool) => {
-  return function (collectionObj) {
-    const username = collectionObj.username;
-    const name = collectionObj.collection_name;
-    const description = collectionObj.collection_description;
+  assert(username && collection_name && collection_description, 'Incorrect collection object')
 
-    assert(username && name && description, 'Incorrect collection object')
+  return new Promise((resolve, reject) => {
+    pool.connect((connectErr, client, done) => {
+      if (connectErr) {
+        done();
+        return reject(connectErr);
+      }
 
-    return new Promise((resolve, reject) => {
-      pool.connect((connectErr, client, done) => {
-        rejectErr(connectErr);
-
-        client.query(
-          'select user_id from user_table where username = $1',
-          [ username ],
-          (selectErr, idData) => {
-            rejectErr(selectErr);
-
-            if (!idData.rows.length) {
-              return reject('User is not logged in');
-            }
-
-            const user_id = idData.rows[0].user_id
-
-            client.query(
-              'insert into collection_table ('
-              + 'user_id, collection_name, collection_description'
-              + ') values ($1, $2, $3)',
-              [ user_id, name, description ],
-              (collErr) => {
-                done();
-                rejectErr(collErr, reject);
-
-                resolve();
-              }
-            );
+      client.query(
+        'select user_id from user_table where username = $1',
+        [ username ],
+        (selectErr, idData) => {
+          if (selectErr) {
+            done();
+            return reject(selectErr);
           }
-        );
-      });
+
+          if (!idData.rows.length) {
+            return reject('User is not logged in');
+          }
+
+          client.query(
+            'insert into collection_table ('
+            + 'user_id, collection_name, collection_description'
+            + ') values ($1, $2, $3)',
+            [ idData.rows[0].user_id, collection_name, collection_description ],
+
+            (collErr) => {
+              done();
+              if (collErr) {
+                return reject(collErr);
+              }
+
+              resolve();
+            }
+          );
+        }
+      );
     });
-  }
-}
+  });
+};
