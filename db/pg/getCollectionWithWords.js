@@ -1,12 +1,19 @@
 function format (rows) {
-  const obj = {};
-  rows.forEach((row) => {
-    obj[row.collection_id] = {
-      collection_name: row.collection_name,
-      collection_description: row.collection_description
-    };
-  });
-  return obj;
+  return {
+    collection_id: rows[0].collection_id,
+    collection_name: rows[0].collection_name,
+    collection_description: rows[0].collection_description,
+    words: rows.map((row) => ({
+      word_id: row.word_id,
+      direction: row.direction,
+      source_word: row.source_word,
+      target_words: row.target_words,
+      hint: row.hint,
+      attempts: row.attempts,
+      correct_attempts: row.correct_attempts,
+      score: row.score
+    }))
+  };
 }
 
 module.exports = (pool) => (collection_id) => {
@@ -23,7 +30,7 @@ module.exports = (pool) => (collection_id) => {
         + 'w.word_id, w.direction, w.source_word, w.target_words, '
         + 'w.hint, w.attempts, w.correct_attempts, w.score '
         + 'from '
-        + 'collection_table as c inner join '
+        + 'collection_table as c left outer join '
         + 'word_table as w on c.collection_id = w.collection_id '
         + ' where c.collection_id = $1',
         [ collection_id ],
@@ -33,7 +40,7 @@ module.exports = (pool) => (collection_id) => {
             return reject(selectErr);
           }
 
-          resolve(data.rows);
+          resolve(format(data.rows));
         }
       );
     });
