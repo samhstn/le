@@ -29,7 +29,7 @@ exports.register = (server, options, next) => {
         const id = request.params.collection_id;
 
         getCollectionWithWords(pool)(id)
-          .then((collections) => reply({ collections }));
+          .then((collection) => reply({ collection }));
       }
     },
     {
