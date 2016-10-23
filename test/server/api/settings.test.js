@@ -10,7 +10,7 @@ const authenticate = require('../../helpers/authenticate.js')(pool, redisCli);
 const updateSettings = require('../../../db/pg/updateSettings.js')(pool);
 const getSettings = require('../../../db/pg/getSettings.js')(pool);
 
-tape('GET :: /api/collection', (t) => {
+tape('GET :: /api/settings', (t) => {
   const options = {
     method: 'get',
     url: '/api/settings'
