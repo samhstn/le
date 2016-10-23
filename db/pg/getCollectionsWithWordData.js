@@ -1,9 +1,3 @@
-function rejectErr(err, reject) {
-  if (err) {
-    reject(err);
-  }
-}
-
 function format (rows) {
   const uniqueRows = rows.reduce((prev, curr) => {
     if (prev.map((r) => r.collection_id).indexOf(curr.collection_id) === -1) {
@@ -38,35 +32,38 @@ function format (rows) {
       };
     }
   });
+
   return obj;
 }
 
-module.exports = (pool) => {
-  return function (username) {
-    return new Promise((resolve, reject) => {
-      pool.connect((connectErr, client, done) => {
-        rejectErr(connectErr, reject, done);
+module.exports = (pool) => (username) => {
+  return new Promise((resolve, reject) => {
+    pool.connect((connectErr, client, done) => {
+      if (connectErr) {
+        return reject(connectErr);
+      }
 
-        client.query(
-          'select '
-          + 'c.collection_id, c.collection_name, c.collection_description, '
-          + 'w.attempts, w.correct_attempts, w.score, w.word_id '
-          + 'from '
-          + 'user_table as u inner join '
-          + 'collection_table as c '
-          + 'on c.user_id = u.user_id '
-          + 'left outer join word_table as w '
-          + 'on c.collection_id = w.collection_id '
-          + 'where u.username = $1',
-          [ username ],
-          (selectErr, data) => {
-            done();
-            rejectErr(selectErr, reject);
-
-            resolve(format(data.rows));
+      client.query(
+        'select '
+        + 'c.collection_id, c.collection_name, c.collection_description, '
+        + 'w.attempts, w.correct_attempts, w.score, w.word_id '
+        + 'from '
+        + 'user_table as u inner join '
+        + 'collection_table as c '
+        + 'on c.user_id = u.user_id '
+        + 'left outer join word_table as w '
+        + 'on c.collection_id = w.collection_id '
+        + 'where u.username = $1',
+        [ username ],
+        (selectErr, data) => {
+          done();
+          if (selectErr) {
+            return reject(selectErr);
           }
-        );
-      });
+
+          resolve(format(data.rows));
+        }
+      );
     });
-  }
-}
+  });
+};

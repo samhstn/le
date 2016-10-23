@@ -9,6 +9,7 @@ module.exports = (pool, collectionObj) => {
   return new Promise((resolve, reject) => {
     pool.connect((connectErr, client, done) => {
       if (connectErr) {
+        done();
         return reject('connection err');
       }
 
