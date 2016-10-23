@@ -14,10 +14,10 @@ CREATE TABLE user_table (
   user_id BIGINT DEFAULT nextval('user_seq'::text),
   username VARCHAR,
   password VARCHAR,
-  decrease_per_hour DECIMAL,
-  decrease_per_day DECIMAL,
-  correct_answer_increase DECIMAL,
-  incorrect_answer_decrease DECIMAL,
+  decrease_per_hour DECIMAL DEFAULT 1,
+  decrease_per_day DECIMAL DEFAULT 1,
+  correct_answer_increase DECIMAL DEFAULT 1,
+  incorrect_answer_decrease DECIMAL DEFAULT 1,
   CONSTRAINT user_pk PRIMARY KEY(user_id)
 )
 WITHOUT OIDS;
@@ -42,9 +42,9 @@ CREATE TABLE word_table (
   source_word VARCHAR,
   target_words VARCHAR[],
   hint VARCHAR,
-  attempts VARCHAR,
-  correct_attempts VARCHAR,
-  score REAL,
+  attempts VARCHAR DEFAULT 0,
+  correct_attempts VARCHAR DEFAULT 0,
+  score REAL DEFAULT 5,
   CONSTRAINT word_pk PRIMARY KEY(word_id)
 )
 WITHOUT OIDS;
