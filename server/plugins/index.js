@@ -11,8 +11,7 @@ const scheme = require('./auth/scheme.js');
 const strategy = require('./auth/strategy.js');
 
 const collection = require('./api/collection.js');
-// const result = require('./api/result.js');
-// const settings = require('./api/settings.js');
+const settings = require('./api/settings.js');
 
 const plugins = [
   Inert,
@@ -25,8 +24,7 @@ const plugins = [
   scheme,
   strategy,
   collection,
-  // result,
-  // settings
+  settings
 ];
 
 module.exports = plugins;

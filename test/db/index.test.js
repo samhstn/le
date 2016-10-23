@@ -12,3 +12,6 @@ require('./getWords.test.js');
 require('./getCollectionWithWords.test.js');
 require('./getCollectionsWithWordData.test.js');
 require('./deleteCollection.js');
+
+require('./updateSettings.js');
+require('./getSettings.js');
