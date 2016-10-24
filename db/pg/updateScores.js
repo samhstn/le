@@ -1,4 +1,29 @@
-const getUsernamesAndDecrease = (pool) => (type) => {
+const getUsernamesAndDecrease = (pool) => (type, username) => {
+  if (username) {
+    return new Promise((resolve, reject) => {
+      pool.connect((connectErr, client, done) => {
+        if (connectErr) {
+          return reject(connectErr);
+        }
+
+        client.query(
+          'select username, decrease_per_' + type
+          + ' from user_table '
+          + 'where username = $1',
+          [ username ],
+          (selectErr, data) => {
+            done();
+            if (selectErr) {
+              return reject(selectErr);
+            }
+
+            resolve({ type, usersAndDecr: data.rows });
+          }
+        );
+      });
+    });
+  }
+
   return new Promise((resolve, reject) => {
     pool.connect((connectErr, client, done) => {
       if (connectErr) {
@@ -103,9 +128,9 @@ const decreaseWords = (pool) => (users) => {
   );
 };
 
-module.exports = (pool) => (type) => {
+module.exports = (pool) => (type, username) => {
   return new Promise((resolve, reject) => {
-    getUsernamesAndDecrease(pool)(type)
+    getUsernamesAndDecrease(pool)(type, username)
       .then(getWordsToDecrease(pool))
       .then(decreaseWords(pool))
       .then(resolve)
