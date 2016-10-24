@@ -368,4 +368,5 @@ tape('DELETE :: /api/collection/{collection_id}', (t) => {
 tape.onFinish(() => {
   redisCli.quit();
   pool.end();
+  clearInterval(server.app.interval);
 });

@@ -111,4 +111,5 @@ tape('GET :: /resource/helpers/request.js', (t) => {
 tape.onFinish(() => {
   server.app.redisCli.quit();
   server.app.pool.end();
+  clearInterval(server.app.interval);
 });

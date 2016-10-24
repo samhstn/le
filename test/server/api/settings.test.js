@@ -123,4 +123,5 @@ tape('PUT :: /api/settings', (t) => {
 tape.onFinish(() => {
   redisCli.quit();
   pool.end();
+  clearInterval(server.app.interval);
 });

@@ -25,5 +25,6 @@ tape.onFinish(() => {
     .then(() => {
       pool.end();
       redisCli.quit();
+      clearInterval(server.app.interval);
     });
 });
