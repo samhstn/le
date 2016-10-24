@@ -1,12 +1,12 @@
 const updateScores = require('../../../db/pg/updateScores.js');
 
-exports.register = (sever, options, next) => {
+exports.register = (server, options, next) => {
   const pool = server.app.pool;
-  const server.app.startDate = server.app.startDate || Date.now();
-  const server.app.updateHourCount = server.app.updateHourCount || 0;
-  const server.app.updateDayCount = server.app.updateDayCount || 0;
+  server.app.startDate = server.app.startDate || Date.now();
+  server.app.updateHourCount = server.app.updateHourCount || 0;
+  server.app.updateDayCount = server.app.updateDayCount || 0;
 
-  setInterval(() => {
+  server.app.interval = setInterval(() => {
     if (Date.now() - 24 * 60 * 60 * 1000 * updateDayCount - server.app.startDate > 0) {
       updateScores(pool)('day')
         .then(() => {
@@ -21,11 +21,13 @@ exports.register = (sever, options, next) => {
     }
   }, 30 * 1000);
 
+  server.route([]);
+
   next();
 }
 
 exports.register.attributes = {
   pkg: {
-    name: 'decrease score
+    name: 'decrease score'
   }
 };
