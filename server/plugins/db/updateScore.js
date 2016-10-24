@@ -1,4 +1,5 @@
 const updateScores = require('../../../db/pg/updateScores.js');
+const usernameFromCookie = require('../../helpers/usernameFromCookie.js');
 
 exports.register = (server, options, next) => {
   const pool = server.app.pool;
@@ -13,7 +14,7 @@ exports.register = (server, options, next) => {
           ++ server.app.updateDayCount;
           ++ server.app.updateHourCount;
         });
-    } else if (server.app.startDate - Date.now() - 60 * 60 * 1000 * updateCount > 0) {
+    } else if (Date.now() - 60 * 60 * 1000 * updateCount > 0 - server.app.startDate) {
       updateScores(pool)('hour')
         .then(() => {
           ++ server.app.updateHourCount;
@@ -21,7 +22,32 @@ exports.register = (server, options, next) => {
     }
   }, 30 * 1000);
 
-  server.route([]);
+  server.route([
+    {
+      method: 'get',
+      path: '/api/startDate',
+      handler: (request, reply) => {
+        reply({ startDate: server.app.startDate });
+      }
+    },
+    {
+      method: 'post',
+      path: '/api/updateScores',
+      handler: (request, reply) => {
+        const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+        const username = usernameFromCookie(cookie);
+        const type = request.payload.type;
+
+        updateScores(pool)(type, username)
+          .then(() => {
+            reply({
+              message: 'Scores updated',
+              info: { updated: true }
+            })
+          });
+      }
+    }
+  ]);
 
   next();
 }
