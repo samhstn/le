@@ -13,6 +13,8 @@ const strategy = require('./auth/strategy.js');
 const collection = require('./api/collection.js');
 const settings = require('./api/settings.js');
 
+const updateScore = require('./db/updateScore.js');
+
 const plugins = [
   Inert,
   Vision,
@@ -24,7 +26,8 @@ const plugins = [
   scheme,
   strategy,
   collection,
-  settings
+  settings,
+  updateScore
 ];
 
 module.exports = plugins;
