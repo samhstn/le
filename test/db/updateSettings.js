@@ -46,11 +46,11 @@ tape('updateSettings', (t) => {
     }))
     .then(() => getSettings('sam'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].decrease_per_hour, '1');
-      t.equal(res[0].decrease_per_day, '3');
-      t.equal(res[0].correct_answer_increase, '1');
-      t.equal(res[0].incorrect_answer_decrease, '1');
+      t.equal(res.length, 1, 'O4Bbs4LrB6');
+      t.equal(res[0].decrease_per_hour, '1', 'O4Bbs4LrB6');
+      t.equal(res[0].decrease_per_day, '3', 'O4Bbs4LrB6');
+      t.equal(res[0].correct_answer_increase, '1', 'O4Bbs4LrB6');
+      t.equal(res[0].incorrect_answer_decrease, '1', 'O4Bbs4LrB6');
       t.end();
     })
     .catch((err) => assert(err));

@@ -34,10 +34,10 @@ tape('updateScores', (t) => {
     }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ], 'Ek9vRITCpD');
       Object.keys(res).forEach((key, i) => {
-        t.equal(res[key].collection_name, 'hi' + (i + 1));
-        t.equal(res[key].collection_description, 'desc' + (i + 1));
+        t.equal(res[key].collection_name, 'hi' + (i + 1), '9KA08suq0i');
+        t.equal(res[key].collection_description, 'desc' + (i + 1), '9KA08suq0i');
       });
 
       const collectionObj = {
@@ -86,22 +86,22 @@ tape('updateScores', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ], 'Ek9vRITCpD');
 
       return getWords('100');
     })
     .then((res) => {
-      t.equal(res.length, 2);
-      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen');
-      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ]);
-      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello');
-      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ]);
+      t.equal(res.length, 2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen', '9KA08suq0i');
+      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello', '9KA08suq0i');
+      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ], 'Ek9vRITCpD');
 
       const collectionObj = {
         collection_id: '100',
@@ -142,26 +142,26 @@ tape('updateScores', (t) => {
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.deepEqual(res.filter((o) => o.word_id === '100')[0].target_words, [ 'GoodBye' ]);
-      t.equal(res.filter((o) => o.word_id === '100')[0].hint, 'my first hint');
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 6.9);
-      t.equal(res.filter((o) => o.word_id === '101')[0].hint, 'Hello hint');
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 7.1);
+      t.deepEqual(res.filter((o) => o.word_id === '100')[0].target_words, [ 'GoodBye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '100')[0].hint, 'my first hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 6.9, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].hint, 'Hello hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 7.1, '9KA08suq0i');
 
       return getWords('101');
     })
     .then((res) => {
-      t.deepEqual(res, []);
+      t.deepEqual(res, [], 'Ek9vRITCpD');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.deepEqual(res.filter((o) => o.word_id === '102')[0].target_words, [ 'GoodBye' ]);
-      t.equal(res.filter((o) => o.word_id === '102')[0].hint, 'my first hint');
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 9.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 9.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.deepEqual(res.filter((o) => o.word_id === '102')[0].target_words, [ 'GoodBye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '102')[0].hint, 'my first hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 9.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 9.9, '9KA08suq0i');
 
       const settingsObj = {
         'sam': {
@@ -177,31 +177,31 @@ tape('updateScores', (t) => {
     .then(() => updateScores('hour'))
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5.9);
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 6.1);
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5.9, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 6.1, '9KA08suq0i');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 8.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 8.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 8.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 8.9, '9KA08suq0i');
 
       return updateScores('day');
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5);
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 5);
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 5, '9KA08suq0i');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 5.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 5.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 5.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 5.9, '9KA08suq0i');
 
       t.end();
     })
@@ -228,10 +228,10 @@ tape('updateScores of an individual user', (t) => {
     }))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ], 'Ek9vRITCpD');
       Object.keys(res).forEach((key, i) => {
-        t.equal(res[key].collection_name, 'hi' + (i + 1));
-        t.equal(res[key].collection_description, 'desc' + (i + 1));
+        t.equal(res[key].collection_name, 'hi' + (i + 1), '9KA08suq0i');
+        t.equal(res[key].collection_description, 'desc' + (i + 1), '9KA08suq0i');
       });
 
       const collectionObj = {
@@ -280,22 +280,22 @@ tape('updateScores of an individual user', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(Object.keys(res), [ '100', '101', '102' ]);
+      t.deepEqual(Object.keys(res), [ '100', '101', '102' ], 'Ek9vRITCpD');
 
       return getWords('100');
     })
     .then((res) => {
-      t.equal(res.length, 2);
-      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen');
-      t.deepEqual(res[0].target_words, [ 'Bye' ]);
-      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello');
-      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ]);
+      t.equal(res.length, 2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen', '9KA08suq0i');
+      t.deepEqual(res[0].target_words, [ 'Bye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe', '9KA08suq0i');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello', '9KA08suq0i');
+      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ], 'Ek9vRITCpD');
 
       const collectionObj = {
         collection_id: '100',
@@ -336,26 +336,26 @@ tape('updateScores of an individual user', (t) => {
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.deepEqual(res.filter((o) => o.word_id === '100')[0].target_words, [ 'GoodBye' ]);
-      t.equal(res.filter((o) => o.word_id === '100')[0].hint, 'my first hint');
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 6.9);
-      t.equal(res.filter((o) => o.word_id === '101')[0].hint, 'Hello hint');
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 7.1);
+      t.deepEqual(res.filter((o) => o.word_id === '100')[0].target_words, [ 'GoodBye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '100')[0].hint, 'my first hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 6.9, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].hint, 'Hello hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 7.1, '9KA08suq0i');
 
       return getWords('101');
     })
     .then((res) => {
-      t.deepEqual(res, []);
+      t.deepEqual(res, [], 'Ek9vRITCpD');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.deepEqual(res.filter((o) => o.word_id === '102')[0].target_words, [ 'GoodBye' ]);
-      t.equal(res.filter((o) => o.word_id === '102')[0].hint, 'my first hint');
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 9.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 9.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.deepEqual(res.filter((o) => o.word_id === '102')[0].target_words, [ 'GoodBye' ], 'Ek9vRITCpD');
+      t.equal(res.filter((o) => o.word_id === '102')[0].hint, 'my first hint', '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 9.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 9.9, '9KA08suq0i');
 
       const settingsObj = {
         'sam': {
@@ -371,31 +371,31 @@ tape('updateScores of an individual user', (t) => {
     .then(() => updateScores('hour', 'sam'))
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5.9);
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 6.1);
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5.9, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 6.1, '9KA08suq0i');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 8.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 8.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 8.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 8.9, '9KA08suq0i');
 
       return updateScores('day', 'sam');
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5);
-      t.equal(res.filter((o) => o.word_id === '101')[0].score, 5);
+      t.equal(res.filter((o) => o.word_id === '100')[0].score, 5, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '101')[0].score, 5, '9KA08suq0i');
 
       return getWords('102');
     })
     .then((res) => {
-      t.equal(res.length, 3);
-      t.equal(res.filter((o) => o.word_id === '102')[0].score, 5.2);
-      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4);
-      t.equal(res.filter((o) => o.word_id === '104')[0].score, 5.9);
+      t.equal(res.length, 3, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '102')[0].score, 5.2, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '103')[0].score, 4, '9KA08suq0i');
+      t.equal(res.filter((o) => o.word_id === '104')[0].score, 5.9, '9KA08suq0i');
 
       t.end();
     })

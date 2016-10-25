@@ -38,36 +38,36 @@ tape('POST :: /login', (t) => {
   flushDb()
     .then(() => server.inject(registerOpts))
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/register/registered=true');
+      t.equal(res.statusCode, 302, '0Ad1FRuChh');
+      t.equal(res.headers.location, '/register/registered=true', '0Ad1FRuChh');
       return checkUserRegistered('daBoss');
     })
     .then((res) => {
-      t.ok(res);
+      t.ok(res, 'GbGzKqAzZE');
       return server.inject(loginOpts);
     })
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/');
-      t.equal(res.headers['set-cookie'][0].substring(0, 7), 'cookie=');
+      t.equal(res.statusCode, 302, '0Ad1FRuChh');
+      t.equal(res.headers.location, '/', '0Ad1FRuChh');
+      t.equal(res.headers['set-cookie'][0].substring(0, 7), 'cookie=', '0Ad1FRuChh');
       cookie = res.headers['set-cookie'][0].split(';')[0];
       return checkUserLoggedInWRedis('daBoss');
     })
     .then((res) => {
-      t.ok(res);
+      t.ok(res, 'GbGzKqAzZE');
       return server.inject(Object.assign(logoutOpts, { headers: { cookie } }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, '0Ad1FRuChh');
       t.equal(
         res.headers['set-cookie'][0],
         'cookie=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Strict'
       );
-      t.deepEqual(JSON.parse(res.payload), { logout: true });
+      t.deepEqual(JSON.parse(res.payload), { logout: true }, 'YvRFGhj0N9');
       return checkUserLoggedInWRedis('daBoss');
     })
     .then((res) => {
-      t.notOk(res);
+      t.notOk(res, 'iD6yh5Ozrt');
       t.end();
     })
     .catch((err) => assert(!err, err));

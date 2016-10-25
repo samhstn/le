@@ -9,6 +9,6 @@ tape('setDefinedString', (t) => {
   };
   const str = setDefinedString(obj);
 
-  t.equal(str, 'set key1 = $2, key2 = $3 ');
+  t.equal(str, 'set key1 = $2, key2 = $3 ', 'hHFB8Qd73i');
   t.end();
 });

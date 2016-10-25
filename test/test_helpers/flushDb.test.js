@@ -23,7 +23,7 @@ tape('flush db clears pg database', (t) => {
           'select * from user_table',
           (err, data) => {
             rejectErr(err, reject);
-            t.equal(data.rows.length, 0, 'pg database is empty');
+            t.equal(data.rows.length, 0, 'pg database is empty', 'KYiiYb5Ofc');
             resolve({ client: _.client, done: _.done });
           }
         );
@@ -47,7 +47,7 @@ tape('flush db clears pg database', (t) => {
           'select * from user_table',
           (err, data) => {
             _.done();
-            t.equal(data.rows.length, 1, 'pg database contains data');
+            t.equal(data.rows.length, 1, 'pg database contains data', 'KYiiYb5Ofc');
             rejectErr(err, reject);
             resolve();
           }
@@ -70,7 +70,7 @@ tape('flush db clears pg database', (t) => {
           (err, data) => {
             _.done();
             rejectErr(err, reject)
-            t.equal(data.rows.length, 0, 'pg database is cleared by flushDb');
+            t.equal(data.rows.length, 0, 'pg database is cleared by flushDb', 'KYiiYb5Ofc');
             t.end();
           }
         );
@@ -83,17 +83,17 @@ tape('flushDb clears the redis database', (t) => {
   flushDb()
     .then(() => redisCli.keysAsync('*'))
     .then((keys) => {
-      t.equal(keys.length, 0, 'redis db is empty');
+      t.equal(keys.length, 0, 'redis db is empty', 'KYiiYb5Ofc');
       return redisCli.set('key', 'value')
     })
     .then(() => redisCli.keysAsync('*'))
     .then((keys) => {
-      t.equal(keys.length, 1, 'redis db has data');
+      t.equal(keys.length, 1, 'redis db has data', 'KYiiYb5Ofc');
       return flushDb();
     })
     .then(() => redisCli.keysAsync('*'))
     .then((keys) => {
-      t.equal(keys.length, 0, 'redis db is cleared by flushDb');
+      t.equal(keys.length, 0, 'redis db is cleared by flushDb', 'KYiiYb5Ofc');
       t.end();
     })
     .catch((err) => assert(!err, err));

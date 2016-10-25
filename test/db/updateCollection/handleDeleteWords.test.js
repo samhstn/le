@@ -42,16 +42,16 @@ tape('handleUpdateWords', (t) => {
     .then(() => handleNewWords(pool, wordsObj))
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.length, 2);
-      t.equal(res[0].word_id, '100');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'enToDe');
-      t.equal(res[0].source_word, 'hello');
-      t.equal(res[1].word_id, '101');
-      t.equal(res[1].collection_id, '100');
-      t.equal(res[1].direction, 'deToEn');
-      t.equal(res[1].source_word, 'das auto');
-      t.deepEqual(res[1].target_words, [ 'the car' ]);
+      t.equal(res.length, 2, 'BXV3AUhlV4');
+      t.equal(res[0].word_id, '100', 'BXV3AUhlV4');
+      t.equal(res[0].collection_id, '100', 'BXV3AUhlV4');
+      t.equal(res[0].direction, 'enToDe', 'BXV3AUhlV4');
+      t.equal(res[0].source_word, 'hello', 'BXV3AUhlV4');
+      t.equal(res[1].word_id, '101', 'BXV3AUhlV4');
+      t.equal(res[1].collection_id, '100', 'BXV3AUhlV4');
+      t.equal(res[1].direction, 'deToEn', 'BXV3AUhlV4');
+      t.equal(res[1].source_word, 'das auto', 'BXV3AUhlV4');
+      t.deepEqual(res[1].target_words, [ 'the car' ], 'NzNgeJAStS');
       const deleteCollObj = {
         collection_id: '100',
         delete_words: ['100']
@@ -60,12 +60,12 @@ tape('handleUpdateWords', (t) => {
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].word_id, '101');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'deToEn');
-      t.equal(res[0].source_word, 'das auto');
-      t.deepEqual(res[0].target_words, [ 'the car' ]);
+      t.equal(res.length, 1, 'BXV3AUhlV4');
+      t.equal(res[0].word_id, '101', 'BXV3AUhlV4');
+      t.equal(res[0].collection_id, '100', 'BXV3AUhlV4');
+      t.equal(res[0].direction, 'deToEn', 'BXV3AUhlV4');
+      t.equal(res[0].source_word, 'das auto', 'BXV3AUhlV4');
+      t.deepEqual(res[0].target_words, [ 'the car' ], 'NzNgeJAStS');
       t.end();
     })
     .catch((err) => assert(!err, err));

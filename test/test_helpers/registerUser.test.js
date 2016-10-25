@@ -34,13 +34,13 @@ tape('registerUser', (t) => {
   flushDb()
     .then(() => getUsers())
     .then((data) => {
-      t.equal(data.rows.length, 0);
+      t.equal(data.rows.length, 0, 'pTFqOxXmHu');
       return registerUser({ username: 'sam', password: 'pass' });
     })
     .then(() => getUsers())
     .then((data) => {
-      t.equal(data.rows.length, 1);
-      t.equal(data.rows.map((u) => u.username)[0], 'sam');
+      t.equal(data.rows.length, 1, 'pTFqOxXmHu');
+      t.equal(data.rows.map((u) => u.username)[0], 'sam', 'pTFqOxXmHu');
       t.end();
     })
     .catch((err) => assert(!err, err));

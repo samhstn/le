@@ -12,7 +12,7 @@ tape('checkUserLoggedInWRedis with no user logged in', (t) => {
   flushDb()
     .then(() => checkUserLoggedInWRedis('sam'))
     .then((res) => {
-      t.equal(res, false);
+      t.equal(res, false, 'Letb9Dkerm');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -25,7 +25,7 @@ tape('checkUserLoggedInWRedis with user logged in', (t) => {
     })
     .then(() => checkUserLoggedInWRedis('sam'))
     .then((res) => {
-      t.equal(res, true);
+      t.equal(res, true, 'Letb9Dkerm');
       t.end();
     })
     .catch((err) => assert(!err, err));

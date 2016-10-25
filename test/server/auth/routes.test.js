@@ -10,8 +10,8 @@ tape('GET :: /', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'Ilpyuw9onz');
+      t.equal(res.headers.location, '/login/timeout=true', 'Ilpyuw9onz');
       t.end();
     });
 });
@@ -24,8 +24,8 @@ tape('GET :: /practice', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'Ilpyuw9onz');
+      t.equal(res.headers.location, '/login/timeout=true', 'Ilpyuw9onz');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -39,9 +39,9 @@ tape('GET :: /login', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(res.headers['content-type'], 'text/html; charset=utf-8');
-      t.ok(res.payload.includes('/resource/tags/login.js'));
+      t.equal(res.statusCode, 200, 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'text/html; charset=utf-8', 'Ilpyuw9onz');
+      t.ok(res.payload.includes('/resource/tags/login.js'), 'LdYtPVEn8C');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -55,9 +55,9 @@ tape('GET :: /register', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(res.headers['content-type'], 'text/html; charset=utf-8');
-      t.ok(res.payload.includes('/resource/tags/register.js'));
+      t.equal(res.statusCode, 200, 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'text/html; charset=utf-8', 'Ilpyuw9onz');
+      t.ok(res.payload.includes('/resource/tags/register.js'), 'LdYtPVEn8C');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -71,8 +71,8 @@ tape('GET :: /riot+compiler.min.js', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
+      t.equal(res.statusCode, 200, 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8', 'Ilpyuw9onz');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -86,8 +86,8 @@ tape('GET :: /resource/tags/login.js', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 200, 'You will have to run the build to find this file');
-      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
+      t.equal(res.statusCode, 200, 'You will have to run the build to find this file', 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8', 'Ilpyuw9onz');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -101,8 +101,8 @@ tape('GET :: /resource/helpers/request.js', (t) => {
 
   server.inject(options)
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8');
+      t.equal(res.statusCode, 200, 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8', 'Ilpyuw9onz');
       t.end();
     })
     .catch((err) => assert(!err, err));
