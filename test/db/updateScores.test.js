@@ -290,7 +290,7 @@ tape('updateScores of an individual user', (t) => {
       t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100', '9KA08suq0i');
       t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn', '9KA08suq0i');
       t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen', '9KA08suq0i');
-      t.deepEqual(res[0].target_words, [ 'Bye' ], 'Ek9vRITCpD');
+      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ], 'Ek9vRITCpE');
       t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101', '9KA08suq0i');
       t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100', '9KA08suq0i');
       t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe', '9KA08suq0i');
