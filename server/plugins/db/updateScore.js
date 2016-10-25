@@ -8,13 +8,13 @@ exports.register = (server, options, next) => {
   server.app.updateDayCount = server.app.updateDayCount || 0;
 
   server.app.interval = setInterval(() => {
-    if (Date.now() - 24 * 60 * 60 * 1000 * updateDayCount - server.app.startDate > 0) {
+    if (Date.now() - 24 * 60 * 60 * 1000 * server.app.updateDayCount - server.app.startDate > 0) {
       updateScores(pool)('day')
         .then(() => {
           ++ server.app.updateDayCount;
           ++ server.app.updateHourCount;
         });
-    } else if (Date.now() - 60 * 60 * 1000 * updateCount > 0 - server.app.startDate) {
+    } else if (Date.now() - 60 * 60 * 1000 * server.app.updateHourCount > 0 - server.app.startDate) {
       updateScores(pool)('hour')
         .then(() => {
           ++ server.app.updateHourCount;
