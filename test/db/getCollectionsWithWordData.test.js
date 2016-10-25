@@ -35,13 +35,13 @@ tape('getCollectionsWithWordData', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 2);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'col1');
-      t.equal(res['100'].collection_description, 'col desc1')
-      t.equal(Object.keys(res)[1], '101');
-      t.equal(res['101'].collection_name, 'col2');
-      t.equal(res['101'].collection_description, 'col desc2')
+      t.equal(Object.keys(res).length, 2, 'O5H5K3Ztyy');
+      t.equal(Object.keys(res)[0], '100', 'O5H5K3Ztyy');
+      t.equal(res['100'].collection_name, 'col1', 'O5H5K3Ztyy');
+      t.equal(res['100'].collection_description, 'col desc1', 'O5H5K3Ztyy')
+      t.equal(Object.keys(res)[1], '101', 'O5H5K3Ztyy');
+      t.equal(res['101'].collection_name, 'col2', 'O5H5K3Ztyy');
+      t.equal(res['101'].collection_description, 'col desc2', 'O5H5K3Ztyy')
       const collectionObj = {
         collection_id: '100',
         new_words: [
@@ -89,18 +89,18 @@ tape('getCollectionsWithWordData', (t) => {
     })
     .then(() => getCollectionsWithWordData('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 2);
-      t.deepEqual(Object.keys(res), ['100', '101']);
+      t.equal(Object.keys(res).length, 2, 'O5H5K3Ztyy');
+      t.deepEqual(Object.keys(res), ['100', '101'], 'hSVO8y5o3b');
 
-      t.equal(res['100'].collection_name, 'col1');
-      t.equal(res['100'].collection_description, 'col desc1');
-      t.equal(res['100'].average_score, 6.67);
-      t.equal(res['100'].number_of_words, 3);
+      t.equal(res['100'].collection_name, 'col1', 'O5H5K3Ztyy');
+      t.equal(res['100'].collection_description, 'col desc1', 'O5H5K3Ztyy');
+      t.equal(res['100'].average_score, 6.67, 'O5H5K3Ztyy');
+      t.equal(res['100'].number_of_words, 3, 'O5H5K3Ztyy');
 
-      t.equal(res['101'].collection_name, 'col2');
-      t.equal(res['101'].collection_description, 'col desc2');
-      t.equal(res['101'].average_score, null);
-      t.equal(res['101'].number_of_words, 0);
+      t.equal(res['101'].collection_name, 'col2', 'O5H5K3Ztyy');
+      t.equal(res['101'].collection_description, 'col desc2', 'O5H5K3Ztyy');
+      t.equal(res['101'].average_score, null, 'O5H5K3Ztyy');
+      t.equal(res['101'].number_of_words, 0, 'O5H5K3Ztyy');
 
       t.end();
     })

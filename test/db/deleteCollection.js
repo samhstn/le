@@ -24,12 +24,12 @@ tape('deleteCollection', (t) => {
     .then(() => createCollection(collectionObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
+      t.equal(Object.keys(res).length, 1, 'hQCTkXsHKm');
       return deleteCollection('100');
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(res, {});
+      t.deepEqual(res, {}, 'TSitw7L11S');
       t.end();
     })
     .catch((err) => assert(!err, err));

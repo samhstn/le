@@ -25,12 +25,12 @@ tape('POST :: /logout', (t) => {
     .then(() => loginUserWRedis({ username: 'steve', key }))
     .then(() => checkUserLoggedInWRedis('steve'))
     .then((res) => {
-      t.ok(res);
+      t.ok(res, 'LXiZUj3K1g');
       return server.inject(options);
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.deepEqual(JSON.parse(res.payload), { logout: true });
+      t.equal(res.statusCode, 200, 'QHb5OyrxL8');
+      t.deepEqual(JSON.parse(res.payload), { logout: true }, 'OqKSV3st7m');
       t.equal(
         res.headers['set-cookie'][0],
         'cookie=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Strict'
@@ -43,4 +43,5 @@ tape('POST :: /logout', (t) => {
 tape.onFinish(() => {
   redisCli.quit();
   pool.end();
+  clearInterval(server.app.interval);
 });

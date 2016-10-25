@@ -36,19 +36,19 @@ tape('handleNewWords', (t) => {
     .then(() => handleNewWords(pool, newWordsObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'name');
-      t.equal(res['100'].collection_description, 'desc');
+      t.equal(Object.keys(res).length, 1, 'YMygtV8cfw');
+      t.equal(Object.keys(res)[0], '100', 'YMygtV8cfw');
+      t.equal(res['100'].collection_name, 'name', 'YMygtV8cfw');
+      t.equal(res['100'].collection_description, 'desc', 'YMygtV8cfw');
     })
     .then(() => getWords('100'))
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].word_id, '100');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'enToDe');
-      t.equal(res[0].source_word, 'hello');
-      t.deepEqual(res[0].target_words, [ 'hallo' ]);
+      t.equal(res.length, 1, 'YMygtV8cfw');
+      t.equal(res[0].word_id, '100', 'YMygtV8cfw');
+      t.equal(res[0].collection_id, '100', 'YMygtV8cfw');
+      t.equal(res[0].direction, 'enToDe', 'YMygtV8cfw');
+      t.equal(res[0].source_word, 'hello', 'YMygtV8cfw');
+      t.deepEqual(res[0].target_words, [ 'hallo' ], 'D2UptVR7Jk');
       t.end();
     })
     .catch((err) => assert(!err, err));

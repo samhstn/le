@@ -31,8 +31,8 @@ tape('GET :: /api/collection', (t) => {
   flushDb()
     .then(() => server.inject(options))
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'ogDv9CFa4T');
+      t.equal(res.headers.location, '/login/timeout=true', 'ogDv9CFa4T');
 
       return authenticate(userObj);
     })
@@ -42,8 +42,8 @@ tape('GET :: /api/collection', (t) => {
       return server.inject(Object.assign(options, { headers }))
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.deepEqual(JSON.parse(res.payload).collections, {});
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.deepEqual(JSON.parse(res.payload).collections, {}, 'I0lYn6Hlo0');
 
       return createCollection(collectionObj);
     })
@@ -52,10 +52,10 @@ tape('GET :: /api/collection', (t) => {
       const collections = JSON.parse(res.payload).collections;
       const collectionId = Object.keys(collections)[0];
 
-      t.equal(res.statusCode, 200);
-      t.equal(Object.keys(collections).length, 1);
-      t.equal(collections[collectionId].collection_name, 'another name');
-      t.equal(collections[collectionId].collection_description, 'another description');
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.equal(Object.keys(collections).length, 1, 'ogDv9CFa4T');
+      t.equal(collections[collectionId].collection_name, 'another name', 'ogDv9CFa4T');
+      t.equal(collections[collectionId].collection_description, 'another description', 'ogDv9CFa4T');
 
       t.end();
     })
@@ -83,8 +83,8 @@ tape('GET :: /api/collection/{collection_id}', (t) => {
       return server.inject(options);
     })
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'ogDv9CFa4T');
+      t.equal(res.headers.location, '/login/timeout=true', 'ogDv9CFa4T');
 
       return authenticate(userObj);
     })
@@ -102,13 +102,13 @@ tape('GET :: /api/collection/{collection_id}', (t) => {
       return server.inject(Object.assign(options, { headers }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
       const collection = JSON.parse(res.payload).collection;
   
-      t.equal(collection.collection_id, '100');
-      t.equal(collection.collection_name, 'another name');
-      t.equal(collection.collection_description, 'another description');
-      t.equal(collection.words.length, 1);
+      t.equal(collection.collection_id, '100', 'ogDv9CFa4T');
+      t.equal(collection.collection_name, 'another name', 'ogDv9CFa4T');
+      t.equal(collection.collection_description, 'another description', 'ogDv9CFa4T');
+      t.equal(collection.words.length, 1, 'ogDv9CFa4T');
 
       const collectionObj = {
         collection_id: '100',
@@ -137,31 +137,31 @@ tape('GET :: /api/collection/{collection_id}', (t) => {
       return server.inject(Object.assign(options, { headers }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
       const collection = JSON.parse(res.payload).collection;
   
-      t.equal(collection.collection_id, '100');
-      t.equal(collection.collection_name, 'another name');
-      t.equal(collection.collection_description, 'another description');
+      t.equal(collection.collection_id, '100', 'ogDv9CFa4T');
+      t.equal(collection.collection_name, 'another name', 'ogDv9CFa4T');
+      t.equal(collection.collection_description, 'another description', 'ogDv9CFa4T');
 
-      t.equal(collection.words.length, 2);
-      t.equal(collection.words[0].word_id, '100');
-      t.equal(collection.words[0].direction, 'deToEn');
-      t.equal(collection.words[0].source_word, 'Wiedersehen');
-      t.deepEqual(collection.words[0].target_words, [ 'Bye' ]);
-      t.equal(collection.words[0].hint, null);
-      t.equal(collection.words[0].attempts, '0');
-      t.equal(collection.words[0].correct_attempts, '0');
-      t.equal(collection.words[0].score, 5);
+      t.equal(collection.words.length, 2, 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.word_id === '100')[0].word_id, '100', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen', 'ogDv9CFa4T');
+      t.deepEqual(collection.words.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ], 'I0lYn6Hlo0');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].hint, null, 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].attempts, '0', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].correct_attempts, '0', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].score, 5, 'ogDv9CFa4T');
 
-      t.equal(collection.words[1].word_id, '101');
-      t.equal(collection.words[1].direction, 'enToDe');
-      t.equal(collection.words[1].source_word, 'hello');
-      t.deepEqual(collection.words[1].target_words, [ 'hallo', 'Guten Tag' ]);
-      t.equal(collection.words[1].hint, null);
-      t.equal(collection.words[1].attempts, '0');
-      t.equal(collection.words[1].correct_attempts, '0');
-      t.equal(collection.words[1].score, 5);
+      t.equal(collection.words.filter((o) => o.word_id === '101')[0].word_id, '101', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello', 'ogDv9CFa4T');
+      t.deepEqual(collection.words.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ], 'I0lYn6Hlo0');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].hint, null, 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].attempts, '0', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].correct_attempts, '0', 'ogDv9CFa4T');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].score, 5, 'ogDv9CFa4T');
 
       t.end();
     })
@@ -184,16 +184,16 @@ tape('POST :: /api/collection', (t) => {
     .then(() => authenticate(userObj))
     .then((headers) => server.inject(Object.assign(options, { headers })))
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(JSON.parse(res.payload).message, 'New collection created');
-      t.ok(JSON.parse(res.payload).info.created);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.equal(JSON.parse(res.payload).message, 'New collection created', 'ogDv9CFa4T');
+      t.ok(JSON.parse(res.payload).info.created, '4OVGjSnVwC');
       return getCollections(userObj.username);
     })
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'collection1');
-      t.equal(res['100'].collection_description, 'my first collection');
+      t.equal(Object.keys(res).length, 1, 'ogDv9CFa4T');
+      t.equal(Object.keys(res)[0], '100', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_name, 'collection1', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_description, 'my first collection', 'ogDv9CFa4T');
 
       t.end();
     })
@@ -213,8 +213,8 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return server.inject(options)
     })
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'ogDv9CFa4T');
+      t.equal(res.headers.location, '/login/timeout=true', 'ogDv9CFa4T');
 
       return authenticate({
         username: 'sam',
@@ -234,10 +234,10 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'another name');
-      t.equal(res['100'].collection_description, 'another description');
+      t.equal(Object.keys(res).length, 1, 'ogDv9CFa4T');
+      t.equal(Object.keys(res)[0], '100', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_name, 'another name', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_description, 'another description', 'ogDv9CFa4T');
 
       const options = {
         method: 'put',
@@ -251,16 +251,16 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return server.inject(Object.assign(options, { headers }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(JSON.parse(res.payload).message, 'Collection has been updated');
-      t.ok(JSON.parse(res.payload).info.updated);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.equal(JSON.parse(res.payload).message, 'Collection has been updated', 'ogDv9CFa4T');
+      t.ok(JSON.parse(res.payload).info.updated, '4OVGjSnVwC');
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_description, 'description 2.0');
-      t.equal(res['100'].collection_name, 'new name');
+      t.equal(Object.keys(res).length, 1, 'ogDv9CFa4T');
+      t.equal(Object.keys(res)[0], '100', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_description, 'description 2.0', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_name, 'new name', 'ogDv9CFa4T');
 
       const options = {
         method: 'put',
@@ -285,29 +285,29 @@ tape('PUT :: /api/collection/{collection_id}', (t) => {
       return server.inject(Object.assign(options, { headers }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(JSON.parse(res.payload).message, 'Collection has been updated');
-      t.ok(JSON.parse(res.payload).info.updated);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.equal(JSON.parse(res.payload).message, 'Collection has been updated', 'ogDv9CFa4T');
+      t.ok(JSON.parse(res.payload).info.updated, '4OVGjSnVwC');
       return getCollections('sam');
     })
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_description, 'even newer description');
-      t.equal(res['100'].collection_name, 'new name');
+      t.equal(Object.keys(res).length, 1, 'ogDv9CFa4T');
+      t.equal(Object.keys(res)[0], '100', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_description, 'even newer description', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_name, 'new name', 'ogDv9CFa4T');
       return getWords('100');
     })
     .then((res) => {
-      t.equal(res.length, 2);
-      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe');
-      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello');
-      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'Hallo' ]);
+      t.equal(res.length, 2, 'ogDv9CFa4T');
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100', 'ogDv9CFa4T');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe', 'ogDv9CFa4T');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello', 'ogDv9CFa4T');
+      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'Hallo' ], 'I0lYn6Hlo0');
 
-      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn');
-      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen');
-      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ]);
+      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101', 'ogDv9CFa4T');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn', 'ogDv9CFa4T');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen', 'ogDv9CFa4T');
+      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ], 'I0lYn6Hlo0');
 
       t.end();
     })
@@ -333,8 +333,8 @@ tape('DELETE :: /api/collection/{collection_id}', (t) => {
   flushDb()
     .then(() => server.inject(options))
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'ogDv9CFa4T');
+      t.equal(res.headers.location, '/login/timeout=true', 'ogDv9CFa4T');
 
       return authenticate(userObj);
     })
@@ -345,20 +345,20 @@ tape('DELETE :: /api/collection/{collection_id}', (t) => {
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.deepEqual(Object.keys(res), [ '100' ]);
-      t.equal(res['100'].collection_description, 'another description');
-      t.equal(res['100'].collection_name, 'another name');
+      t.deepEqual(Object.keys(res), [ '100' ], 'I0lYn6Hlo0');
+      t.equal(res['100'].collection_description, 'another description', 'ogDv9CFa4T');
+      t.equal(res['100'].collection_name, 'another name', 'ogDv9CFa4T');
       return server.inject(Object.assign(options, { headers }))
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(JSON.parse(res.payload).message, 'Collection has been deleted');
-      t.ok(JSON.parse(res.payload).info.deleted);
+      t.equal(res.statusCode, 200, 'ogDv9CFa4T');
+      t.equal(JSON.parse(res.payload).message, 'Collection has been deleted', 'ogDv9CFa4T');
+      t.ok(JSON.parse(res.payload).info.deleted, '4OVGjSnVwC');
 
       return getCollections('sam');
     })
     .then((res) => {
-      t.deepEqual(res, {});
+      t.deepEqual(res, {}, 'I0lYn6Hlo0');
 
       t.end();
     })
@@ -368,4 +368,5 @@ tape('DELETE :: /api/collection/{collection_id}', (t) => {
 tape.onFinish(() => {
   redisCli.quit();
   pool.end();
+  clearInterval(server.app.interval);
 });

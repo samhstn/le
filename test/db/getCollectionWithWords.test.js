@@ -67,36 +67,36 @@ tape('getCollectionWithWords', (t) => {
     })
     .then(() => getCollectionWithWords('100'))
     .then((res) => {
-      t.equal(res.collection_id, '100');
-      t.equal(res.collection_name, 'col1');
-      t.equal(res.collection_description, 'col desc1');
-      t.equal(res.words.length, 3);
-      t.equal(res.words[0].word_id, '100');
-      t.equal(res.words[0].direction, 'deToEn');
-      t.equal(res.words[0].source_word, 'Wiedersehen');
-      t.deepEqual(res.words[0].target_words, [ 'Bye' ]);
-      t.equal(res.words[0].hint, null);
-      t.equal(res.words[0].attempts, '0');
-      t.equal(res.words[0].correct_attempts, '0');
-      t.equal(res.words[0].score, 5);
+      t.equal(res.collection_id, '100', 'WUEyoe5ZCR');
+      t.equal(res.collection_name, 'col1', 'WUEyoe5ZCR');
+      t.equal(res.collection_description, 'col desc1', 'WUEyoe5ZCR');
+      t.equal(res.words.length, 3, 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.word_id === '100')[0].word_id, '100', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].direction, 'deToEn', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].source_word, 'Wiedersehen', 'WUEyoe5ZCR');
+      t.deepEqual(res.words[0].target_words, [ 'Bye' ], 'pyhwTDxM0y');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].hint, null, 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].correct_attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'Wiedersehen')[0].score, 5, 'WUEyoe5ZCR');
 
-      t.equal(res.words[1].word_id, '101');
-      t.equal(res.words[1].direction, 'enToDe');
-      t.equal(res.words[1].source_word, 'hello');
-      t.deepEqual(res.words[1].target_words, [ 'hallo', 'Guten Tag' ]);
-      t.equal(res.words[1].hint, null);
-      t.equal(res.words[1].attempts, '0');
-      t.equal(res.words[1].correct_attempts, '0');
-      t.equal(res.words[1].score, 5);
+      t.equal(res.words.filter((o) => o.word_id === '101')[0].word_id, '101', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].direction, 'enToDe', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].source_word, 'hello', 'WUEyoe5ZCR');
+      t.deepEqual(res.words.filter((o) => o.source_word === 'hello')[0].target_words, [ 'hallo', 'Guten Tag' ], 'pyhwTDxM0y');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].hint, null, 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].correct_attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'hello')[0].score, 5, 'WUEyoe5ZCR');
 
-      t.equal(res.words[2].word_id, '102');
-      t.equal(res.words[2].direction, 'deToEn');
-      t.equal(res.words[2].source_word, 'das Auto');
-      t.deepEqual(res.words[2].target_words, [ 'the car' ]);
-      t.equal(res.words[2].hint, null);
-      t.equal(res.words[2].attempts, '0');
-      t.equal(res.words[2].correct_attempts, '0');
-      t.equal(res.words[2].score, 5);
+      t.equal(res.words.filter((o) => o.word_id === '102')[0].word_id, '102', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].direction, 'deToEn', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].source_word, 'das Auto', 'WUEyoe5ZCR');
+      t.deepEqual(res.words.filter((o) => o.source_word === 'das Auto')[0].target_words, [ 'the car' ], 'pyhwTDxM0y');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].hint, null, 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].correct_attempts, '0', 'WUEyoe5ZCR');
+      t.equal(res.words.filter((o) => o.source_word === 'das Auto')[0].score, 5, 'WUEyoe5ZCR');
 
       t.end();
     })

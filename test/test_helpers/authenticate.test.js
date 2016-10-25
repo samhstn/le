@@ -14,7 +14,7 @@ tape('authenticate', (t) => {
     .then(() => authenticate({ username: 'sam', password: 'asdf' }))
     .then((headers) => server.inject({ method: 'get', url: '/', headers }))
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, 'gIJ3VH4AWh');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -25,5 +25,6 @@ tape.onFinish(() => {
     .then(() => {
       pool.end();
       redisCli.quit();
+      clearInterval(server.app.interval);
     });
 });

@@ -21,8 +21,8 @@ tape('GET :: /api/settings', (t) => {
   flushDb()
     .then(() => server.inject(options))
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'hFfkpF8v4c');
+      t.equal(res.headers.location, '/login/timeout=true', 'hFfkpF8v4c');
 
       return authenticate({ username: 'sam', password: 'pass' });
     })
@@ -32,16 +32,16 @@ tape('GET :: /api/settings', (t) => {
       return server.inject(Object.assign(options, { headers }))
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, 'hFfkpF8v4c');
       const settingsKeys = [
         'decrease_per_hour',
         'decrease_per_day',
         'correct_answer_increase',
         'incorrect_answer_decrease'
       ];
-      t.deepEqual(Object.keys(JSON.parse(res.payload).settings), settingsKeys);
+      t.deepEqual(Object.keys(JSON.parse(res.payload).settings), settingsKeys, 'hL7NDKwyRd');
       settingsKeys.forEach((key) => {
-        t.equal(JSON.parse(res.payload).settings[key], '1');
+        t.equal(JSON.parse(res.payload).settings[key], '1', 'hFfkpF8v4c');
       });
 
       const settingsObj = {
@@ -57,7 +57,7 @@ tape('GET :: /api/settings', (t) => {
     })
     .then(() => server.inject(Object.assign(options, { headers })))
     .then((res) => {
-      t.equal(res.statusCode, 200);
+      t.equal(res.statusCode, 200, 'hFfkpF8v4c');
       const settingsPayload = JSON.parse(res.payload).settings;
       const settingsKeys = [
         'decrease_per_hour',
@@ -65,11 +65,11 @@ tape('GET :: /api/settings', (t) => {
         'correct_answer_increase',
         'incorrect_answer_decrease'
       ];
-      t.deepEqual(Object.keys(settingsPayload), settingsKeys);
-      t.equal(settingsPayload.decrease_per_hour, '1');
-      t.equal(settingsPayload.decrease_per_day, '3');
-      t.equal(settingsPayload.correct_answer_increase, '1');
-      t.equal(settingsPayload.incorrect_answer_decrease, '5');
+      t.deepEqual(Object.keys(settingsPayload), settingsKeys, 'hL7NDKwyRd');
+      t.equal(settingsPayload.decrease_per_hour, '1', 'hFfkpF8v4c');
+      t.equal(settingsPayload.decrease_per_day, '3', 'hFfkpF8v4c');
+      t.equal(settingsPayload.correct_answer_increase, '1', 'hFfkpF8v4c');
+      t.equal(settingsPayload.incorrect_answer_decrease, '5', 'hFfkpF8v4c');
 
       t.end();
     })
@@ -87,8 +87,8 @@ tape('PUT :: /api/settings', (t) => {
   flushDb()
     .then(() => server.inject(options))
     .then((res) => {
-      t.equal(res.statusCode, 302);
-      t.equal(res.headers.location, '/login/timeout=true');
+      t.equal(res.statusCode, 302, 'hFfkpF8v4c');
+      t.equal(res.headers.location, '/login/timeout=true', 'hFfkpF8v4c');
 
       return authenticate({ username: 'sam', password: 'pass' });
     })
@@ -104,17 +104,17 @@ tape('PUT :: /api/settings', (t) => {
       return server.inject(Object.assign(options, { headers, payload }))
     })
     .then((res) => {
-      t.equal(res.statusCode, 200);
-      t.equal(JSON.parse(res.payload).message, 'Settings updated');
-      t.ok(JSON.parse(res.payload).info.updated);
+      t.equal(res.statusCode, 200, 'hFfkpF8v4c');
+      t.equal(JSON.parse(res.payload).message, 'Settings updated', 'hFfkpF8v4c');
+      t.ok(JSON.parse(res.payload).info.updated, 'so12J29jQ2');
 
       return getSettings('sam');
     })
     .then((res) => {
-      t.equal(res[0].decrease_per_hour, '1');
-      t.equal(res[0].decrease_per_day, '1');
-      t.equal(res[0].correct_answer_increase, '5');
-      t.equal(res[0].incorrect_answer_decrease, '6');
+      t.equal(res[0].decrease_per_hour, '1', 'hFfkpF8v4c');
+      t.equal(res[0].decrease_per_day, '1', 'hFfkpF8v4c');
+      t.equal(res[0].correct_answer_increase, '5', 'hFfkpF8v4c');
+      t.equal(res[0].incorrect_answer_decrease, '6', 'hFfkpF8v4c');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -123,4 +123,5 @@ tape('PUT :: /api/settings', (t) => {
 tape.onFinish(() => {
   redisCli.quit();
   pool.end();
+  clearInterval(server.app.interval);
 });

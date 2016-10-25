@@ -30,18 +30,18 @@ tape('handleCollectionUpdates', (t) => {
     .then(() => createCollection(initialCollectionObj))
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'a');
-      t.equal(res['100'].collection_description, 'a');
+      t.equal(Object.keys(res).length, 1, 'KOly50zPCS');
+      t.equal(Object.keys(res)[0], '100', 'KOly50zPCS');
+      t.equal(res['100'].collection_name, 'a', 'KOly50zPCS');
+      t.equal(res['100'].collection_description, 'a', 'KOly50zPCS');
       return handleCollectionUpdates(pool, updateCollectionObj);
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'hello name');
-      t.equal(res['100'].collection_description, 'hello description');
+      t.equal(Object.keys(res).length, 1, 'KOly50zPCS');
+      t.equal(Object.keys(res)[0], '100', 'KOly50zPCS');
+      t.equal(res['100'].collection_name, 'hello name', 'KOly50zPCS');
+      t.equal(res['100'].collection_description, 'hello description', 'KOly50zPCS');
       t.end();
     })
     .catch((err) => assert(!err, err));

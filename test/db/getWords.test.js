@@ -40,27 +40,27 @@ tape('getWords', (t) => {
     .then(() => getCollections('sam'))
     .then((res) => {
       collection_id = Object.keys(res)[0];
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'coll');
-      t.equal(res['100'].collection_description, 'desc');
+      t.equal(Object.keys(res).length, 1, 'HnmWd2o0Kj');
+      t.equal(Object.keys(res)[0], '100', 'HnmWd2o0Kj');
+      t.equal(res['100'].collection_name, 'coll', 'HnmWd2o0Kj');
+      t.equal(res['100'].collection_description, 'desc', 'HnmWd2o0Kj');
       return updateCollection(Object.assign(updateCollectionObj, { collection_id }));
     })
     .then(() => getCollections('sam'))
     .then((res) => {
-      t.equal(Object.keys(res).length, 1);
-      t.equal(Object.keys(res)[0], '100');
-      t.equal(res['100'].collection_name, 'sams collection');
-      t.equal(res['100'].collection_description, 'desc');
+      t.equal(Object.keys(res).length, 1, 'HnmWd2o0Kj');
+      t.equal(Object.keys(res)[0], '100', 'HnmWd2o0Kj');
+      t.equal(res['100'].collection_name, 'sams collection', 'HnmWd2o0Kj');
+      t.equal(res['100'].collection_description, 'desc', 'HnmWd2o0Kj');
       return getWords(collection_id);
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'enToDe');
-      t.equal(res[0].source_word, 'hello');
-      t.deepEqual(res[0].target_words, [ 'hi', 'hallo' ]);
-      t.equal(res[0].word_id, '100')
+      t.equal(res.length, 1, 'HnmWd2o0Kj');
+      t.equal(res[0].collection_id, '100', 'HnmWd2o0Kj');
+      t.equal(res[0].direction, 'enToDe', 'HnmWd2o0Kj');
+      t.equal(res[0].source_word, 'hello', 'HnmWd2o0Kj');
+      t.deepEqual(res[0].target_words, [ 'hi', 'hallo' ], '7mOiLSeaIY');
+      t.equal(res[0].word_id, '100', 'HnmWd2o0Kj')
       t.end();
     })
     .catch((err) => assert(!err, err));

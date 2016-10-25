@@ -28,11 +28,11 @@ tape('getSettings', (t) => {
       return getSettings('sam');
     })
     .then((res) => {
-      t.equal(res.length, 1);
-      t.equal(res[0].decrease_per_hour, '1');
-      t.equal(res[0].decrease_per_day, '3');
-      t.equal(res[0].correct_answer_increase, '1');
-      t.equal(res[0].incorrect_answer_decrease, '1');
+      t.equal(res.length, 1, 'Df3HgmRx0T');
+      t.equal(res[0].decrease_per_hour, '1', 'Df3HgmRx0T');
+      t.equal(res[0].decrease_per_day, '3', 'Df3HgmRx0T');
+      t.equal(res[0].correct_answer_increase, '1', 'Df3HgmRx0T');
+      t.equal(res[0].incorrect_answer_decrease, '1', 'Df3HgmRx0T');
 
       t.end();
     })

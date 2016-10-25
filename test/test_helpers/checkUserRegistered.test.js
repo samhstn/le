@@ -13,7 +13,7 @@ tape('checkUserRegistered with no user registered', (t) => {
   flushDb()
     .then(() => checkUserRegistered('sam'))
     .then((res) => {
-      t.equal(res, false);
+      t.equal(res, false, 'DiuXD0q4Rr');
       t.end();
     })
     .catch((err) => {
@@ -42,7 +42,7 @@ tape('checkUserRegistered with user registered', (t) => {
     })
     .then(checkUserRegistered)
     .then((res) => {
-      t.equal(res, true);
+      t.equal(res, true, 'DiuXD0q4Rr');
       t.end();
     })
     .catch((err) => {

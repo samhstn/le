@@ -34,8 +34,8 @@ tape('createCollection', (t) => {
     .then(() => createCollection(collectionObj))
     .then(getAllCollections)
     .then((res) => {
-      t.equal(res.rows[0].collection_name, 'colllll');
-      t.equal(res.rows[0].collection_description, 'another coll')
+      t.equal(res.rows[0].collection_name, 'colllll', 'u6YXiOyEaw');
+      t.equal(res.rows[0].collection_description, 'another coll', 'u6YXiOyEaw')
       t.end();
     })
     .catch((err) => assert(!err, err));

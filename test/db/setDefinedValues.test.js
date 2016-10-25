@@ -9,6 +9,6 @@ tape('setDefinedValues', (t) => {
   };
   const val = setDefinedValues(obj);
 
-  t.deepEqual(val, ['value1', 'value2']);
+  t.deepEqual(val, ['value1', 'value2'], 'JPubxOUd5q');
   t.end();
 });
