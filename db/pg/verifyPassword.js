@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (pool, creds) => {
   return new Promise((resolve, reject) => {
     pool.connect((connectErr, client, done) => {
@@ -16,11 +18,17 @@ module.exports = (pool, creds) => {
             return reject('db error');
           }
 
-          if (dbPass.rows[0].password !== creds.password) {
-            return reject('incorrect password');
-          }
+          bcrypt.compare(creds.password, dbPass.rows[0].password, (hashErr, res) => {
+            if (hashErr) {
+              return reject(hashErr);
+            }
 
-          resolve();
+            if (!res) {
+              return reject('incorrect password');
+            }
+
+            resolve();
+          });
         }
       );
     });

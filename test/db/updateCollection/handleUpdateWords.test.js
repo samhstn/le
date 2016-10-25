@@ -74,45 +74,44 @@ tape('handleUpdateWords', (t) => {
     .then(() => getWords('100'))
     .then((res) => {
       t.equal(res.length, 3, 'gHUClYtj8z');
-      t.equal(res[0].word_id, '100', 'gHUClYtj8z');
-      t.equal(res[0].collection_id, '100', 'gHUClYtj8z');
-      t.equal(res[0].direction, 'enToDe', 'gHUClYtj8z');
-      t.equal(res[0].source_word, 'hello', 'gHUClYtj8z');
-      t.deepEqual(res[0].target_words, [ 'hallo' ], 'arlGFnCOxt');
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hello')[0].direction, 'enToDe', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hello')[0].source_word, 'hello', 'gHUClYtj8z');
+      t.deepEqual(res.filter((o) => o.source_word === 'hello')[0].target_words, [ 'hallo' ], 'arlGFnCOxt');
+
       return handleUpdateWords(pool, newWordsObj);
     })
     .then(() => getWords('100'))
     .then((res) => {
       t.equal(res.length, 3, 'gHUClYtj8z');
-      t.equal(res[0].word_id, '100', 'gHUClYtj8z');
-      t.equal(res[0].collection_id, '100', 'gHUClYtj8z');
-      t.equal(res[0].direction, 'deToEn', 'gHUClYtj8z');
-      t.equal(res[0].source_word, 'hallo', 'gHUClYtj8z');
-      t.deepEqual(res[0].target_words, [ 'hello' ], 'arlGFnCOxt');
-      t.equal(res[0].hint, 'my first hint', 'gHUClYtj8z');
-      t.equal(res[0].attempts, '10', 'gHUClYtj8z');
-      t.equal(res[0].correct_attempts, '9', 'gHUClYtj8z');
-      t.equal(res[0].score, 6, 'gHUClYtj8z');
 
-      t.equal(res[1].word_id, '101', 'gHUClYtj8z');
-      t.equal(res[1].collection_id, '100', 'gHUClYtj8z');
-      t.equal(res[1].direction, 'deToEn', 'gHUClYtj8z');
-      t.equal(res[1].source_word, 'die Bibliothek', 'gHUClYtj8z');
-      t.deepEqual(res[1].target_words, [ 'the library' ], 'arlGFnCOxt');
-      t.equal(res[1].hint, 'second hint', 'gHUClYtj8z');
-      t.equal(res[1].attempts, '10', 'gHUClYtj8z');
-      t.equal(res[1].correct_attempts, '10', 'gHUClYtj8z');
-      t.equal(res[1].score, 9, 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].direction, 'deToEn', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].source_word, 'hallo', 'gHUClYtj8z');
+      t.deepEqual(res.filter((o) => o.source_word === 'hallo')[0].target_words, [ 'hello' ], 'arlGFnCOxt');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].hint, 'my first hint', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].attempts, '10', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].correct_attempts, '9', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'hallo')[0].score, 6, 'gHUClYtj8z');
 
-      t.equal(res[2].word_id, '102', 'gHUClYtj8z');
-      t.equal(res[2].collection_id, '100', 'gHUClYtj8z');
-      t.equal(res[2].direction, 'deToEn', 'gHUClYtj8z');
-      t.equal(res[2].source_word, 'der Laden', 'gHUClYtj8z');
-      t.deepEqual(res[2].target_words, [ 'the shop' ], 'arlGFnCOxt');
-      t.equal(res[2].hint, 'third hint', 'gHUClYtj8z');
-      t.equal(res[2].attempts, '12', 'gHUClYtj8z');
-      t.equal(res[2].correct_attempts, '10', 'gHUClYtj8z');
-      t.equal(res[2].score, 8, 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].direction, 'deToEn', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].source_word, 'die Bibliothek', 'gHUClYtj8z');
+      t.deepEqual(res.filter((o) => o.source_word === 'die Bibliothek')[0].target_words, [ 'the library' ], 'arlGFnCOxt');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].hint, 'second hint', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].attempts, '10', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].correct_attempts, '10', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'die Bibliothek')[0].score, 9, 'gHUClYtj8z');
+
+      t.equal(res.filter((o) => o.word_id === '102')[0].word_id, '102', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].direction, 'deToEn', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].source_word, 'der Laden', 'gHUClYtj8z');
+      t.deepEqual(res.filter((o) => o.source_word === 'der Laden')[0].target_words, [ 'the shop' ], 'arlGFnCOxt');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].hint, 'third hint', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].attempts, '12', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].correct_attempts, '10', 'gHUClYtj8z');
+      t.equal(res.filter((o) => o.source_word === 'der Laden')[0].score, 8, 'gHUClYtj8z');
+
       t.end();
     })
     .catch((err) => assert(!err, err));
