@@ -90,16 +90,16 @@ tape('updateCollection', (t) => {
     })
     .then((res) => {
       t.equal(res.length, 2);
-      t.equal(res[0].word_id, '100');
-      t.equal(res[0].collection_id, '100');
-      t.equal(res[0].direction, 'deToEn');
-      t.equal(res[0].source_word, 'Wiedersehen');
-      t.deepEqual(res[0].target_words, [ 'Bye' ]);
-      t.equal(res[1].word_id, '101');
-      t.equal(res[1].collection_id, '100');
-      t.equal(res[1].direction, 'enToDe');
-      t.equal(res[1].source_word, 'hello');
-      t.deepEqual(res[1].target_words, [ 'hallo', 'Guten Tag' ]);
+      t.equal(res.filter((o) => o.word_id === '100')[0].word_id, '100');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].collection_id, '100');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn');
+      t.equal(res.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen');
+      t.deepEqual(res.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ]);
+      t.equal(res.filter((o) => o.word_id === '101')[0].word_id, '101');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].collection_id, '100');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe');
+      t.equal(res.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello');
+      t.deepEqual(res.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ]);
 
       const collectionObj = {
         collection_id: '100',

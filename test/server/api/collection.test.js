@@ -145,23 +145,23 @@ tape('GET :: /api/collection/{collection_id}', (t) => {
       t.equal(collection.collection_description, 'another description');
 
       t.equal(collection.words.length, 2);
-      t.equal(collection.words[0].word_id, '100');
-      t.equal(collection.words[0].direction, 'deToEn');
-      t.equal(collection.words[0].source_word, 'Wiedersehen');
-      t.deepEqual(collection.words[0].target_words, [ 'Bye' ]);
-      t.equal(collection.words[0].hint, null);
-      t.equal(collection.words[0].attempts, '0');
-      t.equal(collection.words[0].correct_attempts, '0');
-      t.equal(collection.words[0].score, 5);
+      t.equal(collection.words.filter((o) => o.word_id === '100')[0].word_id, '100');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].direction, 'deToEn');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].source_word, 'Wiedersehen');
+      t.deepEqual(collection.words.filter((o) => o.direction === 'deToEn')[0].target_words, [ 'Bye' ]);
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].hint, null);
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].attempts, '0');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].correct_attempts, '0');
+      t.equal(collection.words.filter((o) => o.direction === 'deToEn')[0].score, 5);
 
-      t.equal(collection.words[1].word_id, '101');
-      t.equal(collection.words[1].direction, 'enToDe');
-      t.equal(collection.words[1].source_word, 'hello');
-      t.deepEqual(collection.words[1].target_words, [ 'hallo', 'Guten Tag' ]);
-      t.equal(collection.words[1].hint, null);
-      t.equal(collection.words[1].attempts, '0');
-      t.equal(collection.words[1].correct_attempts, '0');
-      t.equal(collection.words[1].score, 5);
+      t.equal(collection.words.filter((o) => o.word_id === '101')[0].word_id, '101');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].direction, 'enToDe');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].source_word, 'hello');
+      t.deepEqual(collection.words.filter((o) => o.direction === 'enToDe')[0].target_words, [ 'hallo', 'Guten Tag' ]);
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].hint, null);
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].attempts, '0');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].correct_attempts, '0');
+      t.equal(collection.words.filter((o) => o.direction === 'enToDe')[0].score, 5);
 
       t.end();
     })

@@ -8,22 +8,20 @@ const pool = new pg.pool(pg.config);
 const flushDb = require('../helpers/flushDb.js')(pool, redisCli);
 const registerUser = require('../helpers/registerUser.js')(pool);
 
-function rejectErr(err, reject) {
-  if (err) {
-    reject(err);
-  }
-}
-
 function getUsers () {
   return new Promise((resolve, reject) => {
     pool.connect((connectionErr, client, done) => {
-      rejectErr(connectionErr, reject);
+      if (connectionErr) {
+        return reject(connectionErr);
+      }
 
       client.query(
         'select username from user_table',
         (selectErr, data) => {
           done();
-          rejectErr(selectErr, reject);
+          if (selectErr) {
+            return reject(selectErr);
+          }
 
           resolve(data);
         }
