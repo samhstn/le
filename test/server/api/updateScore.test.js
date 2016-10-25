@@ -36,7 +36,7 @@ tape('GET :: /api/startDate', (t) => {
     .catch((err) => assert(err));
 });
 
-tape.only('POST :: /api/updateScores', (t) => {
+tape('POST :: /api/updateScores', (t) => {
   const options = {
     method: 'post',
     url: '/api/updateScores'
