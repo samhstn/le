@@ -1,6 +1,8 @@
 <app>
   <h1>Register View</h1>
 
+  Have an account? Login <a href="/login">here</a>
+
   <form onsubmit={ register }>
 
     <label>Username: </label><input type="text" />
@@ -10,7 +12,13 @@
 
   </form>
 
+  <p style="display:{timeout}">Your session has timed out</p>
+
   <script>
+
+    console.log(opts.param);
+
+    this.timeout = (opts.param || {}).timeout ? 'inerit' : 'none';
 
     register (e) {
       var user = e.target[0].value
@@ -20,7 +28,8 @@
         password: pass
       };
       request.post('/api/register', payload, function (res) {
-        console.log('Response: ', res);
+        console.log('Response: ', JSON.parse(res));
+        window.location.href = JSON.parse(res).redirect;
       });
     }
 
