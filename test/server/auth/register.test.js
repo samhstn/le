@@ -40,8 +40,8 @@ tape('POST :: /register', (t) => {
       return server.inject(Object.assign(options, { payload }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 302, 'dJxNxIRE3r');
-      t.equal(res.headers.location, '/register/registered=true', 'dJxNxIRE3r');
+      t.equal(res.statusCode, 200, 'dJxNxIRE3r');
+      t.equal(JSON.parse(res.payload).redirect, '/register/registered=true', 'dJxNxIRE3r');
       return checkUserRegistered('sam')
     })
     .then((res) => {
@@ -51,8 +51,8 @@ tape('POST :: /register', (t) => {
       return server.inject(Object.assign(options, { payload }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 302, 'dJxNxIRE3r');
-      t.equal(res.headers.location, '/register/unavailable_username=true&user=sam', 'dJxNxIRE3r');
+      t.equal(res.statusCode, 200, 'dJxNxIRE3r');
+      t.equal(JSON.parse(res.payload).redirect, '/register/unavailable_username=true&user=sam', 'dJxNxIRE3r');
       t.end();
     })
     .catch((err) => assert(!err, err));

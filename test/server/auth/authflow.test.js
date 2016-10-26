@@ -38,8 +38,8 @@ tape('POST :: /login', (t) => {
   flushDb()
     .then(() => server.inject(registerOpts))
     .then((res) => {
-      t.equal(res.statusCode, 302, '0Ad1FRuChh');
-      t.equal(res.headers.location, '/register/registered=true', '0Ad1FRuChh');
+      t.equal(res.statusCode, 200, '0Ad1FRuChh');
+      t.equal(JSON.parse(res.payload).redirect, '/register/registered=true', '0Ad1FRuChh');
       return checkUserRegistered('daBoss');
     })
     .then((res) => {
@@ -47,8 +47,8 @@ tape('POST :: /login', (t) => {
       return server.inject(loginOpts);
     })
     .then((res) => {
-      t.equal(res.statusCode, 302, '0Ad1FRuChh');
-      t.equal(res.headers.location, '/', '0Ad1FRuChh');
+      t.equal(res.statusCode, 200, '0Ad1FRuChh');
+      t.equal(JSON.parse(res.payload).redirect, '/', '0Ad1FRuChh');
       t.equal(res.headers['set-cookie'][0].substring(0, 7), 'cookie=', '0Ad1FRuChh');
       cookie = res.headers['set-cookie'][0].split(';')[0];
       return checkUserLoggedInWRedis('daBoss');
