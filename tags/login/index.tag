@@ -17,6 +17,7 @@
   <p style="display:{incorrect_pass}">Incorrect Password</p>
 
   <p style="display:{timeout}">Your session has timed out</p>
+  <p style="display:{user_not_registered}">Username is not registered</p>
 
   <script>
 
@@ -27,6 +28,8 @@
     this.logged_out = paramObj.logged_out ? 'inherit' : 'none';
     this.incorrect_pass = paramObj.incorrect_pass ? 'inherit' : 'none';
     this.timeout = paramObj.timeout ? 'inherit' : 'none';
+    this.user_not_registered = paramObj.user_not_registered ? 'inherit' : 'none';
+
     this.user = paramObj.user || '';
 
     login (e) {
