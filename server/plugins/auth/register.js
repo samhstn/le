@@ -8,12 +8,12 @@ exports.register = (server, options, next) => {
     config: { validate, auth: false },
     handler: (request, reply) => {
       registerUser(server.app.pool, request.payload)
-        .then(() => reply.redirect('/register/registered=true'))
+        .then(() => reply({ redirect: '/register/registered=true' }))
         .catch((err) => {
           if (err === 'username not available') {
-            return reply.redirect(
-              '/register/unavailable_username=true&user=' + request.payload.username
-            );
+            return reply({
+              redirect: '/register/unavailable_username=true&user=' + request.payload.username
+            });
           }
 
           return reply(err).code(500);

@@ -15,8 +15,7 @@ exports.register = (server, options, next) => {
         .then(() => verifyPassword(server.app.pool, request.payload))
         .then(() => storeKeyInRedis(server.app.redisCli, request.payload))
         .then((key) => {
-          reply
-            .redirect('/')
+          reply({ redirect: '/' })
             .state('cookie', { username, key });
         })
         .catch((err) => {
@@ -24,9 +23,9 @@ exports.register = (server, options, next) => {
           case 'db error':
             return reply(err).code(500);
           case 'user not registered':
-            return reply.redirect('/login/user_not_registered=true&user=' + username);
+            return reply({ redirect: '/login/user_not_registered=true&user=' + username });
           case 'incorrect password':
-            return reply.redirect('/login/incorrect_pass=true&user=' + username);
+            return reply({ redirect: '/login/incorrect_pass=true&user=' + username });
           default:
             return reply('Unknown error').code(500);
           }
