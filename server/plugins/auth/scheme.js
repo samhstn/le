@@ -21,7 +21,9 @@ internals.validate = (server, options) => {
       }
 
       if (!(request.headers.cookie || request.headers['set-cookie'])) {
-        return reply.redirect('/login/timeout=true');
+        return reply
+          .redirect('/login/timeout=true')
+          .unstate('cookie');
       }
 
       const cookie = request.headers.cookie || request.headers['set-cookie'][0];
@@ -29,7 +31,7 @@ internals.validate = (server, options) => {
       const cookieVal = cookie.split('cookie=')[1];
 
       if (!cookieVal) {
-        return reply('The cookie value has been tampered with')
+        return reply('The cookie value has been tampered with ' + cookieVal)
           .unstate('cookie')
           .code(500);
       }
@@ -37,7 +39,7 @@ internals.validate = (server, options) => {
       const buffer = Buffer.from(cookieVal, 'base64')
 
       if (!Buffer.isBuffer(buffer)) {
-        return reply('The cookie value has been tampered with')
+        return reply('The cookie value has been tampered with ' + buffer)
           .unstate('cookie')
           .code(500);
       }
@@ -63,8 +65,8 @@ internals.validate = (server, options) => {
 
           reply.continue({ credentials });
         });
-      } catch (_) {
-        reply('The cookie value has been tampered with')
+      } catch (caughtErr) {
+        reply('The cookie value has been tampered with' + caughtErr)
           .unstate('cookie')
           .code(500);
       }
