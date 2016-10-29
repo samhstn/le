@@ -3,10 +3,10 @@
 
   Dont have an account? Register <a href="/register">here</a>
 
-  <form onsubmit={ login }>
+  <form action="/login" method="post">
 
-    <label>Username: </label><input value={user} type="text" />
-    <label>Password: </label><input type="password" />
+    <label>Username: </label><input name="username" value={user} type="text" />
+    <label>Password: </label><input name="password" type="password" />
 
     <button type="submit">SUBMIT</button>
 
@@ -21,8 +21,6 @@
 
   <script>
 
-    console.log(opts.param);
-
     var paramObj = parse(opts.param);
 
     this.logged_out = paramObj.logged_out ? 'inherit' : 'none';
@@ -31,19 +29,6 @@
     this.user_not_registered = paramObj.user_not_registered ? 'inherit' : 'none';
 
     this.user = paramObj.user || '';
-
-    login (e) {
-      var user = e.target[0].value
-      var pass = e.target[1].value
-      var payload = {
-        username: user,
-        password: pass
-      };
-      request.post('/api/login', payload, function (res) {
-        console.log('Response: ', res);
-        window.location.href = JSON.parse(res).redirect;
-      });
-    }
 
   </script>
 </app>

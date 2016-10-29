@@ -3,35 +3,29 @@
 
   Have an account? Login <a href="/login">here</a>
 
-  <form onsubmit={ register }>
+  <form action="/register" method="post">
 
-    <label>Username: </label><input type="text" />
-    <label>Password: </label><input type="password" />
+    <label>Username: </label>
+    <input name="username" type="text" value={ user || '' } />
+    <label if={ unavailable_username }>
+      Username Not available
+    </label>
+
+    <label>Password: </label>
+    <input name="password" type="password" />
 
     <button type="submit">SUBMIT</button>
 
   </form>
 
-  <p style="display:{timeout}">Your session has timed out</p>
+  <p if={ timeout }>Your session has timed out</p>
 
   <script>
 
-    console.log(opts.param);
+    var params = parse(opts.param)
 
-    this.timeout = (opts.param || {}).timeout ? 'inerit' : 'none';
-
-    register (e) {
-      var user = e.target[0].value
-      var pass = e.target[1].value
-      var payload = {
-        username: user,
-        password: pass
-      };
-      request.post('/api/register', payload, function (res) {
-        console.log('Response: ', JSON.parse(res));
-        window.location.href = JSON.parse(res).redirect;
-      });
-    }
+    this.unavailable_username = params.unavailable_username;
+    this.user = params.user;
 
   </script>
 </app>
