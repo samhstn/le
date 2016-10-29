@@ -4,12 +4,12 @@ exports.register = (server, options, next) => {
 
     redisCli.keys('*', (_, keys) => {
       if (keys.indexOf(username) === -1) {
-        return cb(null, 'timeout=true');
+        return cb(true, false);
       }
 
       redisCli.get(username, (_, redisKey) => {
         if (redisKey !== key) {
-          return cb(null, 'timeout=true');
+          return cb(true, false);
         }
 
         cb(null, true, { username, key });
