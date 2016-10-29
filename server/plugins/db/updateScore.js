@@ -17,7 +17,7 @@ exports.register = (server, options, next) => {
     } else if (Date.now() - 60 * 60 * 1000 * server.app.updateHourCount > 0 - server.app.startDate) {
       updateScores(pool)('hour')
         .then(() => {
-          ++ server.app.updateHourCount;
+          ++server.app.updateHourCount;
         });
     }
   }, 30 * 1000);

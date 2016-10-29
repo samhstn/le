@@ -13,7 +13,7 @@ const checkUserLoggedInWRedis = require('../../helpers/checkUserLoggedInWRedis.j
 tape('POST :: /login', (t) => {
   const options = {
     method: 'post',
-    url: '/api/login'
+    url: '/login'
   };
 
   flushDb()
@@ -42,8 +42,8 @@ tape('POST :: /login', (t) => {
       return server.inject(Object.assign(options, { payload }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200, 'dJGraNHLn7');
-      t.equal(JSON.parse(res.payload).redirect, '/login/user_not_registered=true&user=sam', 'dJGraNHLn7');
+      t.equal(res.statusCode, 302, 'dJGraNHLn7');
+      t.equal(res.headers.location, '/login/user_not_registered=true&user=sam', 'dJGraNHLn7');
       return registerUser({ username: 'sam', password: 'pass' });
     })
     .then(() => checkUserRegistered('sam'))
@@ -55,16 +55,16 @@ tape('POST :: /login', (t) => {
       return server.inject(Object.assign(options, { payload }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200, 'dJGraNHLn7');
-      t.equal(JSON.parse(res.payload).redirect, '/login/incorrect_pass=true&user=sam', 'dJGraNHLn7');
+      t.equal(res.statusCode, 302, 'dJGraNHLn7');
+      t.equal(res.headers.location, '/login/incorrect_pass=true&user=sam', 'dJGraNHLn7');
     })
     .then(() => {
       const payload = { username: 'sam', password: 'pass' };
       return server.inject(Object.assign(options, { payload }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200, 'dJGraNHLn7');
-      t.equal(JSON.parse(res.payload).redirect, '/', 'dJGraNHLn7');
+      t.equal(res.statusCode, 302, 'dJGraNHLn7');
+      t.equal(res.headers.location, '/', 'dJGraNHLn7');
       t.equal(res.headers['set-cookie'][0].substring(0, 7), 'cookie=', 'dJGraNHLn7');
       return checkUserLoggedInWRedis('sam');
     })
