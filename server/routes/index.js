@@ -1,12 +1,13 @@
-const views = ['register', 'login', 'dashboard', 'practice'].map((route) => {
+const views = ['register', 'login', 'dashboard', 'practice'].map((component) => {
   return {
     method: 'get',
-    config: ['register', 'login'].indexOf(route) > -1 ? {
+    config: ['register', 'login'].indexOf(component) > -1 ? {
       auth: false
     } : {},
-    path: route === 'dashboard' ? '/' : '/' + route,
+    path: component === 'dashboard' ? '/' : '/' + component + '/{param?}',
     handler: (request, reply) => {
-      reply.view('layout', { component: route });
+      const param = request.params.param;
+      reply.view('layout', { component, param });
     }
   };
 });

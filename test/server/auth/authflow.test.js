@@ -12,7 +12,7 @@ const checkUserLoggedInWRedis = require('../../helpers/checkUserLoggedInWRedis.j
 tape('POST :: /login', (t) => {
   const loginOpts = {
     method: 'post',
-    url: '/api/login',
+    url: '/login',
     payload: {
       username: 'daBoss',
       password: 'maBling'
@@ -21,7 +21,7 @@ tape('POST :: /login', (t) => {
 
   const registerOpts = {
     method: 'post',
-    url: '/api/register',
+    url: '/register',
     payload: {
       username: 'daBoss',
       password: 'maBling'
@@ -30,7 +30,7 @@ tape('POST :: /login', (t) => {
 
   const logoutOpts = {
     method: 'post',
-    url: '/api/logout'
+    url: '/logout'
   };
 
   let cookie;
@@ -58,12 +58,12 @@ tape('POST :: /login', (t) => {
       return server.inject(Object.assign(logoutOpts, { headers: { cookie } }));
     })
     .then((res) => {
-      t.equal(res.statusCode, 200, '0Ad1FRuChh');
+      t.equal(res.statusCode, 302, '0Ad1FRuChh');
       t.equal(
         res.headers['set-cookie'][0],
         'cookie=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Strict'
       );
-      t.deepEqual(JSON.parse(res.payload), { logout: true }, 'YvRFGhj0N9');
+      t.equal(res.headers.location, '/login', 'YvRFGhj0N9');
       return checkUserLoggedInWRedis('daBoss');
     })
     .then((res) => {

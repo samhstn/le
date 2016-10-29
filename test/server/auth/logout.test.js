@@ -15,7 +15,7 @@ tape('POST :: /logout', (t) => {
   const cookie = Buffer.from(JSON.stringify(userObj)).toString('base64');
   const options = {
     method: 'post',
-    url: '/api/logout',
+    url: '/logout',
     headers: {
       cookie: 'cookie=' + cookie
     }
@@ -29,8 +29,8 @@ tape('POST :: /logout', (t) => {
       return server.inject(options);
     })
     .then((res) => {
-      t.equal(res.statusCode, 200, 'QHb5OyrxL8');
-      t.deepEqual(JSON.parse(res.payload), { logout: true }, 'OqKSV3st7m');
+      t.equal(res.statusCode, 302, 'QHb5OyrxL8');
+      t.equal(res.headers.location, '/login', 'OqKSV3st7m');
       t.equal(
         res.headers['set-cookie'][0],
         'cookie=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Strict'

@@ -13,7 +13,7 @@ const checkUserLoggedInWRedis = require('../../helpers/checkUserLoggedInWRedis.j
 tape('POST :: /login', (t) => {
   const options = {
     method: 'post',
-    url: '/api/login'
+    url: '/login'
   };
 
   flushDb()

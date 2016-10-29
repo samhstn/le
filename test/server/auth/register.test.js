@@ -11,7 +11,7 @@ const checkUserRegistered = require('../../helpers/checkUserRegistered.js')(pool
 tape('POST :: /register', (t) => {
   const options = {
     method: 'post',
-    url: '/api/register'
+    url: '/register'
   };
 
   flushDb()
