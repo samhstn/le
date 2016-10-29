@@ -52,15 +52,15 @@ internals.validate = (server, options) => {
 
         options.validateFunc(request, username, key, (err, isValid, credentials) => {
           if (err) {
+            if (!isValid) {
+              return reply
+                .redirect('/login/timeout=true')
+                .unstate('cookie');
+            }
+
             return reply('Server error has occurred')
               .unstate('cookie')
               .code(500);
-          }
-
-          if (!isValid) {
-            return reply
-              .redirect('/login/timeout=true')
-              .unstate('cookie');
           }
 
           reply.continue({ credentials });
