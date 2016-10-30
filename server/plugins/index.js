@@ -15,6 +15,9 @@ const settings = require('./api/settings.js');
 
 const updateScore = require('./db/updateScore.js');
 
+const dashboard = require('./content/dashboard.js');
+const practice = require('./content/practice.js');
+
 const plugins = [
   Inert,
   Vision,
@@ -27,7 +30,9 @@ const plugins = [
   strategy,
   collection,
   settings,
-  updateScore
+  updateScore,
+  dashboard,
+  practice
 ];
 
 module.exports = plugins;

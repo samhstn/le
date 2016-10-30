@@ -14,22 +14,6 @@ const createRoute = (route) => {
 const register = createRoute('register');
 const login = createRoute('login');
 
-const dashboard = {
-  method: 'get',
-  path: '/',
-  handler: (request, reply) => {
-    reply.view('dashboard');
-  }
-};
-
-const practice = {
-  method: 'get',
-  path: '/practice',
-  handler: (request, reply) => {
-    reply.view('practice');
-  }
-};
-
 const riot = {
   method: 'get',
   path: '/riot+compiler.min.js',
