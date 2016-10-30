@@ -7,7 +7,8 @@ exports.register = (server, options, next) => {
     path: '/logout',
     config: { validate, auth: false },
     handler: (request, reply) => {
-      const username = usernameFromCookie(request.headers.cookie);
+      const cookie = request.headers.cookie || request.headers['set-cookie'][0];
+      const username = usernameFromCookie(cookie);
       const redisCli = server.app.redisCli;
 
       redisCli.del(username, () => {
