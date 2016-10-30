@@ -1,4 +1,4 @@
-<app>
+<login>
   <h1>Login View</h1>
 
   Dont have an account? Register <a href="/register">here</a>
@@ -12,23 +12,18 @@
 
   </form>
 
-  <p style="display:{logged_out}">You have been logged out</p>
-
-  <p style="display:{incorrect_pass}">Incorrect Password</p>
-
-  <p style="display:{timeout}">Your session has timed out</p>
-  <p style="display:{user_not_registered}">Username is not registered</p>
+  <p if = { logged_out }>You have been logged out</p>
+  <p if = { incorrect_pass }>Incorrect Password</p>
+  <p if = { timeout }>Your session has timed out</p>
+  <p if = { user_not_registered }>Username is not registered</p>
 
   <script>
-
-    var paramObj = parse(opts.param);
-
-    this.logged_out = paramObj.logged_out ? 'inherit' : 'none';
-    this.incorrect_pass = paramObj.incorrect_pass ? 'inherit' : 'none';
-    this.timeout = paramObj.timeout ? 'inherit' : 'none';
-    this.user_not_registered = paramObj.user_not_registered ? 'inherit' : 'none';
-
-    this.user = paramObj.user || '';
+    
+    this.logged_out = opts.logged_out;
+    this.incorrect_pass = opts.incorrect_pass;
+    this.timeout = opts.timeout;
+    this.user_not_registered = opts.user_not_registered;
+    this.user = opts.user || '';
 
   </script>
-</app>
+</login>

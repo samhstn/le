@@ -1,16 +1,34 @@
-const views = ['register', 'login', 'dashboard', 'practice'].map((component) => {
+const qs = require('querystring');
+
+const createRoute = (route) => {
   return {
     method: 'get',
-    config: ['register', 'login'].indexOf(component) > -1 ? {
-      auth: false
-    } : {},
-    path: component === 'dashboard' ? '/' : '/' + component + '/{param?}',
+    path: '/' + route + '/{param?}',
+    config: { auth: false },
     handler: (request, reply) => {
-      const param = request.params.param;
-      reply.view('layout', { component, param });
+      reply.view(route, qs.parse(request.params.param));
     }
   };
-});
+};
+
+const register = createRoute('register');
+const login = createRoute('login');
+
+const dashboard = {
+  method: 'get',
+  path: '/',
+  handler: (request, reply) => {
+    reply.view('dashboard');
+  }
+};
+
+const practice = {
+  method: 'get',
+  path: '/practice',
+  handler: (request, reply) => {
+    reply.view('practice');
+  }
+};
 
 const riot = {
   method: 'get',
@@ -28,4 +46,11 @@ const resources = {
   handler: { directory: { path: 'public' } }
 };
 
-module.exports = views.concat(riot).concat(resources);
+module.exports = [
+  register,
+  login,
+  dashboard,
+  practice,
+  riot,
+  resources
+];
