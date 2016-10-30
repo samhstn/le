@@ -1,4 +1,4 @@
-<app>
+<register>
   <h1>Register View</h1>
 
   Have an account? Login <a href="/login">here</a>
@@ -6,7 +6,7 @@
   <form action="/register" method="post">
 
     <label>Username: </label>
-    <input name="username" type="text" value={ user || '' } />
+    <input name="username" type="text" value={ user } />
     <label if={ unavailable_username }>
       Username Not available
     </label>
@@ -18,14 +18,10 @@
 
   </form>
 
-  <p if={ timeout }>Your session has timed out</p>
-
   <script>
 
-    var params = parse(opts.param)
-
-    this.unavailable_username = params.unavailable_username;
-    this.user = params.user;
+    this.unavailable_username = opts.unavailable_username;
+    this.user = opts.user || '';
 
   </script>
-</app>
+</register>

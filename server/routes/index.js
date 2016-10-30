@@ -1,13 +1,12 @@
+const qs = require('querystring');
+
 const createRoute = (route) => {
   return {
     method: 'get',
     path: '/' + route + '/{param?}',
     config: { auth: false },
     handler: (request, reply) => {
-      reply.view('layout', {
-        component: route,
-        param: request.params.param
-      });
+      reply.view(route, qs.parse(request.params.param));
     }
   };
 };
@@ -19,7 +18,7 @@ const dashboard = {
   method: 'get',
   path: '/',
   handler: (request, reply) => {
-    reply.view('layout', { component: 'dashboard' });
+    reply.view('dashboard');
   }
 };
 
@@ -27,7 +26,7 @@ const practice = {
   method: 'get',
   path: '/practice',
   handler: (request, reply) => {
-    reply.view('layout', { component: 'practice' });
+    reply.view('practice');
   }
 };
 
