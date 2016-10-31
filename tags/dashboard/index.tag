@@ -154,5 +154,17 @@
       });
     }
 
+    delete_collection () {
+      request.del('/api/collection/' + self.focussed_collection.id, () => {
+        delete self.collections[self.focussed_collection.id];
+
+        self.show_collections = true;
+        self.new_collection_form = false;
+        self.edit_collection_form = false;
+
+        self.update();
+      })
+    }
+
   </script>
 </dashboard>

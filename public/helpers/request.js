@@ -16,7 +16,7 @@
   const get = (url, cb) => request('GET', url, null, cb);
   const post = (url, payload, cb) => request('POST', url, payload, cb);
   const put = (url, payload, cb) => request('PUT', url, payload, cb); 
-  const del = (url, cb) => request('DELETEE', url, null, cb);
+  const del = (url, cb) => request('DELETE', url, null, cb);
 
   exp.request = {
     get,
