@@ -28,8 +28,9 @@
     </div>
     <button>Add word</button>
 
-    <button name="edit">Done</button>
-    <button name="cancel">cancel</button>
+    <button onclick={ edit_collection }>Done</button>
+    <button onclick={ cancel_edit_collection }>cancel</button>
+    <button onclick={ delete_collection }>delete collection</button>
   </form>
 
   <script>
@@ -39,8 +40,6 @@
     self.collections = self.collections || opts.collections;
     self.focussed_collection = self.focussed_collection || {};
 
-    console.log(self.collections, self.focussed_collection);
-
     this.view = this.view || 'collections';
 
     show_create_new_collection_form () {
@@ -48,19 +47,15 @@
       self.update();
     }
 
-    reset_collection_values (id) {
-      id.querySelector('input[name=name]').value = '';
-      id.querySelector('input[name=description]').value = '';
-    }
-
     cancel_collection_creation () {
-      self.reset_new_collection_vals('create_collection_form_id');
-
       self.view = 'collections';
       self.update();
     }
 
     create_new_collection () {
+      const collection_name = new_collection_form_id.querySelector('input[name=name]').value;
+      const collection_description = new_collection_form_id.querySelector('input[name=description]').value;
+
       const payload = {
         collection_name,
         collection_description
@@ -68,14 +63,12 @@
 
       request.post('/api/collection', payload, () => {
         request.get('/api/collection', (res) => {
-          const newCollections = JSON.parse(res).collections;
+          const newCollections = res.collections;
           Object.keys(newCollections).forEach((col) => {
             if (!self.collections[col]) {
               self.collections[col] = newCollections[col];
             }
           });
-
-          self.reset_collection_values('create_collection_form_id');
 
           self.view = 'collections';
           self.update();
@@ -83,9 +76,13 @@
       });
     }
 
-    show_edit_collection_form () {
-      self.view = 'edit_collection';
-      self.update();
+    show_edit_collection_form (id) {
+      request.get('/api/collection/' + id, (res) => {
+        self.focussed_collection = res;
+
+        self.view = 'edit_collection';
+        self.update();
+      });
     }
 
     cancel_edit_collection () {
@@ -94,9 +91,12 @@
     }
 
     edit_collection () {
+      const collection_name = edit_collection_form_id.querySelector('input[name=name]').value;
+      const collection_description = edit_collection_form_id.querySelector('input[name=description]').value;
+
       const newCollObj = {
-        collection_name: edit_collection_form_id.querySelector('input[name=name]').value,
-        collection_description: edit_collection_form_id.querySelector('input[name=description]').value
+        collection_name,
+        collection_description
       };
       const id = self.focussed_collection.id;
 
@@ -117,7 +117,7 @@
 
       request.put('/api/collection/' + id, payload, (r) => {
         request.get('/api/collection/' + id, (res) => {
-          const collRes = JSON.parse(res).collection;
+          const collRes = res.collection;
 
           ['collection_name', 'collection_description'].forEach((key) => {
             if (self.collections[id][key] !== collRes[key]) {
@@ -132,8 +132,9 @@
     }
 
     delete_collection () {
-      request.del('/api/collection/' + self.focussed_collection.id, () => {
-        delete self.collections[self.focussed_collection.id];
+      console.log(self.focussed_collection, self.focussed_collection.collection.collection_id);
+      request.del('/api/collection/' + self.focussed_collection.collection.collection_id, () => {
+        delete self.collections[self.focussed_collection.collection.collection_id];
 
         self.view = 'collections';
 
