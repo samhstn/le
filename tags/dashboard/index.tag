@@ -1,78 +1,71 @@
 <dashboard>
-  <h1>Hello Dashboard</h1>
+  <form action="/logout" method="post"><button type="submit">logout</button></form>
 
-  <form action="/logout" method="post">
-    <button type="submit">logout</button>
-  </form>
-
-  <div if={ show_collections } id="collections_container_id">
-    <div style="padding: 20px; margin: 20px;" each={ id, coll in collections }>
-      <div class="coll_id_{ id }" each={key, value in coll} style="padding: 0; margin: 0;">
-        <p style="padding: 0; margin: 0;">{
-          key === 'collection_name' ?
-          'Name' : key === 'collection_description' ?
-          'Description' : key === 'average_score' ?
-          'Average Score' : key === 'number_of_words' ?
-          'Words' : key}: { value }</p>
+  <div if={ view === 'collections' }>
+    <div each={ id, coll in collections }>
+      <div each={ key, value in coll } onclick={ () => show_edit_collection_form(id) }>
+        <p>{key} - {value}</p>
       </div>
-      <button onclick={ () => edit_collection(id) }>Edit</button>
     </div>
-    <div style="background-color: lightgreen; width: 100px; height: 100px;">
-      <p onclick={ show_new_collection_form }>add a collection</p>
+    <div>
+      <button onclick={ show_create_new_collection_form }>Add a collecton</button>
     </div>
   </div>
 
-  <form id="new_collection_form_id" if={ new_collection_form } onsubmit={ create_new_collection }>
-    <label>Collection name: </label>
-    <input class="new_collection_name" required />
-    <label>Collection description: </label>
-    <input class="new_collection_description" required />
+  <form if={ view === 'new_collection' } id="new_collection_form_id">
+    <input name="name">
+    <input name="description">
 
-    <button type="submit">create collection</button>
-    <button type="button" onclick={ cancel_collection_creation }>cancel collection</button>
+    <button onclick={ create_new_collection }>done</button>
+    <button onclick={ cancel_collection_creation }>cancel</button>
   </form>
 
-  <form id="edit_collection_form_id" if={ edit_collection_form } onsubmit={ save_collection_edit }>
-    <label>Collection name: </label>
-    <input class="edit_collection_name" value={focussed_collection.collection_name} />
-    <label>Collection name: </label>
-    <input class="edit_collection_description" value={focussed_collection.collection_description} />
-    
-    <button type="submit">save edit</button>
-    <button type="button" onclick={ cancel_edit_collection }>cancel edit</button>
-    <button type="button" onclick={ delete_collection }>delete collection</button>
+  <form if={ view === 'edit_collection' } id="edit_collection_form_id">
+    <input name="name"></div>
+    <input name="description"></div>
+    <div each={word}>
+      <input><button>delete</button>
+    </div>
+    <button>Add word</button>
+
+    <button name="edit">Done</button>
+    <button name="cancel">cancel</button>
   </form>
 
   <script>
 
     const self = this;
-    
+
     self.collections = self.collections || opts.collections;
     self.focussed_collection = self.focussed_collection || {};
 
-    show_collections = typeof self.show_collections === 'undefined'
-      ? true : self.show_collections;
+    console.log(self.collections, self.focussed_collection);
 
-    show_new_collection_form () {
-      self.show_collections = false;
-      self.new_collection_form = true;
-      self.edit_collection_form = false;
+    this.view = this.view || 'collections';
+
+    show_create_new_collection_form () {
+      self.view = 'new_collection'
+      self.update();
+    }
+
+    reset_collection_values (id) {
+      id.querySelector('input[name=name]').value = '';
+      id.querySelector('input[name=description]').value = '';
     }
 
     cancel_collection_creation () {
-      self.show_collections = true;
-      self.new_collection_form = false;
-      self.edit_collection_form = false;
+      self.reset_new_collection_vals('create_collection_form_id');
+
+      self.view = 'collections';
+      self.update();
     }
 
-    create_new_collection (e) {
-      e.preventDefault();
-      const collection_name = e.target.querySelector('.new_collection_name').value;
-      const collection_description = e.target.querySelector('.new_collection_description').value
+    create_new_collection () {
       const payload = {
         collection_name,
         collection_description
       };
+
       request.post('/api/collection', payload, () => {
         request.get('/api/collection', (res) => {
           const newCollections = JSON.parse(res).collections;
@@ -82,38 +75,28 @@
             }
           });
 
-          self.show_collections = true;
-          self.new_collection_form = false;
-          self.edit_collection_form = false;
+          self.reset_collection_values('create_collection_form_id');
 
+          self.view = 'collections';
           self.update();
-
         });
       });
     }
 
-    edit_collection (id) {
-      self.show_collections = false;
-      self.new_collection_form = false;
-      self.edit_collection_form = true;
-
-      self.focussed_collection = Object.assign({}, self.collections[id], { id });
-
+    show_edit_collection_form () {
+      self.view = 'edit_collection';
       self.update();
     }
 
     cancel_edit_collection () {
-      self.show_collections = true;
-      self.new_collection_form = false;
-      self.edit_collection_form = false;
+      self.view = 'collections';
+      self.update();
     }
 
-    save_collection_edit (e) {
-      e.preventDefault();
-
+    edit_collection () {
       const newCollObj = {
-        collection_name: e.target.querySelector('.edit_collection_name').value,
-        collection_description: e.target.querySelector('.edit_collection_description').value
+        collection_name: edit_collection_form_id.querySelector('input[name=name]').value,
+        collection_description: edit_collection_form_id.querySelector('input[name=description]').value
       };
       const id = self.focussed_collection.id;
 
@@ -121,10 +104,7 @@
         newCollObj.collection_name === self.focussed_collection.collection_name
         && newCollObj.collection_description === self.focussed_collection.collection_description
       ) {
-        self.show_collections = true;
-        self.new_collection_form = false;
-        self.edit_collection_form = false;
-        return;
+        return self.view = 'collections';
       }
 
       const payload = {};
@@ -145,10 +125,7 @@
             }
           });
 
-          self.show_collections = true;
-          self.new_collection_form = false;
-          self.edit_collection_form = false;
-
+          self.view = 'collections';
           self.update();
         });
       });
@@ -158,12 +135,24 @@
       request.del('/api/collection/' + self.focussed_collection.id, () => {
         delete self.collections[self.focussed_collection.id];
 
-        self.show_collections = true;
-        self.new_collection_form = false;
-        self.edit_collection_form = false;
+        self.view = 'collections';
 
         self.update();
       })
+    }
+
+    add_word () {
+      const id = Object.keys(view.focussed_collection)[0];
+      view.focussed_collection[id].words = view.focussed_collection[id].words.concat(new_word_obj);
+
+      self.update();
+    }
+
+    delete_word () {
+      const id = Object.keys(view.focussed_collection)[0];
+      view.focussed_collection[id].words = view.focussed_collection[id].words.filter((w) => w.word_id !== id);
+
+      self.update();
     }
 
   </script>
