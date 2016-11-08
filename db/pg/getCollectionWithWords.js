@@ -1,4 +1,4 @@
-function format (rows) {
+const format = (rows) => {
   return {
     collection_id: rows[0].collection_id,
     collection_name: rows[0].collection_name,
@@ -12,7 +12,7 @@ function format (rows) {
       attempts: row.attempts,
       correct_attempts: row.correct_attempts,
       score: row.score
-    }))
+    })).filter((w) => w.word_id)
   };
 }
 
