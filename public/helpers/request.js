@@ -5,7 +5,7 @@
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        cb(xhr.responseText);
+        cb(JSON.parse(xhr.responseText));
       }
     };
     xhr.open(method, url);
