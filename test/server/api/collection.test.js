@@ -108,7 +108,7 @@ tape('GET :: /api/collection/{collection_id}', (t) => {
       t.equal(collection.collection_id, '100', 'ogDv9CFa4T');
       t.equal(collection.collection_name, 'another name', 'ogDv9CFa4T');
       t.equal(collection.collection_description, 'another description', 'ogDv9CFa4T');
-      t.equal(collection.words.length, 1, 'ogDv9CFa4T');
+      t.equal(collection.words.length, 0, 'ogDv9CFa4T');
 
       const collectionObj = {
         collection_id: '100',
