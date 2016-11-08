@@ -1,0 +1,65 @@
+# State
+{
+  view: 'collections/new_collection/edit_collection',
+  focussed_collection: { ['id']: { ... } }
+};
+
+# UX
+
+1. The user should see no collections, but a 'create collection' button (wrapped in a collections_list div)
+2. 'create new collection' should have an onclick event of create_new_collection_form
+3. Clicking 'create new collection' should change the view to 'new_collection'
+4. There should be two text boxes, name and description, and two buttons, create and cancel
+5. Cancel should change the value of both text boxes to blank and the view to collections
+6. Create should do the same as cancel, but also add the data to collections by a POST request to /collection
+
+7. The user should now see one single collection above a 'create collection' button.
+8. The user should see meta data about the collection 
+9. And each collection should have an onclick event of edit_collection_form
+
+10. Clicking the collection should produce an edit_collection_form similar to create_new_collection_form,
+11. but with the option to add words, which will be in the following format
+12. There will be empty textboxes to fill in each word category and a plus button to add it
+13. The word will be appended to the edit_collection_form, and then the textboxes below it
+14. Each word will display it's metadata (e.g. score)
+15. Each added word will appear with an edit button to edit and a minus button which will delete the word
+
+# HTML
+
+<button>logout</button>
+
+<div id="collections" if={ view === 'collections' }>
+  <div each={ collection }></div>
+</div>
+
+<form id="create_new_collections_form" if={ view === 'new_collection }>
+  <input name="name"></div>
+  <input name="description"></div>
+
+  <button name="create"></div>
+  <button name="cancel"></div>
+</form>
+
+<form id="edit_collection_form">
+  <input name="name"></div>
+  <input name="description"></div>
+  <div each={word}>
+    <input><button>delete</button>
+  </div>
+
+  <button name="edit">Done</button>
+  <button name="cancel"></button>
+</form>
+
+# Functions
+
+show_create_new_collection_form
+cancel_collection_creation
+create_new_collection
+show_edit_collection_form
+edit_collection
+cancel_edit_collection
+delete_collection
+add_word
+delete_word
+
