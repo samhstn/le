@@ -126,8 +126,8 @@
     }
 
     delete_collection () {
-      request.del('/api/collection/' + self.focussed_collection.collection.collection_id, () => {
-        delete self.collections[self.focussed_collection.collection.collection_id];
+      request.del('/api/collection/' + self.focussed_collection.collection_id, () => {
+        delete self.collections[self.focussed_collection.collection_id];
 
         self.view = 'collections';
 
