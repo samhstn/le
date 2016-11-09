@@ -24,7 +24,11 @@ tape('getCollectionWithWords', (t) => {
 
       return createCollection(collectionObj);
     })
-    .then(() => {
+    .then(() => getCollectionWithWords('100'))
+    .then((res) => {
+      t.equal(res.collection_id, '100');
+      t.equal(res.words.length, 0);
+      
       const collectionObj = {
         username: 'sam',
         collection_name: 'col2',
