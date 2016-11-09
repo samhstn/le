@@ -30,7 +30,7 @@
 
     <button onclick={ edit_collection }>Done</button>
     <button onclick={ cancel_edit_collection }>cancel</button>
-    <button onclick={ delete_collection }>delete collection</button>
+    <button onclick={ delete_collection }>Delete</button>
   </form>
 
   <script>
@@ -78,7 +78,7 @@
 
     show_edit_collection_form (id) {
       request.get('/api/collection/' + id, (res) => {
-        self.focussed_collection = res;
+        self.focussed_collection = res.collection;
 
         self.view = 'edit_collection';
         self.update();
@@ -98,14 +98,8 @@
         collection_name,
         collection_description
       };
-      const id = self.focussed_collection.id;
 
-      if (
-        newCollObj.collection_name === self.focussed_collection.collection_name
-        && newCollObj.collection_description === self.focussed_collection.collection_description
-      ) {
-        return self.view = 'collections';
-      }
+      const id = self.focussed_collection.id;
 
       const payload = {};
 
@@ -132,7 +126,6 @@
     }
 
     delete_collection () {
-      console.log(self.focussed_collection, self.focussed_collection.collection.collection_id);
       request.del('/api/collection/' + self.focussed_collection.collection.collection_id, () => {
         delete self.collections[self.focussed_collection.collection.collection_id];
 
