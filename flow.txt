@@ -66,7 +66,7 @@ delete_word
 # edit_collection_flow
 
 Each word is initially rendered in a div with 3 classes: 'word', 'stored', 'word_id_{id}'
-Each subsequent word added will only have teh 'word' class
+Each subsequent word added will only have the 'word' class
 When edit words is clicked, we need to seperate the words onthe dom into:
 new words (without the 'stored' class),
 updated words (go through the focussed_collection obj then compare),

@@ -21,12 +21,8 @@
   </form>
 
   <form if={ view === 'edit_collection' } id="edit_collection_form_id">
-    <input name="name"></div>
-    <input name="description"></div>
-    <div each={word}>
-      <input><button>delete</button>
-    </div>
-    <button>Add word</button>
+    <input name="name" value="{ focussed_collection.collection_name || '' }">
+    <input name="description" value="{ focussed_collection.collection_description || '' }">
 
     <button onclick={ edit_collection }>Done</button>
     <button onclick={ cancel_edit_collection }>cancel</button>
@@ -133,20 +129,6 @@
 
         self.update();
       })
-    }
-
-    add_word () {
-      const id = Object.keys(view.focussed_collection)[0];
-      view.focussed_collection[id].words = view.focussed_collection[id].words.concat(new_word_obj);
-
-      self.update();
-    }
-
-    delete_word () {
-      const id = Object.keys(view.focussed_collection)[0];
-      view.focussed_collection[id].words = view.focussed_collection[id].words.filter((w) => w.word_id !== id);
-
-      self.update();
     }
 
   </script>
