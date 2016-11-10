@@ -2,7 +2,7 @@ const qs = require('querystring');
 
 const createRoute = (route) => ({
   path: '/' + route + '/{param?}',
-  handler: (request, reply) => reply.view(route, qs.parse(request.params.param))
+  handler: (request, reply) => reply.view(route, { props: qs.parse(request.params.param) })
 });
 
 const register = createRoute('register');

@@ -10,10 +10,12 @@
     <$component$></$component$>
 
     <script src='/resource/tags/$component$.js' type='riot/tag'></script>
+    <!--$child_components$-->
+
     <script src='/riot+compiler.min.js'></script>
     <script src='/resource/helpers/request.js'></script>
     <script>
-      riot.mount('$component$', $opts$);
+      riot.mount('*', $opts$);
     </script>
   </body>
 </html>

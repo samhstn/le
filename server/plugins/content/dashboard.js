@@ -10,7 +10,7 @@ exports.register = (server, options, next) => {
       const username = usernameFromCookie(cookie);
       getCollectionsWithWordData(server.app.pool)(username)
         .then((res) => {
-          reply.view('dashboard', { collections: res });
+          reply.view('dashboard', { props: {collections: res } });
         })
         .catch((err) => {
           console.log('Error: ', err);
