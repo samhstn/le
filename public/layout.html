@@ -3,19 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <title>$component$</title>
-    <link rel='shortcut icon' href='/resource/favicon.ico'>
+    <link rel="shortcut icon" href="/resource/favicon.ico">
   </head>
   <body>
 
     <$component$></$component$>
 
-    <script src='/resource/tags/$component$.js' type='riot/tag'></script>
-    <!--$child_components$-->
+    <script src="/resource/tags/$component$.js" type="riot/tag"></script>
 
-    <script src='/riot+compiler.min.js'></script>
-    <script src='/resource/helpers/request.js'></script>
+    <script src="/riot+compiler.min.js"></script>
+    <script src="/resource/helpers/request.js"></script>
     <script>
-      riot.mount('*', $opts$);
+      riot.mount("$component$", $opts$);
     </script>
   </body>
 </html>

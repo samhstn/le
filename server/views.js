@@ -13,7 +13,7 @@ module.exports = {
 
         const templated = layout
           .replace(/\$component\$/g, component)
-          .replace(/\$opts\$/, JSON.stringify(context.props));
+          .replace(/\$opts\$/, JSON.stringify(context));
 
         return templated;
       }
