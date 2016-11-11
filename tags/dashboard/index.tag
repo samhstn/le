@@ -1,5 +1,5 @@
 <dashboard>
-  <form action="/logout" method="post"><button type="submit">logout</button></form>
+  <logout_button></logout_button>
 
   <div if={ view === 'collections' }>
     <div each={ id, coll in collections }>
