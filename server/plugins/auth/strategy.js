@@ -1,5 +1,5 @@
 exports.register = (server, options, next) => {
-  function validate (request, username, key, cb) {
+  const validate = (request, username, key, cb) => {
     const redisCli = server.app.redisCli;
 
     redisCli.keys('*', (_, keys) => {

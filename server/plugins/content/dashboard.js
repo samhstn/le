@@ -9,12 +9,8 @@ exports.register = (server, options, next) => {
       const cookie = request.headers.cookie || request.headers['set-cookie'][0];
       const username = usernameFromCookie(cookie);
       getCollectionsWithWordData(server.app.pool)(username)
-        .then((res) => {
-          reply.view('dashboard', { collections: res });
-        })
-        .catch((err) => {
-          console.log('Error: ', err);
-        });
+        .then((res) => reply.view('dashboard', { collections: res }))
+        .catch((err) => console.log('Error: ', err));
     }
   });
 

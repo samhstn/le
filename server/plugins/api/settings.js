@@ -15,9 +15,7 @@ exports.register = (server, options, next) => {
         const pool = server.app.pool;
 
         getSettings(pool)(username)
-          .then((settings) => {
-            reply({ settings: settings[0] });
-          })
+          .then((settings) => reply({ settings: settings[0] }))
       }
     },
     {
