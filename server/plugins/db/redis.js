@@ -11,8 +11,4 @@ exports.register = (server, options, next) =>  {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'redis'
-  }
-}
+exports.register.attributes = { pkg: { name: 'redis' } }

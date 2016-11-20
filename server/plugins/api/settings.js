@@ -15,9 +15,7 @@ exports.register = (server, options, next) => {
         const pool = server.app.pool;
 
         getSettings(pool)(username)
-          .then((settings) => {
-            reply({ settings: settings[0] });
-          })
+          .then((settings) => reply({ settings: settings[0] }))
       }
     },
     {
@@ -42,8 +40,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'settings'
-  }
-}
+exports.register.attributes = { pkg: { name: 'settings' } }

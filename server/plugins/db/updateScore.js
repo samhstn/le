@@ -52,8 +52,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'decrease score'
-  }
-};
+exports.register.attributes = { pkg: { name: 'decrease score' } };
