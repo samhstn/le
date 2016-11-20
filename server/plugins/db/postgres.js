@@ -7,8 +7,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'postgres'
-  }
-}
+exports.register.attributes = { pkg: { name: 'postgres' } }

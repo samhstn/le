@@ -42,8 +42,4 @@ exports.register = (server, options, next) => {
   next();
 }
 
-exports.register.attributes = {
-  pkg: {
-    name: 'settings'
-  }
-}
+exports.register.attributes = { pkg: { name: 'settings' } }
