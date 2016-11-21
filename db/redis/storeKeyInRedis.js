@@ -7,8 +7,8 @@ module.exports = (redisCli, creds) => {
 
   return new Promise((resolve) => {
     redisCli.set(username, key, () => {
-      // expire after 10 mins
-      redisCli.expire(username, 10 * 60)
+      // expire after 100 mins
+      redisCli.expire(username, 100 * 60)
 
       resolve(key);
     })
