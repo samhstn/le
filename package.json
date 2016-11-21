@@ -7,7 +7,10 @@
     "start": "node server/index.js",
     "build": "for dir in tags/*;do\nnode_modules/.bin/riot $dir public/$dir.js\ndone",
     "test": "NODE_ENV=test node_modules/.bin/tape test/runner.js",
-    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/tape test/runner.js"
+    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/tape test/runner.js",
+    "riot:watch": "nodemon -x 'npm run build' -w tags -e tag",
+    "server:watch": "nodemon -w server -e html,css,js,json -x 'npm start'",
+    "test:watch": "nodemon -w server -w test -x 'npm t'"
   },
   "repository": {
     "type": "git",
@@ -43,6 +46,7 @@
     "karma-fixture": "^0.2.6",
     "karma-html2js-preprocessor": "^1.1.0",
     "karma-jasmine": "^1.0.2",
+    "nodemon": "^1.11.0",
     "shot": "^3.3.2",
     "tape": "^4.6.2"
   }
