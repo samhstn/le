@@ -41,7 +41,7 @@ tape('GET :: /login', (t) => {
     .then((res) => {
       t.equal(res.statusCode, 200, 'Ilpyuw9onz');
       t.equal(res.headers['content-type'], 'text/html; charset=utf-8', 'Ilpyuw9onz');
-      t.ok(res.payload.includes('/resource/tags/login.js'), 'LdYtPVEn8C');
+      t.ok(res.payload.includes('/tags/login.tag'), 'LdYtPVEn8C');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -57,7 +57,7 @@ tape('GET :: /register', (t) => {
     .then((res) => {
       t.equal(res.statusCode, 200, 'Ilpyuw9onz');
       t.equal(res.headers['content-type'], 'text/html; charset=utf-8', 'Ilpyuw9onz');
-      t.ok(res.payload.includes('/resource/tags/register.js'), 'LdYtPVEn8C');
+      t.ok(res.payload.includes('/tags/register.tag'), 'LdYtPVEn8C');
       t.end();
     })
     .catch((err) => assert(!err, err));
@@ -78,16 +78,16 @@ tape('GET :: /riot+compiler.min.js', (t) => {
     .catch((err) => assert(!err, err));
 });
 
-tape('GET :: /resource/tags/login.js', (t) => {
+tape('GET :: /tags/login.tag', (t) => {
   const options = {
     method: 'get',
-    url: '/resource/tags/login.js'
+    url: '/tags/login.tag'
   };
 
   server.inject(options)
     .then((res) => {
       t.equal(res.statusCode, 200, 'You will have to run the build to find this file', 'Ilpyuw9onz');
-      t.equal(res.headers['content-type'], 'application/javascript; charset=utf-8', 'Ilpyuw9onz');
+      t.equal(res.headers['content-type'], 'application/octet-stream', 'Ilpyuw9onz');
       t.end();
     })
     .catch((err) => assert(!err, err));
