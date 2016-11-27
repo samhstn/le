@@ -4,7 +4,7 @@
 
 <div if={ view === 'collections' }>
   <div each={ id, coll in collections }>
-    <div each={ key, value in coll } onclick={ () => show_edit_collection_form(id) }>
+    <div each={ key, value in coll } onclick={ show_edit_collection_form.bind(this, id) }>
       <p>{key} - {value}</p>
     </div>
   </div>
@@ -54,14 +54,14 @@ create_new_collection () {
   const collection_description = new_collection_form_id.querySelector('input[name=description]').value;
 
   const payload = {
-    collection_name,
-    collection_description
+    collection_name: collection_name,
+    collection_description: collection_description
   };
 
-  request.post('/api/collection', payload, () => {
-    request.get('/api/collection', (res) => {
+  request.post('/api/collection', payload, function() {
+    request.get('/api/collection', function (res) {
       const newCollections = res.collections;
-      Object.keys(newCollections).forEach((col) => {
+      Object.keys(newCollections).forEach(function (col) {
         if (!self.collections[col]) {
           self.collections[col] = newCollections[col];
         }
@@ -74,7 +74,7 @@ create_new_collection () {
 }
 
 show_edit_collection_form (id) {
-  request.get('/api/collection/' + id, (res) => {
+  request.get('/api/collection/' + id, function (res) {
     self.focussed_collection = res.collection;
 
     self.view = 'edit_collection';
@@ -92,25 +92,25 @@ edit_collection () {
   const collection_description = edit_collection_form_id.querySelector('input[name=description]').value;
 
   const newCollObj = {
-    collection_name,
-    collection_description
+    collection_name: collection_name,
+    collection_description: collection_description
   };
 
   const id = self.focussed_collection.id;
 
   const payload = {};
 
-  ['collection_name', 'collection_description'].forEach((key) => {
+  ['collection_name', 'collection_description'].forEach(function (key) {
     if (self.focussed_collection[key] !== newCollObj[key]) {
       payload[key] = newCollObj[key];
     }
   });
 
-  request.put('/api/collection/' + id, payload, (r) => {
-    request.get('/api/collection/' + id, (res) => {
+  request.put('/api/collection/' + id, payload, function (r) {
+    request.get('/api/collection/' + id, function (res) {
       const collRes = res.collection;
 
-      ['collection_name', 'collection_description'].forEach((key) => {
+      ['collection_name', 'collection_description'].forEach(function (key) {
         if (self.collections[id][key] !== collRes[key]) {
           self.collections[id][key] = collRes[key];
         }
@@ -123,7 +123,7 @@ edit_collection () {
 }
 
 delete_collection () {
-  request.del('/api/collection/' + self.focussed_collection.collection_id, () => {
+  request.del('/api/collection/' + self.focussed_collection.collection_id, function () {
     delete self.collections[self.focussed_collection.collection_id];
 
     self.view = 'collections';
