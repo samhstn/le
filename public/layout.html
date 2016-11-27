@@ -9,9 +9,10 @@
 
     <$component$></$component$>
 
-    <script src='/resource/tags/$component$.js' type='riot/tag'></script>
-    <script src='/riot+compiler.min.js'></script>
     <script src='/resource/helpers/request.js'></script>
+    <script src='/resource/helpers/assign.js'></script>
+    <script src='/tags/$component$.tag' type='riot/tag'></script>
+    <script src='/riot+compiler.min.js'></script>
     <script>
       riot.mount('$component$', $opts$);
     </script>

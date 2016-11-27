@@ -18,9 +18,15 @@ const resources = {
   handler: { directory: { path: 'public' } }
 };
 
+const tags = {
+  path: '/tags/{param*}',
+  handler: { directory: { path: 'tags' } }
+}
+
 module.exports = [
   register,
   login,
   riot,
-  resources
+  resources,
+  tags
 ].map((route) => Object.assign(route, { method: 'get', config: { auth: false } }));

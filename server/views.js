@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   engines: {
-    js: {
+    tag: {
       compile: (src, options) => (context) => {
         const layoutPath = path.join(__dirname, '..', 'public', 'layout.html');
         const layout = fs.readFileSync(layoutPath, 'utf8');
@@ -20,5 +20,5 @@ module.exports = {
     }
   },
   relativeTo: __dirname,
-  path: '../public/tags'
+  path: '../tags'
 };
