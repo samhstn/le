@@ -10,6 +10,7 @@ module.exports = (config) => {
     ],
     files: [
       'node_modules/expect.js/index.js',
+      'node_modules/sinon/pkg/sinon.js',
       'public/helpers/*.js',
       'tags/**/*.tag',
       'test/riot/**/*.js'

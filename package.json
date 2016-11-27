@@ -46,6 +46,7 @@
     "nodemon": "^1.11.0",
     "phantomjs-prebuilt": "^2.1.13",
     "shot": "^3.3.2",
+    "sinon": "^1.17.6",
     "tape": "^4.6.2"
   }
 }
