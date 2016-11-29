@@ -4,67 +4,71 @@
  * should have only 1 'it' and one 'expect' assertion
  * inside of that 'it'
  *
- * describe(‘dashboard’)
- * | describe(‘initial state’)
- * | | context(‘no opts’)
- * | | context(‘single collection opts’)
- * | | context(‘two collections opts’)
- * | describe(‘new collection state’)
- * | | context(‘no opts’)
- * | | | context(‘cancel’)
- * | | | context(‘done’)
- * | | context(‘single collection opts’)
- * | | | context(‘cancel’)
- * | | | | context(‘view change’)
- * | | | | context(‘another new collection state’)
- * | | | context(‘done’)
- * | | | | context(‘view change’)
- * | | | | context(‘another new collection state’)
- * | describe(‘edit collection state’)
- * | | context(‘no opts’)
- * | | | context(‘done’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | context(‘cancel’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | context(‘delete’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | context(‘single collection opts’)
- * | | | context(‘done’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | context(‘cancel’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | context(‘delete’)
- * | | | | context(‘no change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’)
- * | | | | context(‘change’)
- * | | | | | context(‘view change’)
- * | | | | | context(‘another edit collection state’) */
+ * describe('dashboard')
+ * | describe('initial state') [x]
+ * | | context('no opts') [x]
+ * | | context('with a single collection') [x]
+ * | | | context('default collection state') [x]
+ * | | | context('collection with words state') [x]
+ * | | context('with two collections') [x]
+ * | describe('create a new collection') [x]
+ * | | context('no opts') [x]
+ * | | | context('change view') [x]
+ * | | | context('cancel') [x]
+ * | | | | context('another new collection state') [x]
+ * | | | context('done') [x]
+ * | | | | context('another new collection state') [x]
+ * | | context('single collection opts') []
+ * | | | context('change view') []
+ * | | | context('cancel') []
+ * | | | | context('another new collection state') []
+ * | | | context('done') []
+ * | | | | context('another new collection state') []
+ * | describe('edit collection state') []
+ * | | context('no opts') []
+ * | | | context('done') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | context('cancel') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | context('delete') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | context('single collection opts') []
+ * | | | context('done') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | context('cancel') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | context('delete') []
+ * | | | | context('no change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') []
+ * | | | | context('change') []
+ * | | | | | context('view change') []
+ * | | | | | context('another edit collection state') [] */
 
 function createDashboard () {
   var dashboard = document.createElement('dashboard');
@@ -216,6 +220,183 @@ describe('initial states', function () {
     it('should display the right words number and score', function () {
       expect(selectorsTextContent('p'))
         .to.eql([ 'Average Score: 6.6, Number of Words: 3', 'Number of Words: 0' ]);
+    });
+  });
+});
+
+describe('create a new collection', function () {
+  context('no initial collections', function () {
+    context('should change view', function () {
+      before(function () {
+        createDashboard();
+        document.querySelectorAll('button')[1].click(); // Add a collection
+      });
+      after(removeDashboard);
+
+      it('should no longer show the collection_list_id', function () {
+        expect(document.querySelector('#collection_list_id'))
+          .to.be.null;
+      });
+      it('should show the new_collection_id', function () {
+        expect(document.querySelector('#new_collection_id'))
+          .to.be.an('object');
+      });
+      it('should have two input boxes', function () {
+        expect(document.querySelectorAll('input').length)
+          .to.be(2);
+      });
+      it('should have empty input boxes', function () {
+        [].forEach.call(document.querySelectorAll('input'), function (input) {
+          expect(input.value).to.be('');
+        });
+      });
+    });
+
+    context('cancel button', function () {
+      before(function () {
+        createDashboard();
+        document.querySelectorAll('button')[1].click(); // Add new collection
+        document.querySelectorAll('input')[0].value = 'col name'; // name input
+        document.querySelectorAll('input')[1].value = 'col description'; // desc input
+        document.querySelectorAll('button')[2].click(); // cancel
+      });
+
+      after(removeDashboard);
+
+      context('should change view', function () {
+        it('should not show the create new collection view', function () {
+          expect(document.querySelector('#new_colleciton_id'))
+            .to.be.null;
+        });
+        it('should show the collection view', function () {
+          expect(document.querySelector('#collection_list_id'))
+            .to.be.an('object');
+        });
+      });
+
+      context('should not have a changed state for creating a new collection', function () {
+        before(function () {
+          document.querySelectorAll('button')[1].click(); // Add new collection
+        });
+
+        it('should no longer show the collection_list_id', function () {
+          expect(document.querySelector('#collection_list_id'))
+            .to.be.null;
+        });
+        it('should show the new_collection_id', function () {
+          expect(document.querySelector('#new_collection_id'))
+            .to.be.an('object');
+        });
+        it('should have two input boxes', function () {
+          expect(document.querySelectorAll('input').length)
+            .to.be(2);
+        });
+        it('should have empty input boxes', function () {
+          [].forEach.call(document.querySelectorAll('input'), function (input) {
+            expect(input.value)
+              .to.be('');
+          });
+        });
+      });
+    });
+
+    context('done button', function () {
+      var get, post;
+      before(function () {
+        get = sinon.stub(request, 'get', function (url, cb) {
+          cb({
+            collections:{
+              '100': {
+                collection_name: 'col name',
+                collection_description: 'col description',
+                average_score: null,
+                number_of_words: 0
+              }
+            }
+          });
+        });
+        post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
+        createDashboard();
+        document.querySelectorAll('button')[1].click(); // Add new collection
+        document.querySelectorAll('input')[0].value = 'col name'; // name input
+        document.querySelectorAll('input')[1].value = 'col description'; // desc input
+        document.querySelectorAll('button')[1].click(); // done
+      });
+      after(function () {
+        removeDashboard();
+        get.restore();
+        post.restore();
+      });
+
+      context('send requests', function () {
+        it('should send a get request', function () {
+          expect(get.callCount)
+            .to.be(1);
+        });
+        it('should have been called with "/api/collection"', function () {
+          expect(get.getCall(0).args[0])
+            .to.be('/api/collection');
+        });
+        it('should send a post request', function () {
+          expect(post.callCount)
+            .to.be(1);
+        });
+        it('should have been called with "/api/collection" and the correct payload', function () {
+          expect(post.getCall(0).args.slice(0, 2))
+            .to.eql([
+              '/api/collection',
+              { collection_name: 'col name', collection_description: 'col description' }
+            ]);
+        });
+        it('should have called post before get', function () {
+          expect(post.calledBefore(get))
+            .to.be(true);
+        });
+      });
+
+      context('change view and display new collection', function () {
+        it('should not show the create new collection view', function () {
+          expect(document.querySelector('#new_colleciton_id'))
+            .to.be.null;
+        });
+        it('should show the collection view', function () {
+          expect(document.querySelector('#collection_list_id'))
+            .to.be.an('object');
+        });
+        it('should show the created collection name', function () {
+          expect(selectorsTextContent('h4'))
+            .to.eql(['col name']);
+        });
+        it('should show the created collection description', function () {
+          expect(selectorsTextContent('h6'))
+            .to.eql(['col description']);
+        });
+        it('should show the created collection name', function () {
+          expect(selectorsTextContent('p'))
+            .to.eql(['Number of Words: 0']);
+        });
+      });
+
+      context('should not have a changed state for creating a new collection', function () {
+        before(function () {
+          document.querySelectorAll('button')[1].click(); // Add new collection
+        });
+
+        it('should no longer show the collection_list_id', function () {
+          expect(document.querySelector('#collection_list_id'))
+            .to.be.null;
+        });
+        it('should show the new_collection_id', function () {
+          expect(document.querySelector('#new_collection_id'))
+            .to.be.an('object');
+        });
+        it('should have empty input boxes', function () {
+          [].forEach.call(document.querySelectorAll('input'), function (input) {
+            expect(input.value)
+              .to.be('');
+          });
+        });
+      });
     });
   });
 });
