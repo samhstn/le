@@ -1,4 +1,4 @@
-describe.only('assign', function () {
+describe('assign', function () {
   it('should merge objects into one', function () {
     expect(assign({ key1: 'value1' }, { key2: 'value2' }))
       .to.eql({ key1: 'value1', key2: 'value2' });

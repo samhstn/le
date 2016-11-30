@@ -21,6 +21,140 @@ var selectorsTextContent = selectors('textContent');
 var selectorsValue = selectors('value');
 var get, post, put;
 
+describe('createDashboard', function () {
+  context('with no arg', function () {
+    var mount, createElement, appendChild;
+    before(function () {
+      mount = sinon.stub(riot, 'mount');
+      createElement = sinon.stub(document, 'createElement').returns('child elem');
+      appendChild = sinon.stub(document.body, 'appendChild');
+      createDashboard();
+    });
+    after(function () {
+      mount.restore();
+      createElement.restore();
+      appendChild.restore();
+    });
+    it('should have called createElement once', function () {
+      expect(createElement.callCount)
+        .to.be(1);
+    });
+    it('should have called createElement on "dashboard"', function () {
+      expect(createElement.getCall(0).args)
+        .to.eql(['dashboard']);
+    });
+    it('should have called appendChild once', function () {
+      expect(appendChild.callCount)
+        .to.be(1);
+    });
+    it('should have called appendChild on "child elem"', function () {
+      expect(appendChild.getCall(0).args)
+        .to.eql(['child elem']);
+    });
+    it('should have called riot.mount once', function () {
+      expect(mount.callCount)
+        .to.be(1);
+    });
+    it('should have called riot.mount with "dashboard" as its arg', function () {
+      expect(mount.getCall(0).args)
+        .to.eql(['dashboard']);
+    });
+  });
+
+  context('with single arg', function () {
+    var mount, createElement, appendChild;
+    before(function () {
+      mount = sinon.stub(riot, 'mount');
+      createElement = sinon.stub(document, 'createElement').returns('child elem');
+      appendChild = sinon.stub(document.body, 'appendChild');
+      createDashboard({ collection: 'collection' });
+    });
+    after(function () {
+      mount.restore();
+      createElement.restore();
+      appendChild.restore();
+    });
+    it('should have called createElement once', function () {
+      expect(createElement.callCount)
+        .to.be(1);
+    });
+    it('should have called createElement on "dashboard"', function () {
+      expect(createElement.getCall(0).args)
+        .to.eql(['dashboard']);
+    });
+    it('should have called appendChild once', function () {
+      expect(appendChild.callCount)
+        .to.be(1);
+    });
+    it('should have called appendChild on "child elem"', function () {
+      expect(appendChild.getCall(0).args)
+        .to.eql(['child elem']);
+    });
+    it('should have called riot.mount once', function () {
+      expect(mount.callCount)
+        .to.be(1);
+    });
+    it('should have called riot.mount with "dashboard" as its arg', function () {
+      expect(mount.getCall(0).args)
+        .to.eql(['dashboard', { collection: 'collection' }]);
+    });
+  });
+
+  context('called multiple times', function () {
+    var mount, createElement, appendChild;
+    before(function () {
+      mount = sinon.stub(riot, 'mount');
+      createElement = sinon.stub(document, 'createElement').returns('child elem');
+      appendChild = sinon.stub(document.body, 'appendChild');
+      createDashboard({ collection: 'collection' });
+      createDashboard({ collection1: 'collection1' });
+      createDashboard({ collectionAnother: 'collectionAnother', collection2: 'collection2' });
+    });
+    after(function () {
+      mount.restore();
+      createElement.restore();
+      appendChild.restore();
+    });
+    it('should have called createElement three times', function () {
+      expect(createElement.callCount)
+        .to.be(3);
+    });
+    it('should have called createElement on "dashboard"', function () {
+      expect([
+        createElement.getCall(0).args[0],
+        createElement.getCall(1).args[0],
+        createElement.getCall(2).args[0]
+      ]).to.eql(['dashboard', 'dashboard', 'dashboard']);
+    });
+    it('should have called appendChild three times', function () {
+      expect(appendChild.callCount)
+        .to.be(3);
+    });
+    it('should have called appendChild on "child elem"', function () {
+      expect([
+        appendChild.getCall(0).args[0],
+        appendChild.getCall(1).args[0],
+        appendChild.getCall(2).args[0]
+      ]).to.eql(['child elem', 'child elem', 'child elem']);
+    });
+    it('should have called riot.mount once', function () {
+      expect(mount.callCount)
+        .to.be(3);
+    });
+    it('should have called riot.mount with "dashboard" as its arg', function () {
+      expect([
+        mount.getCall(0).args,
+        mount.getCall(1).args,
+        mount.getCall(2).args
+      ]).to.eql([
+        ['dashboard', { collection: 'collection' }],
+        ['dashboard', { collection1: 'collection1' }],
+        ['dashboard', { collectionAnother: 'collectionAnother', collection2: 'collection2' }]
+      ]);
+    });
+  });
+});
+
 describe('dashboard', function () {
 describe('initial states', function () {
   context('no opts', function () {
