@@ -19,6 +19,7 @@ function selectors (method) {
 
 var selectorsTextContent = selectors('textContent');
 var selectorsValue = selectors('value');
+var get, post, put;
 
 describe('dashboard', function () {
 describe('initial states', function () {
@@ -51,16 +52,7 @@ describe('initial states', function () {
   context('with a single collection', function () {
     context('default collection state', function () {
       before(function () {
-        createDashboard({
-          collections: {
-            '100': {
-              collection_name: 'col1',
-              collection_description: 'col1 description',
-              average_score: null,
-              number_of_words: 0
-            }
-          }
-        });
+        createDashboard(mock_opts.one_default_collection);
       });
       after(removeDashboard);
       
@@ -69,11 +61,11 @@ describe('initial states', function () {
       });
       it('should display the collection name in a h4', function () {
         expect(document.querySelector('h4').textContent)
-          .to.be('col1');
+          .to.be('col name');
       });
       it('should display the collection description in a h6', function () {
         expect(document.querySelector('h6').textContent)
-          .to.be('col1 description');
+          .to.be('col description');
       })
       it('should display 0 number of words', function () {
         expect(document.querySelector('p').textContent)
@@ -83,17 +75,7 @@ describe('initial states', function () {
 
     context('collection with words state', function () {
       before(function () {
-        createDashboard();
-        riot.mount('dashboard', {
-          collections: {
-            '100': {
-              collection_name: 'col1',
-              collection_description: 'col1 description',
-              average_score: 5.5,
-              number_of_words: 5
-            }
-          }
-        });
+        createDashboard(mock_opts.one_collection_w_words);
       });
       after(removeDashboard);
 
@@ -103,37 +85,22 @@ describe('initial states', function () {
       });
       it('should display the collection name in a h4', function () {
         expect(document.querySelector('h4').textContent)
-          .to.be('col1');
+          .to.be('col name');
       });
       it('should display the collection description in a h6', function () {
         expect(document.querySelector('h6').textContent)
-          .to.be('col1 description');
+          .to.be('col description');
       })
       it('should display the right words number and score', function () {
         expect(document.querySelector('p').textContent)
-          .to.be('Average Score: 5.5, Number of Words: 5');
+          .to.be('Average Score: 6.6, Number of Words: 3');
       });
     });
   });
 
   context('with two collections', function () {
     before(function () {
-      createDashboard({
-        collections: {
-          '100': {
-            collection_name: 'col1',
-            collection_description: 'col1 description',
-            average_score: 6.6,
-            number_of_words: 3
-          },
-          '101': {
-            collection_name: 'col2',
-            collection_description: 'col2 description',
-            average_score: null,
-            number_of_words: 0
-          }
-        }
-      });
+      createDashboard(mock_opts.two_collections_w_words);
     });
     after(removeDashboard);
 
@@ -142,12 +109,12 @@ describe('initial states', function () {
     });
     it('should display the collection names in a h4', function () {
       expect(selectorsTextContent('h4'))
-        .to.eql([ 'col1', 'col2' ]);
+        .to.eql([ 'col name', 'col2 name' ]);
     });
 
     it('should display the collection description in a h6', function () {
       expect(selectorsTextContent('h6'))
-        .to.eql([ 'col1 description', 'col2 description' ]);
+        .to.eql([ 'col description', 'col2 description' ]);
     })
 
     it('should display the right words number and score', function () {
@@ -223,19 +190,9 @@ describe('create a new collection', function () {
     });
 
     context('done button', function () {
-      var get, post;
       before(function () {
         get = sinon.stub(request, 'get', function (url, cb) {
-          cb({
-            collections:{
-              '100': {
-                collection_name: 'col name',
-                collection_description: 'col description',
-                average_score: null,
-                number_of_words: 0
-              }
-            }
-          });
+          cb(mock_responses.get['/collection'].one_default_collection);
         });
         post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
         createDashboard();
@@ -323,16 +280,7 @@ describe('create a new collection', function () {
   context('with single initial collection', function () {
     context('should change view', function () {
       before(function () {
-        createDashboard({
-          collections: {
-            '100': {
-              collection_name: 'initial col name',
-              collection_description: 'initial col description',
-              average_score: null,
-              number_of_words: 0
-            }
-          }
-        });
+        createDashboard(mock_opts.one_default_collection);
         document.querySelectorAll('button')[1].click(); // Add a collection
       });
       after(removeDashboard);
@@ -353,16 +301,7 @@ describe('create a new collection', function () {
 
     context('cancel button', function () {
       before(function () {
-        createDashboard({
-          collections: {
-            '100': {
-              collection_name: 'initial col name',
-              collection_description: 'initial col description',
-              average_score: null,
-              number_of_words: 0
-            }
-          }
-        });
+        createDashboard(mock_opts.one_default_collection);
         document.querySelectorAll('button')[1].click(); // Add a collection
         document.querySelectorAll('input')[0].value = 'col name'; // name input
         document.querySelectorAll('input')[1].value = 'col description'; // desc input
@@ -381,11 +320,11 @@ describe('create a new collection', function () {
         });
         it('should show a single collection name in a h4', function () {
           expect(selectorsTextContent('h4'))
-            .to.eql(['initial col name']);
+            .to.eql(['col name']);
         });
         it('should show a single collection description in a h6', function () {
           expect(selectorsTextContent('h6'))
-            .to.eql(['initial col description']);
+            .to.eql(['col description']);
         });
         it('should show the created collection name', function () {
           expect(selectorsTextContent('p'))
@@ -414,49 +353,24 @@ describe('create a new collection', function () {
     });
 
     context('done button', function () {
-      var get, post;
-      before(function () {
-        get = sinon.stub(request, 'get', function (url, cb) {
-          cb({
-            collections:{
-              '100': {
-                collection_name: 'initial col name',
-                collection_description: 'initial col description',
-                average_score: null,
-                number_of_words: 0
-              },
-              '101': {
-                collection_name: 'col name',
-                collection_description: 'col description',
-                average_score: null,
-                number_of_words: 0
-              }
-            }
-          });
-        });
-        post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
-        createDashboard({
-          collections: {
-            '100': {
-              collection_name: 'initial col name',
-              collection_description: 'initial col description',
-              average_score: null,
-              number_of_words: 0
-            }
-          }
-        });
-        document.querySelectorAll('button')[1].click(); // Add new collection
-        document.querySelectorAll('input')[0].value = 'col name'; // name input
-        document.querySelectorAll('input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('button')[1].click(); // done
-      });
-      after(function () {
-        removeDashboard();
-        get.restore();
-        post.restore();
-      });
-
       context('send requests', function () {
+        before(function () {
+          get = sinon.stub(request, 'get', function (url, cb) {
+            cb(mock_responses.get['/collection'].two_default_collections);
+          });
+          post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
+          createDashboard(mock_opts.one_default_collection);
+          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('button')[1].click(); // done
+        });
+        after(function () {
+          removeDashboard();
+          get.restore();
+          post.restore();
+        });
+
         it('should send a get request', function () {
           expect(get.callCount)
             .to.be(1);
@@ -473,7 +387,7 @@ describe('create a new collection', function () {
           expect(post.getCall(0).args.slice(0, 2))
             .to.eql([
               '/api/collection',
-              { collection_name: 'col name', collection_description: 'col description' }
+              { collection_name: 'col2 name', collection_description: 'col2 description' }
             ]);
         });
         it('should have called post before get', function () {
@@ -483,6 +397,23 @@ describe('create a new collection', function () {
       });
 
       context('change view and display new collection', function () {
+        before(function () {
+          get = sinon.stub(request, 'get', function (url, cb) {
+            cb(mock_responses.get['/collection'].two_default_collections);
+          });
+          post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
+          createDashboard(mock_opts.one_default_collection);
+          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('button')[1].click(); // done
+        });
+        after(function () {
+          removeDashboard();
+          get.restore();
+          post.restore();
+        });
+
         it('should not show the create new collection view', function () {
           expect(document.querySelector('#new_colleciton_id'))
             .to.be.null;
@@ -493,11 +424,11 @@ describe('create a new collection', function () {
         });
         it('should show the correct collection names', function () {
           expect(selectorsTextContent('h4'))
-            .to.eql(['initial col name', 'col name']);
+            .to.eql(['col name', 'col2 name']);
         });
         it('should show the created collection description', function () {
           expect(selectorsTextContent('h6'))
-            .to.eql(['initial col description', 'col description']);
+            .to.eql(['col description', 'col2 description']);
         });
         it('should show the created collection name', function () {
           expect(selectorsTextContent('p'))
@@ -507,7 +438,21 @@ describe('create a new collection', function () {
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
+          get = sinon.stub(request, 'get', function (url, cb) {
+            cb(mock_responses.get['/collection'].two_default_collections);
+          });
+          post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
+          createDashboard(mock_opts.one_default_collection);
           document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('button')[1].click(); // done
+          document.querySelectorAll('button')[1].click(); // Add new collection
+        });
+        after(function () {
+          removeDashboard();
+          get.restore();
+          post.restore();
         });
 
         it('should no longer show the collection_list_id', function () {
@@ -555,29 +500,12 @@ describe('create a new collection', function () {
 describe('editing a collection', function () {
   context('without initial words', function () {
     context('initial state', function () {
-      var get;
       before(function () {
-        createDashboard({
-          collections: {
-            '100': {
-              collection_name: 'initial col name',
-              collection_description: 'initial col description',
-              average_score: null,
-              number_of_words: 0
-            }
-          }
-        });
+        createDashboard(mock_opts.one_default_collection);
         get = sinon.stub(request, 'get', function (url, cb) {
-          cb({
-            collection: {
-              collection_id: '100',
-              collection_name: 'initial col name',
-              collection_description: 'initial col description',
-              words: []
-            }
-          });
+          cb(mock_responses.get['/collection/100'].one_default_collection)
         });
-        document.querySelector('h4').click();
+        document.querySelector('h4').click(); // first (and only) collection
       });
       after(function () {
         removeDashboard();
@@ -594,7 +522,7 @@ describe('editing a collection', function () {
       });
       it('should have two input boxes with the right name and description', function () {
         expect(selectorsValue('input'))
-          .to.eql(['initial col name', 'initial col description']);
+          .to.eql(['col name', 'col description']);
       });
       it('should have 4 buttons with the correct textContent', function () {
         expect(selectorsTextContent('button'))
@@ -607,6 +535,71 @@ describe('editing a collection', function () {
       it('should have called get with "/api/collection/{id}"', function () {
         expect(get.getCall(0).args[0])
           .to.be('/api/collection/100');
+      });
+    });
+
+    context('done', function () {
+      context('after editing the collection name', function () {
+        before(function () {
+          createDashboard(mock_opts.one_default_collection);
+          get = sinon.stub(request, 'get', function (url, cb) {
+            var req = {
+              '/api/collection': mock_responses.get['/collection'].one_edited_name_default_collection,
+              '/api/collection/100': mock_responses.get['/collection/100'].one_default_collection
+            };
+            cb(req[url]);
+          });
+          put = sinon.stub(request, 'put', function (url, payload, cb) { cb(); });
+          document.querySelector('h4').click(); // first (and only) collection
+          document.querySelector('input').value = 'edited col name'; // collection name
+          document.querySelectorAll('button')[1].click(); // done
+        });
+        after(function () {
+          removeDashboard();
+          get.restore();
+          put.restore();
+        });
+        
+        it('should be showing the edit_collection_id', function () {
+          expect(document.querySelector('#edit_collection_id'))
+            .to.be.null;
+        });
+        it('should be showing the collection_list_id', function () {
+          expect(document.querySelector('#collection_list_id'))
+            .to.be.an('object');
+        });
+        xit('should be showing the edited collection name', function () {
+          expect(selectorsTextContent('h4'))
+            .to.eql(['edited col name']);
+        });
+        it('should have called put once', function () {
+          expect(put.callCount)
+            .to.be(1);
+        });
+        it('should have called put with the correct args', function () {
+          expect(put.getCall(0).args.slice(0, 2))
+            .to.eql(['/api/collection/100', { collection_name: 'edited col name'}]);
+        });
+        it('should have called get twice', function () {
+          expect(get.callCount)
+            .to.be(2);
+        });
+        it('should have called the first get with the correct args', function () {
+          expect(get.getCall(0).args[0])
+            .to.be('/api/collection/100');
+        });
+        it('should have called the second get with the correct args', function () {
+          expect(get.getCall(1).args[0])
+            .to.be('/api/collection');
+        });
+        it('should have called get before put', function () {
+          expect(get.calledBefore(put))
+            .to.be(true);
+        });
+        it('should have called get after put', function () {
+          expect(get.calledAfter(put))
+            .to.be(true);
+        });
       });
     });
   });

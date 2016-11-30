@@ -97,7 +97,7 @@ edit_collection () {
     collection_description: collection_description
   };
 
-  const id = self.focussed_collection.id;
+  const id = self.focussed_collection.collection_id;
 
   const payload = {};
 
@@ -108,14 +108,8 @@ edit_collection () {
   });
 
   request.put('/api/collection/' + id, payload, function () {
-    request.get('/api/collection/' + id, function (res) {
-      const collRes = res.collection;
-
-      ['collection_name', 'collection_description'].forEach(function (key) {
-        if (self.collections[id][key] !== collRes[key]) {
-          self.collections[id][key] = collRes[key];
-        }
-      });
+    request.get('/api/collection', function (res) {
+      self.collections[id] = res.collections[id];
 
       self.view = 'collections';
       self.update();
