@@ -1,75 +1,3 @@
- /** Dashboard Tests Contents Page
- *
- * Each of the most nexted 'contexts'
- * should have only 1 'it' and one 'expect' assertion
- * inside of that 'it'
- *
- * describe('dashboard')
- * | describe('initial state') [x]
- * | | context('no opts') [x]
- * | | context('with a single collection') [x]
- * | | | context('default collection state') [x]
- * | | | context('collection with words state') [x]
- * | | context('with two collections') [x]
- * | describe('create a new collection') [x]
- * | | context('no opts') [x]
- * | | | context('change view') [x]
- * | | | context('cancel') [x]
- * | | | | context('another new collection state') [x]
- * | | | context('done') [x]
- * | | | | context('another new collection state') [x]
- * | | context('single collection opts') [x]
- * | | | context('change view') [x]
- * | | | context('cancel') [x]
- * | | | | context('another new collection state') [x]
- * | | | context('done') [x]
- * | | | | context('another new collection state') [x]
- * | describe('edit collection state') []
- * | | context('no opts') []
- * | | | context('done') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | context('cancel') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | context('delete') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | context('single collection opts') []
- * | | | context('done') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | context('cancel') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | context('delete') []
- * | | | | context('no change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') []
- * | | | | context('change') []
- * | | | | | context('view change') []
- * | | | | | context('another edit collection state') [] */
-
 function createDashboard () {
   var dashboard = document.createElement('dashboard');
   document.body.appendChild(dashboard);
@@ -598,4 +526,90 @@ describe('create a new collection', function () {
     });
   });
 });
+
+/* | describe('editing a collection') []
+ * | | context('without initial words') []
+ * | | | context('initial state') []
+ * | | | context('done') []
+ * | | | | context('after editing the collection name') []
+ * | | | | context('after adding and removing a word') []
+ * | | | | context('after adding a word') []
+ * | | | context('cancel') []
+ * | | | | context('after editing the collection name') []
+ * | | | | context('after adding and removing a word') []
+ * | | | | context('after adding a word') []
+ * | | | context('delete') []
+ * | | context('with an initial word') []
+ * | | | context('initial state') []
+ * | | | context('done') []
+ * | | | | context('after editing the collection name') []
+ * | | | | context('after adding and removing a word') []
+ * | | | | context('after adding a word') []
+ * | | | context('cancel') []
+ * | | | | context('after editing the collection name') []
+ * | | | | context('after adding and removing a word') []
+ * | | | | context('after adding a word') []
+ * | | | context('delete') []
+ */
+
+describe('editing a collection', function () {
+  context('without initial words', function () {
+    context('initial state', function () {
+      var get;
+      before(function () {
+        createDashboard({
+          collections: {
+            '100': {
+              collection_name: 'initial col name',
+              collection_description: 'initial col description',
+              average_score: null,
+              number_of_words: 0
+            }
+          }
+        });
+        get = sinon.stub(request, 'get', function (url, cb) {
+          cb({
+            collection: {
+              collection_id: '100',
+              collection_name: 'initial col name',
+              collection_description: 'initial col description',
+              words: []
+            }
+          });
+        });
+        document.querySelector('h4').click();
+      });
+      after(function () {
+        removeDashboard();
+        get.restore();
+      });
+
+      it('should not be showing the collection_list_id', function () {
+        expect(document.querySelector('#collection_list_id'))
+          .to.be.null;
+      });
+      it('should be showing the edit_collection_id', function () {
+        expect(document.querySelector('#edit_collection_id'))
+          .to.be.an('object');
+      });
+      it('should have two input boxes with the right name and description', function () {
+        expect(selectorsValue('input'))
+          .to.eql(['initial col name', 'initial col description']);
+      });
+      it('should have 4 buttons with the correct textContent', function () {
+        expect(selectorsTextContent('button'))
+          .to.eql(['Logout', 'Done', 'Cancel', 'Delete']);
+      });
+      it('should have called get once', function () {
+        expect(get.callCount)
+          .to.be(1);
+      });
+      it('should have called get with "/api/collection/{id}"', function () {
+        expect(get.getCall(0).args[0])
+          .to.be('/api/collection/100');
+      });
+    });
+  });
 });
+});
+
