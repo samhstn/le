@@ -1,6 +1,6 @@
 <dashboard>
 
-<form action="/logout" method="post"><button>logout</button></form>
+<form action="/logout" method="post"><button>Logout</button></form>
 
 <div if={ view === 'collections' } id="collection_list_id">
   <div each={ coll, id in collections } onclick={ show_edit_collection.bind(this, id) }>
@@ -20,8 +20,8 @@
   <input name="name">
   <input name="description">
 
-  <button onclick={ create_new_collection }>done</button>
-  <button onclick={ cancel_collection_creation }>cancel</button>
+  <button onclick={ create_new_collection }>Done</button>
+  <button onclick={ cancel_collection_creation }>Cancel</button>
 </div>
 
 <div if={ view === 'edit_collection' } id="edit_collection_id">
@@ -29,7 +29,7 @@
   <input name="description" value="{ focussed_collection.collection_description || '' }">
 
   <button onclick={ edit_collection }>Done</button>
-  <button onclick={ cancel_edit_collection }>cancel</button>
+  <button onclick={ cancel_edit_collection }>Cancel</button>
   <button onclick={ delete_collection }>Delete</button>
 </div>
 
