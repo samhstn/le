@@ -81,11 +81,16 @@ function removeDashboard () {
   document.body.removeChild(document.querySelector('dashboard'));
 }
 
-function selectorsTextContent (tag) {
-  return [].map.call(document.querySelectorAll(tag), function (t) {
-    return t.textContent
-  })
+function selectors (method) {
+  return function (tag) {
+    return [].map.call(document.querySelectorAll(tag), function (t) {
+      return t[method];
+    })
+  }
 }
+
+var selectorsTextContent = selectors('textContent');
+var selectorsValue = selectors('value');
 
 describe('dashboard', function () {
 describe('initial states', function () {
@@ -99,7 +104,7 @@ describe('initial states', function () {
     });
     it('should have a logout button', function () {
       expect(document.querySelector('form > button').textContent)
-        .to.be('logout');
+        .to.be('Logout');
     });
     it('should only have one div on the page', function () {
       expect(document.querySelectorAll('div').length)
@@ -242,7 +247,7 @@ describe('create a new collection', function () {
           .to.be.an('object');
       });
       it('should have two empty input boxes', function () {
-        expect(selectorsTextContent('input'))
+        expect(selectorsValue('input'))
           .to.eql(['', '']);
       });
     });
@@ -283,7 +288,7 @@ describe('create a new collection', function () {
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsTextContent('input'))
+          expect(selectorsValue('input'))
             .to.eql(['', '']);
         });
       });
@@ -380,7 +385,7 @@ describe('create a new collection', function () {
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsTextContent('input'))
+          expect(selectorsValue('input'))
             .to.eql(['', '']);
         });
       });
@@ -413,7 +418,7 @@ describe('create a new collection', function () {
           .to.be.an('object');
       });
       it('should have two empty input boxes', function () {
-        expect(selectorsTextContent('input'))
+        expect(selectorsValue('input'))
           .to.eql(['', '']);
       });
     });
@@ -474,7 +479,7 @@ describe('create a new collection', function () {
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsTextContent('input'))
+          expect(selectorsValue('input'))
             .to.eql(['', '']);
         });
       });
@@ -586,7 +591,7 @@ describe('create a new collection', function () {
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsTextContent('input'))
+          expect(selectorsValue('input'))
             .to.eql(['', '']);
         });
       });
