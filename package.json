@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "npm run test:server && npm run test:riot",
-    "test:server": "NODE_ENV=test tape test/runner.js",
+    "test:server": "NODE_ENV=test tape test/runner.js | faucet",
     "test:riot": "karma start karma.conf.js",
     "coverage": "NODE_ENV=test istanbul cover tape test/runner.js",
     "watch:test:server": "nodemon -w server -w test -x 'npm run test:server'",
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
+    "faucet": "0.0.1",
     "istanbul": "^0.4.5",
     "karma": "^1.3.0",
     "karma-mocha": "^1.3.0",
