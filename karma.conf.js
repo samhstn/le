@@ -12,6 +12,7 @@ module.exports = (config) => {
       'node_modules/expect.js/index.js',
       'node_modules/sinon/pkg/sinon.js',
       'public/helpers/*.js',
+      'test/riot/mock-data.js',
       'tags/**/*.tag',
       'test/riot/**/*.js'
     ],
