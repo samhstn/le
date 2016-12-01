@@ -231,24 +231,20 @@ describe('initial states', function () {
     before(createDashboard);
     after(removeDashboard);
 
-    it('should only have two buttons', function () {
-      expect(document.querySelectorAll('button').length)
-        .to.be(2);
-    });
     it('should have a logout button', function () {
-      expect(document.querySelector('form > button').textContent)
+      expect(document.querySelector('form#logout_form_id button').textContent)
         .to.be('Logout');
     });
-    it('should only have one div on the page', function () {
-      expect(document.querySelectorAll('div').length)
-        .to.be(1);
-    });
-    it('should have the collection_view div on the page', function () {
-      expect(document.querySelector('#collection_list_id'))
+    it('should display the collection view div', function () {
+      expect(document.querySelector('div#collection_list_id'))
         .to.be.an('object');
     });
+    it('should not have any initial divs', function () {
+      expect(document.querySelectorAll('div#collection_list_id div').length)
+        .to.be(0);
+    });
     it('should contain a button with `Add a collection` content', function () {
-      expect(document.querySelector('div > button').textContent)
+      expect(document.querySelector('div#collection_list_id button').textContent)
         .to.be('Add a collection');
     });
   });
@@ -260,19 +256,24 @@ describe('initial states', function () {
       });
       after(removeDashboard);
       
-      it('should have the right number of divs for one collection', function () {
-        expect(document.querySelectorAll('div').length).to.be(2);
+      it('should have a logout button', function () {
+        expect(document.querySelector('form#logout_form_id button').textContent)
+          .to.be('Logout');
+      });
+      it('should display the collection view div', function () {
+        expect(document.querySelectorAll('div#collection_list_id'))
+          .to.be.an('object');
       });
       it('should display the collection name in a h4', function () {
-        expect(document.querySelector('h4').textContent)
+        expect(document.querySelector('div#collection_list_id h4').textContent)
           .to.be('col name');
       });
       it('should display the collection description in a h6', function () {
-        expect(document.querySelector('h6').textContent)
+        expect(document.querySelector('div#collection_list_id h6').textContent)
           .to.be('col description');
       })
-      it('should display 0 number of words', function () {
-        expect(document.querySelector('p').textContent)
+      it('should display Number of Words: 0', function () {
+        expect(document.querySelector('div#collection_list_id p').textContent)
           .to.be('Number of Words: 0');
       });
     });
@@ -283,20 +284,20 @@ describe('initial states', function () {
       });
       after(removeDashboard);
 
-      it('should have the right number of divs for one collection', function () {
-        expect(document.querySelectorAll('div').length)
-          .to.be(2);
+      it('should have one collection div', function () {
+        expect(document.querySelectorAll('div#collection_list_id div').length)
+          .to.be(1);
       });
       it('should display the collection name in a h4', function () {
-        expect(document.querySelector('h4').textContent)
+        expect(document.querySelector('div#collection_list_id h4').textContent)
           .to.be('col name');
       });
       it('should display the collection description in a h6', function () {
-        expect(document.querySelector('h6').textContent)
+        expect(document.querySelector('div#collection_list_id h6').textContent)
           .to.be('col description');
       })
       it('should display the right words number and score', function () {
-        expect(document.querySelector('p').textContent)
+        expect(document.querySelector('div#collection_list_id p').textContent)
           .to.be('Average Score: 6.6, Number of Words: 3');
       });
     });
@@ -309,20 +310,21 @@ describe('initial states', function () {
     after(removeDashboard);
 
     it('should have the right number of divs for two collections', function () {
-      expect(document.querySelectorAll('div').length).to.be(3);
+      expect(document.querySelectorAll('div#collection_list_id div').length)
+        .to.be(2);
     });
     it('should display the collection names in a h4', function () {
-      expect(selectorsTextContent('h4'))
+      expect(selectorsTextContent('div#collection_list_id h4'))
         .to.eql([ 'col name', 'col2 name' ]);
     });
 
     it('should display the collection description in a h6', function () {
-      expect(selectorsTextContent('h6'))
+      expect(selectorsTextContent('div#collection_list_id h6'))
         .to.eql([ 'col description', 'col2 description' ]);
     })
 
     it('should display the right words number and score', function () {
-      expect(selectorsTextContent('p'))
+      expect(selectorsTextContent('div#collection_list_id p'))
         .to.eql([ 'Average Score: 6.6, Number of Words: 3', 'Number of Words: 0' ]);
     });
   });
@@ -333,20 +335,20 @@ describe('create a new collection', function () {
     context('should change view', function () {
       before(function () {
         createDashboard();
-        document.querySelectorAll('button')[1].click(); // Add a collection
+        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
       });
       after(removeDashboard);
 
       it('should no longer show the collection_list_id', function () {
-        expect(document.querySelector('#collection_list_id'))
+        expect(document.querySelector('div#collection_list_id'))
           .to.be.null;
       });
       it('should show the new_collection_id', function () {
-        expect(document.querySelector('#new_collection_id'))
+        expect(document.querySelector('div#new_collection_id'))
           .to.be.an('object');
       });
       it('should have two empty input boxes', function () {
-        expect(selectorsValue('input'))
+        expect(selectorsValue('div#new_collection_id input'))
           .to.eql(['', '']);
       });
     });
@@ -354,40 +356,40 @@ describe('create a new collection', function () {
     context('cancel button', function () {
       before(function () {
         createDashboard();
-        document.querySelectorAll('button')[1].click(); // Add new collection
-        document.querySelectorAll('input')[0].value = 'col name'; // name input
-        document.querySelectorAll('input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('button')[2].click(); // cancel
+        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
+        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
+        document.querySelectorAll('div#new_collection_id button')[1].click(); // cancel
       });
 
       after(removeDashboard);
 
       context('should change view', function () {
         it('should not show the create new collection view', function () {
-          expect(document.querySelector('#new_colleciton_id'))
+          expect(document.querySelector('div#new_colleciton_id'))
             .to.be.null;
         });
         it('should show the collection view', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.an('object');
         });
       });
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
         });
 
         it('should no longer show the collection_list_id', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.null;
         });
         it('should show the new_collection_id', function () {
-          expect(document.querySelector('#new_collection_id'))
+          expect(document.querySelector('div#new_collection_id'))
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsValue('input'))
+          expect(selectorsValue('div#new_collection_id input'))
             .to.eql(['', '']);
         });
       });
@@ -400,10 +402,10 @@ describe('create a new collection', function () {
         });
         post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
         createDashboard();
-        document.querySelectorAll('button')[1].click(); // Add new collection
-        document.querySelectorAll('input')[0].value = 'col name'; // name input
-        document.querySelectorAll('input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('button')[1].click(); // done
+        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
+        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
+        document.querySelectorAll('div#new_collection_id button')[0].click(); // done
       });
       after(function () {
         removeDashboard();
@@ -439,42 +441,42 @@ describe('create a new collection', function () {
 
       context('change view and display new collection', function () {
         it('should not show the create new collection view', function () {
-          expect(document.querySelector('#new_colleciton_id'))
+          expect(document.querySelector('div#new_colleciton_id'))
             .to.be.null;
         });
         it('should show the collection view', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.an('object');
         });
         it('should show the created collection name', function () {
-          expect(selectorsTextContent('h4'))
+          expect(selectorsTextContent('div#collection_list_id h4'))
             .to.eql(['col name']);
         });
         it('should show the created collection description', function () {
-          expect(selectorsTextContent('h6'))
+          expect(selectorsTextContent('div#collection_list_id h6'))
             .to.eql(['col description']);
         });
         it('should show the created collection name', function () {
-          expect(selectorsTextContent('p'))
+          expect(selectorsTextContent('div#collection_list_id p'))
             .to.eql(['Number of Words: 0']);
         });
       });
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
         });
 
         it('should no longer show the collection_list_id', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.null;
         });
         it('should show the new_collection_id', function () {
-          expect(document.querySelector('#new_collection_id'))
+          expect(document.querySelector('div#new_collection_id'))
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsValue('input'))
+          expect(selectorsValue('div#new_collection_id input'))
             .to.eql(['', '']);
         });
       });
@@ -485,20 +487,20 @@ describe('create a new collection', function () {
     context('should change view', function () {
       before(function () {
         createDashboard(mock_opts.one_default_collection);
-        document.querySelectorAll('button')[1].click(); // Add a collection
+        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
       });
       after(removeDashboard);
 
       it('should no longer show the collection_list_id', function () {
-        expect(document.querySelector('#collection_list_id'))
+        expect(document.querySelector('div#collection_list_id'))
           .to.be.null;
       });
       it('should show the new_collection_id', function () {
-        expect(document.querySelector('#new_collection_id'))
+        expect(document.querySelector('div#new_collection_id'))
           .to.be.an('object');
       });
       it('should have two empty input boxes', function () {
-        expect(selectorsValue('input'))
+        expect(selectorsValue('div#new_collection_id input'))
           .to.eql(['', '']);
       });
     });
@@ -506,51 +508,51 @@ describe('create a new collection', function () {
     context('cancel button', function () {
       before(function () {
         createDashboard(mock_opts.one_default_collection);
-        document.querySelectorAll('button')[1].click(); // Add a collection
-        document.querySelectorAll('input')[0].value = 'col name'; // name input
-        document.querySelectorAll('input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('button')[2].click(); // cancel
+        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
+        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
+        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
+        document.querySelectorAll('div#new_collection_id button')[1].click(); // cancel
       });
       after(removeDashboard);
 
       context('should change view', function () {
         it('should not show the create new collection view', function () {
-          expect(document.querySelector('#new_colleciton_id'))
+          expect(document.querySelector('div#new_colleciton_id'))
             .to.be.null;
         });
         it('should show the collection view', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.an('object');
         });
         it('should show a single collection name in a h4', function () {
-          expect(selectorsTextContent('h4'))
+          expect(selectorsTextContent('div#collection_list_id h4'))
             .to.eql(['col name']);
         });
         it('should show a single collection description in a h6', function () {
-          expect(selectorsTextContent('h6'))
+          expect(selectorsTextContent('div#collection_list_id h6'))
             .to.eql(['col description']);
         });
         it('should show the created collection name', function () {
-          expect(selectorsTextContent('p'))
+          expect(selectorsTextContent('div#collection_list_id p'))
             .to.eql(['Number of Words: 0']);
         });
       });
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
         });
 
         it('should no longer show the collection_list_id', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.null;
         });
         it('should show the new_collection_id', function () {
-          expect(document.querySelector('#new_collection_id'))
+          expect(document.querySelector('div#new_collection_id'))
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsValue('input'))
+          expect(selectorsValue('div#new_collection_id input'))
             .to.eql(['', '']);
         });
       });
@@ -564,10 +566,10 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('button')[1].click(); // Add new collection
-          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('button')[1].click(); // done
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
         });
         after(function () {
           removeDashboard();
@@ -607,10 +609,10 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('button')[1].click(); // Add new collection
-          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('button')[1].click(); // done
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
         });
         after(function () {
           removeDashboard();
@@ -619,23 +621,23 @@ describe('create a new collection', function () {
         });
 
         it('should not show the create new collection view', function () {
-          expect(document.querySelector('#new_colleciton_id'))
+          expect(document.querySelector('div#new_colleciton_id'))
             .to.be.null;
         });
         it('should show the collection view', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.an('object');
         });
         it('should show the correct collection names', function () {
-          expect(selectorsTextContent('h4'))
+          expect(selectorsTextContent('div#collection_list_id h4'))
             .to.eql(['col name', 'col2 name']);
         });
         it('should show the created collection description', function () {
-          expect(selectorsTextContent('h6'))
+          expect(selectorsTextContent('div#collection_list_id h6'))
             .to.eql(['col description', 'col2 description']);
         });
         it('should show the created collection name', function () {
-          expect(selectorsTextContent('p'))
+          expect(selectorsTextContent('div#collection_list_id p'))
             .to.eql(['Number of Words: 0', 'Number of Words: 0']);
         });
       });
@@ -647,11 +649,11 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('button')[1].click(); // Add new collection
-          document.querySelectorAll('input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('button')[1].click(); // done
-          document.querySelectorAll('button')[1].click(); // Add new collection
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
+          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
+          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
+          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
         });
         after(function () {
           removeDashboard();
@@ -660,15 +662,15 @@ describe('create a new collection', function () {
         });
 
         it('should no longer show the collection_list_id', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.null;
         });
         it('should show the new_collection_id', function () {
-          expect(document.querySelector('#new_collection_id'))
+          expect(document.querySelector('div#new_collection_id'))
             .to.be.an('object');
         });
         it('should have two empty input boxes', function () {
-          expect(selectorsValue('input'))
+          expect(selectorsValue('div#new_collection_id input'))
             .to.eql(['', '']);
         });
       });
@@ -709,7 +711,7 @@ describe('editing a collection', function () {
         get = sinon.stub(request, 'get', function (url, cb) {
           cb(mock_responses.get['/collection/100'].one_default_collection)
         });
-        document.querySelector('h4').click(); // first (and only) collection
+        document.querySelector('div#collection_list_id h4').click(); // first (and only) collection
       });
       after(function () {
         removeDashboard();
@@ -717,20 +719,20 @@ describe('editing a collection', function () {
       });
 
       it('should not be showing the collection_list_id', function () {
-        expect(document.querySelector('#collection_list_id'))
+        expect(document.querySelector('div#collection_list_id'))
           .to.be.null;
       });
       it('should be showing the edit_collection_id', function () {
-        expect(document.querySelector('#edit_collection_id'))
+        expect(document.querySelector('div#edit_collection_id'))
           .to.be.an('object');
       });
       it('should have two input boxes with the right name and description', function () {
-        expect(selectorsValue('input'))
+        expect(selectorsValue('div#edit_collection_id input'))
           .to.eql(['col name', 'col description']);
       });
       it('should have 4 buttons with the correct textContent', function () {
-        expect(selectorsTextContent('button'))
-          .to.eql(['Logout', 'Done', 'Cancel', 'Delete']);
+        expect(selectorsTextContent('div#edit_collection_id button'))
+          .to.eql(['Done', 'Cancel', 'Delete']);
       });
       it('should have called get once', function () {
         expect(get.callCount)
@@ -766,9 +768,9 @@ describe('editing a collection', function () {
             cb(req[url]);
           });
           put = sinon.stub(request, 'put', function (url, payload, cb) { cb(); });
-          document.querySelector('h4').click(); // first (and only) collection
-          document.querySelector('input').value = 'edited col name'; // collection name
-          document.querySelectorAll('button')[1].click(); // done
+          document.querySelector('div#collection_list_id h4').click(); // first (and only) collection
+          document.querySelector('div#edit_collection_id input').value = 'edited col name'; // collection name
+          document.querySelectorAll('div#edit_collection_id button')[0].click(); // done
         });
         after(function () {
           removeDashboard();
@@ -777,15 +779,15 @@ describe('editing a collection', function () {
         });
         
         it('should be showing the edit_collection_id', function () {
-          expect(document.querySelector('#edit_collection_id'))
+          expect(document.querySelector('div#edit_collection_id'))
             .to.be.null;
         });
         it('should be showing the collection_list_id', function () {
-          expect(document.querySelector('#collection_list_id'))
+          expect(document.querySelector('div#collection_list_id'))
             .to.be.an('object');
         });
         it('should be showing the edited collection name', function () {
-          expect(selectorsTextContent('h4'))
+          expect(selectorsTextContent('div#collection_list_id h4'))
             .to.eql(['edited col name']);
         });
         it('should have called put once', function () {

@@ -1,6 +1,6 @@
 <dashboard>
 
-<form action="/logout" method="post"><button>Logout</button></form>
+<form id="logout_form_id" action="/logout" method="post"><button>Logout</button></form>
 
 <div if={ view === 'collections' } id="collection_list_id">
   <div each={ coll, id in collections } onclick={ show_edit_collection.bind(this, id) }>
