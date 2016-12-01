@@ -153,6 +153,76 @@ describe('createDashboard', function () {
       ]);
     });
   });
+
+  context('does not mutate the object passed into it', function () {
+    var mount, createElement, appendChild;
+    var data1 = { collection1: 'collection1' };
+    var data2 = { collection: 'collection', collection2: 'collection2' };
+    var data3 = { collection: 'collection' };
+    before(function () {
+      mount = sinon.stub(riot, 'mount');
+      createElement = sinon.stub(document, 'createElement').returns('child elem');
+      appendChild = sinon.stub(document.body, 'appendChild');
+      createDashboard(data1);
+      createDashboard(data2);
+      createDashboard(data3);
+    });
+    after(function () {
+      mount.restore();
+      createElement.restore();
+      appendChild.restore();
+    });
+    
+    it('should have called createElement three times', function () {
+      expect(createElement.callCount)
+        .to.be(3);
+    });
+    it('should have called createElement on "dashboard"', function () {
+      expect([
+        createElement.getCall(0).args[0],
+        createElement.getCall(1).args[0],
+        createElement.getCall(2).args[0]
+      ]).to.eql(['dashboard', 'dashboard', 'dashboard']);
+    });
+    it('should have called appendChild three times', function () {
+      expect(appendChild.callCount)
+        .to.be(3);
+    });
+    it('should have called appendChild on "child elem"', function () {
+      expect([
+        appendChild.getCall(0).args[0],
+        appendChild.getCall(1).args[0],
+        appendChild.getCall(2).args[0]
+      ]).to.eql(['child elem', 'child elem', 'child elem']);
+    });
+    it('should have called riot.mount once', function () {
+      expect(mount.callCount)
+        .to.be(3);
+    });
+    it('should have called riot.mount with "dashboard" as its arg', function () {
+      expect([
+        mount.getCall(0).args,
+        mount.getCall(1).args,
+        mount.getCall(2).args
+      ]).to.eql([
+        ['dashboard', { collection1: 'collection1' }],
+        ['dashboard', { collection: 'collection', collection2: 'collection2' }],
+        ['dashboard', { collection: 'collection' }]
+      ]);
+    });
+    it('should not have mutated data1', function () {
+      expect(data1)
+        .to.eql({ collection1: 'collection1' });
+    });
+    it('should not have mutated data2', function () {
+      expect(data2)
+        .to.eql({ collection: 'collection', collection2: 'collection2' });
+    });
+    it('should not have mutated data3', function () {
+      expect(data3)
+        .to.eql({ collection: 'collection' });
+    });
+  });
 });
 
 describe('dashboard', function () {
