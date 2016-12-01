@@ -745,7 +745,19 @@ describe('editing a collection', function () {
     context('done', function () {
       context('after editing the collection name', function () {
         before(function () {
-          createDashboard(mock_opts.one_default_collection);
+          // TODO:
+          // Temp fix, need to work out why this is happening
+          // createDashboard(mock_opts.one_default_collection);
+          createDashboard({
+            collections: {
+              '100': {
+                collection_name: 'col name',
+                collection_description: 'col description',
+                average_score: null,
+                number_of_words: 0
+              }
+            }
+          });
           get = sinon.stub(request, 'get', function (url, cb) {
             var req = {
               '/api/collection': mock_responses.get['/collection'].one_edited_name_default_collection,
@@ -772,7 +784,7 @@ describe('editing a collection', function () {
           expect(document.querySelector('#collection_list_id'))
             .to.be.an('object');
         });
-        xit('should be showing the edited collection name', function () {
+        it('should be showing the edited collection name', function () {
           expect(selectorsTextContent('h4'))
             .to.eql(['edited col name']);
         });
