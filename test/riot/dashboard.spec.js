@@ -1,8 +1,11 @@
-function createDashboard () {
+function clone (obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function createDashboard (opts) {
   var dashboard = document.createElement('dashboard');
   document.body.appendChild(dashboard);
-  [].unshift.call(arguments, 'dashboard');
-  riot.mount.apply(null, arguments);
+  typeof opts === 'object' ? riot.mount('dashboard', clone(opts)) : riot.mount('dashboard');
 }
 
 function removeDashboard () {
