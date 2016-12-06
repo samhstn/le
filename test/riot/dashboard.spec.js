@@ -482,11 +482,11 @@ describe('create a new collection', function () {
   });
 });
 
-/* | describe('editing a collection') []
- * | | context('without initial words') []
- * | | | context('initial state') []
- * | | | context('done') []
- * | | | | context('after editing the collection name') []
+/* | describe('editing a collection') [x]
+ * | | context('without initial words') [x]
+ * | | | context('initial state') [x]
+ * | | | context('done') [x]
+ * | | | | context('after editing the collection name') [x]
  * | | | | context('after adding and removing a word') []
  * | | | | context('after adding a word') []
  * | | | context('cancel') []
@@ -494,7 +494,7 @@ describe('create a new collection', function () {
  * | | | | context('after adding and removing a word') []
  * | | | | context('after adding a word') []
  * | | | context('delete') []
- * | | context('with an initial word') []
+ * | | context('with a two initial words') [-]
  * | | | context('initial state') []
  * | | | context('done') []
  * | | | | context('after editing the collection name') []
