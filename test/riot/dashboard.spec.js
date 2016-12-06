@@ -22,6 +22,7 @@ function selectors (method) {
 
 var selectorsTextContent = selectors('textContent');
 var selectorsValue = selectors('value');
+var selectorsName = selectors('name');
 var get, post, put;
 
 describe('dashboard', function () {
@@ -138,7 +139,7 @@ describe('create a new collection', function () {
     context('should change view', function () {
       before(function () {
         createDashboard();
-        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
+        document.querySelectorAll('div#collection_list_id button[name=add_collection]')[0].click();
       });
       after(removeDashboard);
 
@@ -159,10 +160,10 @@ describe('create a new collection', function () {
     context('cancel button', function () {
       before(function () {
         createDashboard();
-        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
-        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
-        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('div#new_collection_id button')[1].click(); // cancel
+        document.querySelector('div#collection_list_id button[name=add_collection]').click();
+        document.querySelector('div#new_collection_id input[name=name]').value = 'col name';
+        document.querySelector('div#new_collection_id input[name=description]').value = 'col description';
+        document.querySelector('div#new_collection_id button[name=cancel]').click();
       });
 
       after(removeDashboard);
@@ -180,7 +181,7 @@ describe('create a new collection', function () {
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
         });
 
         it('should no longer show the collection_list_id', function () {
@@ -205,10 +206,10 @@ describe('create a new collection', function () {
         });
         post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
         createDashboard();
-        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
-        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
-        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('div#new_collection_id button')[0].click(); // done
+        document.querySelector('div#collection_list_id button[name=add_collection]').click();
+        document.querySelector('div#new_collection_id input[name=name]').value = 'col name';
+        document.querySelector('div#new_collection_id input[name=description]').value = 'col description';
+        document.querySelector('div#new_collection_id button[name=done]').click();
       });
       after(function () {
         removeDashboard();
@@ -267,7 +268,7 @@ describe('create a new collection', function () {
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
         });
 
         it('should no longer show the collection_list_id', function () {
@@ -290,7 +291,7 @@ describe('create a new collection', function () {
     context('should change view', function () {
       before(function () {
         createDashboard(mock_opts.one_default_collection);
-        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
+        document.querySelector('div#collection_list_id button[name=add_collection]').click();
       });
       after(removeDashboard);
 
@@ -311,10 +312,10 @@ describe('create a new collection', function () {
     context('cancel button', function () {
       before(function () {
         createDashboard(mock_opts.one_default_collection);
-        document.querySelectorAll('div#collection_list_id button')[0].click(); // Add a collection
-        document.querySelectorAll('div#new_collection_id input')[0].value = 'col name'; // name input
-        document.querySelectorAll('div#new_collection_id input')[1].value = 'col description'; // desc input
-        document.querySelectorAll('div#new_collection_id button')[1].click(); // cancel
+        document.querySelector('div#collection_list_id button[name=add_collection]').click();
+        document.querySelector('div#new_collection_id input[name=name]').value = 'col name';
+        document.querySelector('div#new_collection_id input[name=description]').value = 'col description';
+        document.querySelector('div#new_collection_id button[name=cancel]').click();
       });
       after(removeDashboard);
 
@@ -343,7 +344,7 @@ describe('create a new collection', function () {
 
       context('should not have a changed state for creating a new collection', function () {
         before(function () {
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
         });
 
         it('should no longer show the collection_list_id', function () {
@@ -369,10 +370,10 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
-          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
+          document.querySelector('div#new_collection_id input[name=name]').value = 'col2 name';
+          document.querySelector('div#new_collection_id input[name=description]').value = 'col2 description';
+          document.querySelector('div#new_collection_id button[name=done]').click();
         });
         after(function () {
           removeDashboard();
@@ -412,10 +413,10 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
-          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
+          document.querySelector('div#new_collection_id input[name=name]').value = 'col2 name';
+          document.querySelector('div#new_collection_id input[name=description]').value = 'col2 description';
+          document.querySelector('div#new_collection_id button[name=done]').click();
         });
         after(function () {
           removeDashboard();
@@ -452,11 +453,11 @@ describe('create a new collection', function () {
           });
           post = sinon.stub(request, 'post', function (url, payload, cb) { cb(); });
           createDashboard(mock_opts.one_default_collection);
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
-          document.querySelectorAll('div#new_collection_id input')[0].value = 'col2 name'; // name input
-          document.querySelectorAll('div#new_collection_id input')[1].value = 'col2 description'; // desc input
-          document.querySelectorAll('div#new_collection_id button')[0].click(); // done
-          document.querySelectorAll('div#collection_list_id button')[0].click(); // Add new collection
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
+          document.querySelector('div#new_collection_id input[name=name]').value = 'col2 name';
+          document.querySelector('div#new_collection_id input[name=description]').value = 'col2 description';
+          document.querySelector('div#new_collection_id button[name=done]').click();
+          document.querySelector('div#collection_list_id button[name=add_collection]').click();
         });
         after(function () {
           removeDashboard();
@@ -560,8 +561,8 @@ describe('editing a collection', function () {
           });
           put = sinon.stub(request, 'put', function (url, payload, cb) { cb(); });
           document.querySelector('div#collection_list_id h4').click(); // first (and only) collection
-          document.querySelector('div#edit_collection_id input').value = 'edited col name'; // collection name
-          document.querySelectorAll('div#edit_collection_id button')[0].click(); // done
+          document.querySelector('div#edit_collection_id input[name=name]').value = 'edited col name';
+          document.querySelector('div#edit_collection_id button[name=done]').click();
         });
         after(function () {
           removeDashboard();
