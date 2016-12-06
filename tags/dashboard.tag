@@ -1,6 +1,6 @@
 <dashboard>
 
-<form id="logout_form_id" action="/logout" method="post"><button>Logout</button></form>
+<form id="logout_form_id" action="/logout" method="post"><button name="logout">Logout</button></form>
 
 <div if={ view === 'collections' } id="collection_list_id">
   <div each={ coll, id in collections } onclick={ show_edit_collection.bind(this, id) }>
@@ -13,24 +13,24 @@
       : 'Number of Words: ' + coll.number_of_words
     }</p>
   </div>
-  <button onclick={ show_create_new_collection }>Add a collection</button>
+  <button onclick={ show_create_new_collection } name="add_collection">Add a collection</button>
 </div>
 
 <div if={ view === 'new_collection' } id="new_collection_id">
   <input name="name">
   <input name="description">
 
-  <button onclick={ create_new_collection }>Done</button>
-  <button onclick={ cancel_collection_creation }>Cancel</button>
+  <button onclick={ create_new_collection } name="done">Done</button>
+  <button onclick={ cancel_collection_creation } name="cancel">Cancel</button>
 </div>
 
 <div if={ view === 'edit_collection' } id="edit_collection_id">
   <input name="name" value="{ focussed_collection.collection_name || '' }">
   <input name="description" value="{ focussed_collection.collection_description || '' }">
 
-  <button onclick={ edit_collection }>Done</button>
-  <button onclick={ cancel_edit_collection }>Cancel</button>
-  <button onclick={ delete_collection }>Delete</button>
+  <button onclick={ edit_collection } name="done">Done</button>
+  <button onclick={ cancel_edit_collection } name="cancel">Cancel</button>
+  <button onclick={ delete_collection } name="delete">Delete</button>
 </div>
 
 <script>
