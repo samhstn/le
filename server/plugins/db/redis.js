@@ -5,7 +5,7 @@ const config = require('../../../config.js').redis;
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-exports.register = (server, options, next) =>  {
+exports.register = (server, options, next) => {
   server.app.redisCli = redis.createClient(config);
   
   next();
