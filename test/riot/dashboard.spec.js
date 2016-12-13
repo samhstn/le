@@ -482,11 +482,11 @@ describe('create a new collection', function () {
   });
 });
 
-/* | describe('editing a collection') []
- * | | context('without initial words') []
- * | | | context('initial state') []
- * | | | context('done') []
- * | | | | context('after editing the collection name') []
+/* | describe('editing a collection') [x]
+ * | | context('without initial words') [x]
+ * | | | context('initial state') [x]
+ * | | | context('done') [x]
+ * | | | | context('after editing the collection name') [x]
  * | | | | context('after adding and removing a word') []
  * | | | | context('after adding a word') []
  * | | | context('cancel') []
@@ -494,7 +494,7 @@ describe('create a new collection', function () {
  * | | | | context('after adding and removing a word') []
  * | | | | context('after adding a word') []
  * | | | context('delete') []
- * | | context('with an initial word') []
+ * | | context('with a two initial words') [-]
  * | | | context('initial state') []
  * | | | context('done') []
  * | | | | context('after editing the collection name') []
@@ -532,11 +532,15 @@ describe('editing a collection', function () {
       });
       it('should have two input boxes with the right name and description', function () {
         expect(selectorsValue('div#edit_collection_id input'))
-          .to.eql(['col name', 'col description']);
+          .to.eql(['col name', 'col description', '', '', '']);
+      });
+      it('should hve 5 input boxes with the correct names', function () {
+        expect(selectorsName('div#edit_collection_id input'))
+          .to.eql(['name', 'description', 'direction', 'source_word', 'target_words']);
       });
       it('should have 4 buttons with the correct textContent', function () {
         expect(selectorsTextContent('div#edit_collection_id button'))
-          .to.eql(['Done', 'Cancel', 'Delete']);
+          .to.eql(['Create New Word', 'Done', 'Cancel', 'Delete']);
       });
       it('should have called get once', function () {
         expect(get.callCount)
@@ -610,6 +614,50 @@ describe('editing a collection', function () {
           expect(get.calledAfter(put))
             .to.be(true);
         });
+      });
+    });
+  });
+  context('with two initial words', function () {
+    context('initial state', function () {
+      before(function () {
+        createDashboard(mock_opts.one_default_collection);
+        get = sinon.stub(request, 'get', function (url, cb) {
+          cb(mock_responses.get['/collection/100'].one_default_collection)
+        });
+        document.querySelector('div#collection_list_id h4').click(); // first (and only) collection
+      });
+      after(function () {
+        removeDashboard();
+        get.restore();
+      });
+
+      it('should not be showing the collection_list_id', function () {
+        expect(document.querySelector('div#collection_list_id'))
+          .to.be.null;
+      });
+      it('should be showing the edit_collection_id', function () {
+        expect(document.querySelector('div#edit_collection_id'))
+          .to.be.an('object');
+      });
+      it('should have two input boxes with the right name and description', function () {
+        expect(selectorsValue('div#edit_collection_id input'))
+          .to.eql(['col name', 'col description', '', '', '']);
+      });
+      it('should hve 5 input boxes with the correct names', function () {
+        expect(selectorsName('div#edit_collection_id input'))
+          .to.eql(['name', 'description', 'direction', 'source_word', 'target_words']);
+      });
+      it('should have 4 buttons with the correct textContent', function () {
+        expect(selectorsTextContent('div#edit_collection_id button'))
+          .to.eql(['Create New Word', 'Done', 'Cancel', 'Delete']);
+      });
+      it('should have called get once', function () {
+        expect(get.callCount)
+          .to.be(1);
+      });
+      it('should have called get with "/api/collection/{id}"', function () {
+        expect(get.getCall(0).args[0])
+          .to.be('/api/collection/100');
       });
     });
   });

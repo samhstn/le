@@ -1,7 +1,11 @@
 # State
 {
   view: 'collections/new_collection/edit_collection',
-  focussed_collection: { ['id']: { ... } }
+  focussed_collection: { ['id']: { ... } },
+  words: {
+    new: [ { ['id']: { ... } }, ... ],
+    deleted: [ ['id'], ... ]
+  }
 };
 
 # UX

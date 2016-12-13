@@ -74,16 +74,37 @@ var mock_responses = {
     },
     '/collection/100': {
       one_default_collection: {
-        collection: assign(
-          { collection_id: '100', words: [] },
-          mock_opts.one_default_collection.collections['100']
-        )
+        collection: {
+          collection_id: '100',
+          collection_name: 'col name',
+          collection_description: 'col description',
+          words: []
+        }
       },
       one_edited_name_default_collection: {
-        collection: assign(
-          { collection_id: '100', words: [] },
-          mock_opts.one_edited_name_default_collection.collections['100']
-        )
+        collection: {
+          collection_id: '100',
+          collection_name: 'edited col name',
+          collection_description: 'col description',
+          words: []
+        }
+      },
+      one_default_collection_w_words: {
+        collection: {
+          collection_id: '100',
+          collection_name: 'col name',
+          collection_description: 'col description',
+          words: [
+            {
+              direction: 'entode',
+              source_word: 'hello',
+              target_words: [ 'hallo' ],
+              hint: null,
+              attempts: 0,
+              correct_attempts: 0
+            }
+          ]
+        }
       }
     }
   }

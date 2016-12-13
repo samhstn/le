@@ -28,6 +28,19 @@
   <input name="name" value="{ focussed_collection.collection_name || '' }">
   <input name="description" value="{ focussed_collection.collection_description || '' }">
 
+  <div id="word_container_id">
+    <div each={ word, i in focussed_collection.words } class="word stored word_id_{ i }">
+      <span><label>Direction: </label>{ word.direction }</span>
+      <span><label>Source Word: </label>{ word.source_word }</span>
+      <span><label>Target Words: </label>{ word.target_words[0] }</span>
+    </div>
+  </div>
+
+  <input name="direction">
+  <input name="source_word">
+  <input name="target_words">
+  <button onclick={ create_new_word } name="create_new_word">Create New Word</button>
+
   <button onclick={ edit_collection } name="done">Done</button>
   <button onclick={ cancel_edit_collection } name="cancel">Cancel</button>
   <button onclick={ delete_collection } name="delete">Delete</button>
